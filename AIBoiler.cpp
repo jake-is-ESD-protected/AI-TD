@@ -68,7 +68,7 @@ int main(void)
     // start callback
     hw.StartAudio(AudioCallback);
 
-    while(1) {
+    for(;;) {
 		hw.SetLed(true);
 		System::Delay(500);
 		hw.SetLed(false);
