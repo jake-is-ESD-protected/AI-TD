@@ -1,0 +1,206 @@
+Neural Network Tools for STM32 family v1.7.0 (stm.ai v8.1.0-19520)
+Created date          : 2023-10-17 08:39:19
+Parameters            : generate --name esc50v10 -m C:/Users/J/Downloads/esc50_model_v10_lite.tflite --type tflite --compression none --verbosity 1 --workspace C:\Users\J\AppData\Local\Temp\mxAI_workspace900568356869002185666660997009177 --output C:\Users\J\.stm32cubemx\esc50v10_output --allocate-inputs --series stm32h7 --allocate-outputs
+
+Exec/report summary (generate)
+-------------------------------------------------------------------------------------------------------
+model file         :   C:\Users\J\Downloads\esc50_model_v10_lite.tflite                                
+type               :   tflite                                                                          
+c_name             :   esc50v10                                                                        
+compression        :   none                                                                            
+options            :   allocate-inputs, allocate-outputs                                               
+optimization       :   balanced                                                                        
+target/series      :   stm32h7                                                                         
+workspace dir      :   C:\Users\J\AppData\Local\Temp\mxAI_workspace900568356869002185666660997009177   
+output dir         :   C:\Users\J\.stm32cubemx\esc50v10_output                                         
+model_fmt          :   float                                                                           
+model_name         :   esc50_model_v10_lite                                                            
+model_hash         :   e40d262afe261fa6eaa6f24adf8a09c8                                                
+params #           :   105,941 items (413.83 KiB)                                                      
+-------------------------------------------------------------------------------------------------------
+input 1/1          :   'serving_default_conv2d_input0' (domain:activations/**default**)                
+                   :   700 items, 2.73 KiB, ai_float, float, (1,25,28,1)                               
+output 1/1         :   'nl_8' (domain:activations/**default**)                                         
+                   :   5 items, 20 B, ai_float, float, (1,5)                                           
+macc               :   5,653,608                                                                       
+weights (ro)       :   423,764 B (413.83 KiB) (1 segment)                                              
+activations (rw)   :   29,296 B (28.61 KiB) (1 segment) *                                              
+ram (total)        :   29,296 B (28.61 KiB) = 29,296 + 0 + 0                                           
+-------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers can be used from the activations buffer
+
+Model name - esc50_model_v10_lite ['serving_default_conv2d_input0'] ['nl_8']
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+m_id   layer (type,original)                       oshape                      param/size              macc                    connected to   | c_size              c_macc                  c_type                                
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+0      serving_default_conv2d_input0 (Input, )     [b:1,h:25,h:25,w:28,c:1]                                                                   |                                             
+       conv2d_0 (Conv2D, CONV_2D)                  [b:1,h:25,h:25,w:28,c:24]   624/2,496            420,024   serving_default_conv2d_input0   | -2,496(-100.0%)     -420,024(-100.0%)       
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+1      pool_1 (Pool, MAX_POOL_2D)                  [b:1,h:12,h:12,w:14,c:24]                         16,128                        conv2d_0   | +2,496(+100.0%)     +424,056(+2629.3%)      optimized_conv2d_of32/nl_of32[0, 1]   
+       nl_1_nl (Nonlinearity, MAX_POOL_2D)         [b:1,h:12,h:12,w:14,c:24]                          4,032                          pool_1   |                     -4,032(-100.0%)         
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+2      conv2d_2 (Conv2D, CONV_2D)                  [b:1,h:12,h:12,w:14,c:48]   28,848/115,392     4,838,448                         nl_1_nl   | -115,392(-100.0%)   -4,838,448(-100.0%)     
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+3      pool_3 (Pool, MAX_POOL_2D)                  [b:1,h:6,h:6,w:7,c:48]                             8,064                        conv2d_2   | +115,392(+100.0%)   +4,840,464(+60025.6%)   optimized_conv2d_of32/nl_of32[2, 3]   
+       nl_3_nl (Nonlinearity, MAX_POOL_2D)         [b:1,h:6,h:6,w:7,c:48]                             2,016                          pool_3   |                     -2,016(-100.0%)         
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+4      conv2d_4 (Conv2D, CONV_2D)                  [b:1,h:2,h:2,w:3,c:48]      57,648/230,592       345,648                         nl_3_nl   |                     +288(+0.1%)             conv2d_of32/nl_of32[4, 5]             
+       nl_4_nl (Nonlinearity, CONV_2D)             [b:1,h:2,h:2,w:3,c:48]                               288                        conv2d_4   |                     -288(-100.0%)           
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+5      reshape_5 (Reshape, RESHAPE)                [b:1,c:288]                                                                      nl_4_nl   |                                             
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+6      sequential_dense_MatMul (Placeholder, )     [h:64,h:64,c:288]           18,432/73,728                                                  | +256(+0.3%)         +18,560(+100.0%)        dense_of32/nl_of32[6, 7]              
+       dense_bias (Placeholder, )                  [c:64]                      64/256                                                         | -256(-100.0%)                               
+       gemm_6 (Gemm, FULLY_CONNECTED)              [b:1,c:64]                                        18,496                       reshape_5   |                     -18,496(-100.0%)        
+                                                                                                                    sequential_dense_MatMul   | 
+                                                                                                                                 dense_bias   | 
+       nl_6_nl (Nonlinearity, FULLY_CONNECTED)     [b:1,c:64]                                            64                          gemm_6   |                     -64(-100.0%)            
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+7      sequential_dense_1_MatMul (Placeholder, )   [h:5,h:5,c:64]              320/1,280                                                      | +20(+1.6%)          +325(+100.0%)           dense_of32[8]                         
+       dense_1_bias (Placeholder, )                [c:5]                       5/20                                                           | -20(-100.0%)                                
+       gemm_7 (Gemm, FULLY_CONNECTED)              [b:1,c:5]                                            325                         nl_6_nl   |                     -325(-100.0%)           
+                                                                                                                  sequential_dense_1_MatMul   | 
+                                                                                                                               dense_1_bias   | 
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+8      nl_8 (Nonlinearity, SOFTMAX)                [b:1,c:5]                                             75                          gemm_7   |                                             nl_of32[o][9]                         
+------ ------------------------------------------- --------------------------- ---------------- ----------- ------------------------------- --- ------------------- ----------------------- ------------------------------------- 
+model/c-model: macc=5,653,608/5,653,608  weights=423,764/423,764  activations=--/29,296 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : esc50_model_v10_lite
+c-name                : esc50v10
+c-node #              : 10
+c-array #             : 23
+activations size      : 29296 (1 segment)
+weights size          : 423764 (1 segment)
+macc                  : 5653608
+inputs                : ['serving_default_conv2d_input0_output']
+outputs               : ['nl_8_output']
+
+C-Arrays (23)
+------ -------------------------------------- -------------- ------------------------- ------------- --------- --------- 
+c_id   name (*_array)                         item/size      domain/mem-pool           c-type        fmt       comment   
+------ -------------------------------------- -------------- ------------------------- ------------- --------- --------- 
+0      conv2d_2_weights                       28800/115200   weights/weights           const float   float32             
+1      conv2d_2_bias                          48/192         weights/weights           const float   float32             
+2      conv2d_4_weights                       57600/230400   weights/weights           const float   float32             
+3      conv2d_4_bias                          48/192         weights/weights           const float   float32             
+4      gemm_6_weights                         18432/73728    weights/weights           const float   float32             
+5      gemm_6_bias                            64/256         weights/weights           const float   float32             
+6      gemm_7_weights                         320/1280       weights/weights           const float   float32             
+7      gemm_7_bias                            5/20           weights/weights           const float   float32             
+8      conv2d_0_scratch0                      1344/5376      activations/**default**   float         float32             
+9      conv2d_2_scratch0                      1344/5376      activations/**default**   float         float32             
+10     serving_default_conv2d_input0_output   700/2800       activations/**default**   float         float32   /input    
+11     conv2d_0_output                        4032/16128     activations/**default**   float         float32             
+12     nl_1_nl_output                         4032/16128     activations/**default**   float         float32             
+13     conv2d_2_output                        2016/8064      activations/**default**   float         float32             
+14     nl_3_nl_output                         2016/8064      activations/**default**   float         float32             
+15     conv2d_4_output                        288/1152       activations/**default**   float         float32             
+16     nl_4_nl_output                         288/1152       activations/**default**   float         float32             
+17     gemm_6_output                          64/256         activations/**default**   float         float32             
+18     nl_6_nl_output                         64/256         activations/**default**   float         float32             
+19     gemm_7_output                          5/20           activations/**default**   float         float32             
+20     nl_8_output                            5/20           activations/**default**   float         float32   /output   
+21     conv2d_0_weights                       600/2400       weights/weights           const float   float32             
+22     conv2d_0_bias                          24/96          weights/weights           const float   float32             
+------ -------------------------------------- -------------- ------------------------- ------------- --------- --------- 
+
+C-Layers (10)
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+c_id   name (*_layer)   id   layer_type          macc      rom      tensors                                   shape (array id)    
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+0      conv2d_0         1    optimized_conv2d    436152    2496     I: serving_default_conv2d_input0_output   (1,25,28,1) (10)    
+                                                                    S: conv2d_0_scratch0                                          
+                                                                    W: conv2d_0_weights                       (1,5,5,24) (21)     
+                                                                    W: conv2d_0_bias                          (24,) (22)          
+                                                                    O: conv2d_0_output                        (1,12,14,24) (11)   
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+1      nl_1_nl          1    nl                  4032      0        I: conv2d_0_output                        (1,12,14,24) (11)   
+                                                                    O: nl_1_nl_output                         (1,12,14,24) (12)   
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+2      conv2d_2         3    optimized_conv2d    4846512   115392   I: nl_1_nl_output                         (1,12,14,24) (12)   
+                                                                    S: conv2d_2_scratch0                                          
+                                                                    W: conv2d_2_weights                       (24,5,5,48) (0)     
+                                                                    W: conv2d_2_bias                          (48,) (1)           
+                                                                    O: conv2d_2_output                        (1,6,7,48) (13)     
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+3      nl_3_nl          3    nl                  2016      0        I: conv2d_2_output                        (1,6,7,48) (13)     
+                                                                    O: nl_3_nl_output                         (1,6,7,48) (14)     
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+4      conv2d_4         4    conv2d              345648    230592   I: nl_3_nl_output                         (1,6,7,48) (14)     
+                                                                    W: conv2d_4_weights                       (48,5,5,48) (2)     
+                                                                    W: conv2d_4_bias                          (48,) (3)           
+                                                                    O: conv2d_4_output                        (1,2,3,48) (15)     
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+5      nl_4_nl          4    nl                  288       0        I: conv2d_4_output                        (1,2,3,48) (15)     
+                                                                    O: nl_4_nl_output                         (1,2,3,48) (16)     
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+6      gemm_6           6    dense               18496     73984    I: nl_4_nl_output0                        (1,288) (16)        
+                                                                    W: gemm_6_weights                         (288,64) (4)        
+                                                                    W: gemm_6_bias                            (64,) (5)           
+                                                                    O: gemm_6_output                          (1,64) (17)         
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+7      nl_6_nl          6    nl                  64        0        I: gemm_6_output                          (1,64) (17)         
+                                                                    O: nl_6_nl_output                         (1,64) (18)         
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+8      gemm_7           7    dense               325       1300     I: nl_6_nl_output                         (1,64) (18)         
+                                                                    W: gemm_7_weights                         (64,5) (6)          
+                                                                    W: gemm_7_bias                            (5,) (7)            
+                                                                    O: gemm_7_output                          (1,5) (19)          
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+9      nl_8             8    nl                  75        0        I: gemm_7_output                          (1,5) (19)          
+                                                                    O: nl_8_output                            (1,5) (20)          
+------ ---------------- ---- ------------------- --------- -------- ----------------------------------------- ------------------- 
+
+
+
+Number of operations per c-layer
+------- ------ ----------------------------- ----------- -------------- --------- ---------- 
+c_id    m_id   name (type)                           #op           type    #param   sparsity 
+------- ------ ----------------------------- ----------- -------------- --------- ---------- 
+0       1      conv2d_0 (optimized_conv2d)       436,152   smul_f32_f32       624     0.0000 
+1       1      nl_1_nl (nl)                        4,032     op_f32_f32           
+2       3      conv2d_2 (optimized_conv2d)     4,846,512   smul_f32_f32    28,848     0.0000 
+3       3      nl_3_nl (nl)                        2,016     op_f32_f32           
+4       4      conv2d_4 (conv2d)                 345,648   smul_f32_f32    57,648     0.0000 
+5       4      nl_4_nl (nl)                          288     op_f32_f32           
+6       6      gemm_6 (dense)                     18,496   smul_f32_f32    18,496     0.0000 
+7       6      nl_6_nl (nl)                           64     op_f32_f32           
+8       7      gemm_7 (dense)                        325   smul_f32_f32       325     0.0000 
+9       8      nl_8 (nl)                              75     op_f32_f32           
+------- ------ ----------------------------- ----------- -------------- --------- ---------- 
+total                                          5,653,608                  105,941     0.0000 
+
+Number of operation types
+---------------- ----------- ----------- 
+operation type             #           % 
+---------------- ----------- ----------- 
+smul_f32_f32       5,647,133       99.9% 
+op_f32_f32             6,475        0.1% 
+
+Complexity report (model)
+------ --------------------------- ------------------------- ------------------------- -------- 
+m_id   name                        c_macc                    c_rom                     c_id     
+------ --------------------------- ------------------------- ------------------------- -------- 
+1      pool_1                      ||                 7.8%   |                  0.6%   [0, 1]   
+3      pool_3                      ||||||||||||||||  85.8%   ||||||||          27.2%   [2, 3]   
+4      conv2d_4                    ||                 6.1%   ||||||||||||||||  54.4%   [4, 5]   
+6      sequential_dense_MatMul     |                  0.3%   |||||             17.5%   [6, 7]   
+7      sequential_dense_1_MatMul   |                  0.0%   |                  0.3%   [8]      
+8      nl_8                        |                  0.0%   |                  0.0%   [9]      
+------ --------------------------- ------------------------- ------------------------- -------- 
+macc=5,653,608 weights=423,764 act=29,296 ram_io=0
+
+Generated files (7)
+---------------------------------------------------------------- 
+C:\Users\J\.stm32cubemx\esc50v10_output\esc50v10_config.h        
+C:\Users\J\.stm32cubemx\esc50v10_output\esc50v10.h               
+C:\Users\J\.stm32cubemx\esc50v10_output\esc50v10.c               
+C:\Users\J\.stm32cubemx\esc50v10_output\esc50v10_data_params.h   
+C:\Users\J\.stm32cubemx\esc50v10_output\esc50v10_data_params.c   
+C:\Users\J\.stm32cubemx\esc50v10_output\esc50v10_data.h          
+C:\Users\J\.stm32cubemx\esc50v10_output\esc50v10_data.c          
