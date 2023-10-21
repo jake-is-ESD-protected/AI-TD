@@ -68,8 +68,8 @@ int main(void)
 
     for(;;) {
 		hw.SetLed(true);
-		System::Delay(500);
+		System::Delay(1000);
 		hw.SetLed(false);
-		System::Delay(500);
+		System::Delay(1000);
 	}
 }

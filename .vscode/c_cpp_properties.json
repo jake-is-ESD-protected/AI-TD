@@ -10,6 +10,7 @@
             "includePath": [
                 "/media/j/USBSSD/Repos/AI-TD/include",
                 "/media/j/USBSSD/Repos/AI-TD/src",
+                "/media/j/USBSSD/Repos/AI-TD/lib/AI_model",
                 "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy",
                 "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/sys",
                 "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/usbd",
@@ -24,8 +25,7 @@
                 "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc",
                 "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/Third_Party/FatFs/src",
                 "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src",
-                "/media/j/USBSSD/Repos/AI-TD/ ./AI/driver/inc",
-                "/media/j/USBSSD/Repos/AI-TD/ ./AI/model",
+                "/media/j/USBSSD/Repos/AI-TD/AI_driver/inc",
                 ""
             ],
             "browse": {
@@ -33,6 +33,7 @@
                 "path": [
                     "/media/j/USBSSD/Repos/AI-TD/include",
                     "/media/j/USBSSD/Repos/AI-TD/src",
+                    "/media/j/USBSSD/Repos/AI-TD/lib/AI_model",
                     "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy",
                     "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/sys",
                     "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/usbd",
@@ -47,8 +48,7 @@
                     "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc",
                     "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/Third_Party/FatFs/src",
                     "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src",
-                    "/media/j/USBSSD/Repos/AI-TD/ ./AI/driver/inc",
-                    "/media/j/USBSSD/Repos/AI-TD/ ./AI/model",
+                    "/media/j/USBSSD/Repos/AI-TD/AI_driver/inc",
                     ""
                 ]
             },
