@@ -1,4 +1,3 @@
-#include "daisysp.h"
 #include "daisy_seed.h"
 
 #include "stm32h7xx_hal_rcc.h"
@@ -13,7 +12,6 @@ extern "C"
 
 #define CEQ_MAX				5
 
-using namespace daisysp;
 using namespace daisy;
 
 static DaisySeed  hw;

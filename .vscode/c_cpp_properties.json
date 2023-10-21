@@ -1,38 +1,74 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
 {
-  "configurations": [
-    {
-      "cStandard": "c11",
-      "compilerPath": "arm-none-eabi-g++.exe",
-      "cppStandard": "c++17",
-      "defines": [
-        "_DEBUG",
-        "UNICODE",
-        "_UNICODE"
-      ],
-      "includePath": [
-        "${workspaceFolder}/**",
-        "${workspaceFolder}/../../libDaisy/**",
-        "${workspaceFolder}/../../DaisySP/**"
-      ],
-      "name": "Win32",
-      "windowsSdkVersion": "10.0.17763.0"
-    },
-    {
-      "cStandard": "c11",
-      "compilerPath": "/usr/local/bin/arm-none-eabi-g++",
-      "cppStandard": "c++17",
-      "defines": [
-        "_DEBUG",
-        "UNICODE",
-        "_UNICODE"
-      ],
-      "includePath": [
-        "${workspaceFolder}/**",
-        "${workspaceFolder}/../../libDaisy/**",
-        "${workspaceFolder}/../../DaisySP/**"
-      ],
-      "name": "macOS"
-    }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/media/j/USBSSD/Repos/AI-TD/include",
+                "/media/j/USBSSD/Repos/AI-TD/src",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/sys",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/usbd",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/usbh",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Drivers/CMSIS/Include",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Host_Library/Core/Inc",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/Third_Party/FatFs/src",
+                "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src",
+                "/media/j/USBSSD/Repos/AI-TD/ ./AI/driver/inc",
+                "/media/j/USBSSD/Repos/AI-TD/ ./AI/model",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/media/j/USBSSD/Repos/AI-TD/include",
+                    "/media/j/USBSSD/Repos/AI-TD/src",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/sys",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/usbd",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src/usbh",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Drivers/CMSIS/Include",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Host_Library/Core/Inc",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/Middlewares/Third_Party/FatFs/src",
+                    "/media/j/USBSSD/Repos/AI-TD/.pio/libdeps/release/libDaisy/src",
+                    "/media/j/USBSSD/Repos/AI-TD/ ./AI/driver/inc",
+                    "/media/j/USBSSD/Repos/AI-TD/ ./AI/model",
+                    ""
+                ]
+            },
+            "defines": [
+                "F_CPU=400000000L",
+                "PLATFORMIO=60111",
+                "STM32H7xx",
+                "STM32H750xx",
+                ""
+            ],
+            "cppStandard": "c++17",
+            "compilerPath": "/home/j/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin/arm-none-eabi-gcc",
+            "compilerArgs": [
+                "-mthumb",
+                "-mcpu=cortex-m7",
+                "-mfloat-abi=hard",
+                "-mfpu=fpv5-sp-d16",
+                ""
+            ]
+        }
+    ],
+    "version": 4
 }
