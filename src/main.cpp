@@ -52,9 +52,9 @@ int main(void)
 	{
 		while(1) {
 			hw.SetLed(true);
-			System::Delay(100);
+			System::Delay(500);
 			hw.SetLed(false);
-			System::Delay(100);
+			System::Delay(500);
 		}
 	}
     
@@ -67,7 +67,7 @@ int main(void)
     // Fill input buffer (use test value)
     for (uint32_t i = 0; i < AI_NN_IN_1_SIZE; i++)
     {
-      ((ai_float *)in_data)[i] = (ai_float)2.0f;
+      ((ai_float *)in_data)[i] = (ai_float)3.14f;
     }
 
     // Perform inference
@@ -75,9 +75,9 @@ int main(void)
     if (nbatch != 1) {
 		while(1) {
 			hw.SetLed(true);
-			System::Delay(100);
+			System::Delay(500);
 			hw.SetLed(false);
-			System::Delay(100);
+			System::Delay(500);
 		}
     }
 
@@ -89,8 +89,8 @@ int main(void)
 
     for(;;) {
 		hw.SetLed(true);
-		System::Delay(1000);
+		System::Delay((int)(y_val*1000));
 		hw.SetLed(false);
-		System::Delay(1000);
+		System::Delay((int)(y_val*1000));
 	}
 }
