@@ -28,10 +28,9 @@ ai_handle g_nn_activations_table[1 + 2] = {
 
 
 /**  Weights Section  ********************************************************/
-
 AI_ALIGNED(32)
-__attribute__((section(".sdram_bss")))
-const ai_u64 s_nn_weights_array_u64[57] = {
+const ai_u64 __attribute__((section( ".qspiflash_bss"))) s_nn_weights_array_u64[57];
+/* = {
   0x3f6000afbed8726aU, 0xbdea8ed43e72d20cU, 0x3db16462bf134beaU, 0x3e59d923be966cf3U,
   0x3df2d6713ed55777U, 0xbd6296f0bebc8112U, 0xbef3a116be265e2cU, 0xbec2cfd73edeeba4U,
   0xbdbebf9c00000000U, 0xbf13999eU, 0x3e04432d00000000U, 0x3e96b9c100000000U,
@@ -47,8 +46,7 @@ const ai_u64 s_nn_weights_array_u64[57] = {
   0x3f11e62fbe8c62deU, 0x3f99cec53d151f08U, 0x3e55e3e34001a449U, 0x3fa6b1083ef64c28U,
   0xbeb57800bee55cabU, 0x3dd37a793eaf2412U, 0xbece3c063eb89b18U, 0x3ee8a08c3fa3cfe6U,
   0xbea79a2bU,
-};
-
+};*/
 
 ai_handle g_nn_weights_table[1 + 2] = {
   AI_HANDLE_PTR(AI_MAGIC_MARKER),
