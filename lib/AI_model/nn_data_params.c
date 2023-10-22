@@ -28,7 +28,9 @@ ai_handle g_nn_activations_table[1 + 2] = {
 
 
 /**  Weights Section  ********************************************************/
+
 AI_ALIGNED(32)
+__attribute__((section(".sdram_bss")))
 const ai_u64 s_nn_weights_array_u64[57] = {
   0x3f6000afbed8726aU, 0xbdea8ed43e72d20cU, 0x3db16462bf134beaU, 0x3e59d923be966cf3U,
   0x3df2d6713ed55777U, 0xbd6296f0bebc8112U, 0xbef3a116be265e2cU, 0xbec2cfd73edeeba4U,
