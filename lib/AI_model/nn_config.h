@@ -1,9 +1,9 @@
 
 /**
   ******************************************************************************
-  * @file    esc50v10_config.h
+  * @file    nn_config.h
   * @author  AST Embedded Analytics Research Platform
-  * @date    Tue Oct 17 08:39:18 2023
+  * @date    Sun Oct 22 00:51:00 2023
   * @brief   AI Tool Automatic Code Generator for Custom Layers Implementation
   ******************************************************************************
   * @attention
@@ -17,8 +17,8 @@
   ******************************************************************************
   */
 
-#ifndef AI_ESC50V10_CONFIG_H
-#define AI_ESC50V10_CONFIG_H
+#ifndef AI_NN_CONFIG_H
+#define AI_NN_CONFIG_H
 #pragma once
 
 #undef AI_TOOLS_VERSION_MAJOR
@@ -44,4 +44,4 @@
 #define AI_TOOLS_API_VERSION_MINOR (5)
 #define AI_TOOLS_API_VERSION_MICRO (0)
 
-#endif /*AI_ESC50V10_CONFIG_H*/
+#endif /*AI_NN_CONFIG_H*/
