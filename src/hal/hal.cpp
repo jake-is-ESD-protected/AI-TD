@@ -3,6 +3,8 @@
 #include "daisy_seed.h"
 #include "daisysp.h"
 
+#include "../../src/transientDSP/transientDSP.hpp"
+#include "../../src/ui/ui.hpp"
 #include "../../libK/Utilities/Map.hpp"
 
 using namespace daisy;
@@ -16,16 +18,14 @@ static GPIO blue;
 static Oscillator osc;
 double oscScaledValue;
 
-static void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
+void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
-	//double input = in[0][0];
-
-	//COPY A BUNCH OF SHIT FROM MOJO CODEBASE
-
 	oscScaledValue = (osc.Process() + 1.0) / 2.0;
-	BlueLed.Set(Map::mapClip(Map::mapSkew(oscScaledValue * hw.adc.GetFloat(1), 3) + hw.adc.GetFloat(3), 0, 1 ,0.08, 0.6));
+	BlueLed.Set(Map::mapClip(Map::mapSkew(oscScaledValue * KnobAttackTime.getValue(), 3) + KnobSustainTime.getValue(), 0, 1 ,0.08, 0.6));
 	BlueLed.Update();
-	write2VCA(Map::mapSkew(Map::mapClip(oscScaledValue * hw.adc.GetFloat(1) + hw.adc.GetFloat(3),0, 1, 0, 1), 5));
+	write2VCA(Map::mapSkew(Map::mapClip(oscScaledValue * KnobAttackTime.getValue() + KnobSustainTime.getValue() ,0, 1, 0, 1), 5));
+
+    processTransientDSP(in[0][0]);
 }
 
 void write2VCA(double value)
@@ -35,7 +35,12 @@ void write2VCA(double value)
 
 void doHalStuff()
 {
-    osc.SetFreq(Map::mapClip(Map::mapSkew(hw.adc.GetFloat(0), 0.2), 0, 1, 0.1, 30));
+    KnobAttack.updateKnob(hw.adc.GetFloat(0));
+    KnobAttackTime.updateKnob(hw.adc.GetFloat(1));
+    KnobSustain.updateKnob(hw.adc.GetFloat(2));
+    KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
+
+    osc.SetFreq(Map::mapClip(Map::mapSkew(KnobAttack.getValue(), 0.2), 0, 1, 0.1, 30));
 }
 
 void initHal() 

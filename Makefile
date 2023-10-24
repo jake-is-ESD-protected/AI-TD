@@ -6,6 +6,8 @@ TARGET = AIBoiler
 # Sources
 CPP_SOURCES += src/main.cpp
 CPP_SOURCES += src/hal/hal.cpp
+CPP_SOURCES += src/transientDSP/transientDSP.cpp
+CPP_SOURCES += src/ui/ui.cpp
 
 C_SOURCES = $(shell ls lib/AI_model/*.c)
 
@@ -16,8 +18,11 @@ DAISYSP_DIR = ../../DaisySP
 C_INCLUDES += \
 -I./Ai_driver/inc \
 -I./AI/Inc \
--I./lib/AI_model\
--I./src/hal
+-I./lib/AI_model \
+-I./src/transientDSP \
+-I./src/hal \
+-I./src/ui 
+
 
 LDFLAGS += -L./Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
 
