@@ -4,7 +4,8 @@ TARGET = AIBoiler
 #APP_TYPE = BOOT_NONE
 
 # Sources
-CPP_SOURCES = src/main.cpp 
+CPP_SOURCES += src/main.cpp
+CPP_SOURCES += src/hal/hal.cpp
 
 C_SOURCES = $(shell ls lib/AI_model/*.c)
 
@@ -15,7 +16,8 @@ DAISYSP_DIR = ../../DaisySP
 C_INCLUDES += \
 -I./Ai_driver/inc \
 -I./AI/Inc \
--I./lib/AI_model
+-I./lib/AI_model\
+-I./src/hal
 
 LDFLAGS += -L./Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
 
