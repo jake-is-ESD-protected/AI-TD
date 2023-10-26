@@ -2,6 +2,7 @@
 
 #include "daisy_seed.h"
 #include "daisysp.h"
+#include <math.h>
 
 #include "../../src/transientDSP/transientDSP.hpp"
 #include "../../src/ui/ui.hpp"
@@ -20,17 +21,20 @@ double oscScaledValue;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
-	oscScaledValue = (osc.Process() + 1.0) / 2.0;
+    
+    //write2VCA(fabs(in[0][0]));
+	/*oscScaledValue = (osc.Process() + 1.0) / 2.0;
 	BlueLed.Set(Map::mapClip(Map::mapSkew(oscScaledValue * KnobAttackTime.getValue(), 3) + KnobSustainTime.getValue(), 0, 1 ,0.08, 0.6));
-	BlueLed.Update();
-	write2VCA(Map::mapSkew(Map::mapClip(oscScaledValue * KnobAttackTime.getValue() + KnobSustainTime.getValue() ,0, 1, 0, 1), 5));
-
+	BlueLed.Update();*/
+	//write2VCA(Map::mapSkew(Map::mapClip(oscScaledValue * KnobAttackTime.getValue() + KnobSustainTime.getValue() ,0, 1, 0, 1), 5));
+    
     processTransientDSP(in[0][0]);
 }
 
 void write2VCA(double value)
 {
-	hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
+	hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 0, 1, 483, 2344));
+    //hw.dac.WriteValue(DacHandle::Channel::ONE, -1861 * value + 2344);
 }
 
 void doHalStuff()
@@ -47,6 +51,7 @@ void initHal()
 {
     hw.Configure();
     hw.Init();
+    hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
     hw.SetAudioBlockSize(1);
 
     float sampleRate = hw.AudioSampleRate();

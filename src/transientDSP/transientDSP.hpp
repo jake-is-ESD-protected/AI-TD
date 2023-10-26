@@ -3,4 +3,6 @@
 
 void processTransientDSP(double in);
 
+void initTransientDSP();
+
 #endif

@@ -1,6 +1,7 @@
 #include "daisy_seed.h"
 #include "daisysp.h"
 #include "./hal/hal.hpp"
+#include "./transientDSP/transientDSP.hpp"
 
 #include "stm32h7xx_hal_rcc.h"
 
@@ -20,7 +21,10 @@ using namespace daisysp;
 
 int main(void)
 {
+	initTransientDSP();
 	initHal();
+	
+
 
 	ai_float out_data[AI_NN_OUT_1_SIZE];
 	ai_float in_data[AI_NN_IN_1_SIZE];

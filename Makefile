@@ -8,6 +8,9 @@ CPP_SOURCES += src/main.cpp
 CPP_SOURCES += src/hal/hal.cpp
 CPP_SOURCES += src/transientDSP/transientDSP.cpp
 CPP_SOURCES += src/ui/ui.cpp
+CPP_SOURCES += src/transientDSP/EnvelopeFollowerPeakHold.cpp
+CPP_SOURCES += src/transientDSP/SmootherExponential.cpp
+CPP_SOURCES += src/transientDSP/BufferCircular.cpp
 
 C_SOURCES = $(shell ls lib/AI_model/*.c)
 
