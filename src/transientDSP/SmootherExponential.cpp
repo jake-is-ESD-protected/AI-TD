@@ -65,7 +65,13 @@ double SmootherExponentialSingleStage::cutoff_multiplier(int num_stages)
     return cm;
 }
 
-SmootherExponential::SmootherExponential() : num_stages(4){};
+SmootherExponential::SmootherExponential() : num_stages(0){};
+
+void SmootherExponential::init(int _num_stages)
+{
+    num_stages = _num_stages;
+    smoothers.reset(new SmootherExponentialSingleStage[num_stages]);
+}
 
 void SmootherExponential::reset(double sample_rate)
 {

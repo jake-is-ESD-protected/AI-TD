@@ -44,6 +44,9 @@ void doHalStuff()
     KnobSustain.updateKnob(hw.adc.GetFloat(2));
     KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
 
+    setAttackTime(Map::mapClip(KnobAttackTime.getValue(), 0, 1, 1, 40));
+	//envSmoother.set_release(Map::mapClip(KnobSustainTime.getValue(), 0, 1, 1, 500));
+
     osc.SetFreq(Map::mapClip(Map::mapSkew(KnobAttack.getValue(), 0.2), 0, 1, 0.1, 30));
 }
 

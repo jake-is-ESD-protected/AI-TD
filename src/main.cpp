@@ -23,8 +23,6 @@ int main(void)
 {
 	initTransientDSP();
 	initHal();
-	
-
 
 	ai_float out_data[AI_NN_OUT_1_SIZE];
 	ai_float in_data[AI_NN_IN_1_SIZE];
