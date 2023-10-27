@@ -33,7 +33,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
 void write2VCA(double value)
 {
-	hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 0, 1, 483, 2344));
+	hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
     //hw.dac.WriteValue(DacHandle::Channel::ONE, -1861 * value + 2344);
 }
 
@@ -43,9 +43,6 @@ void doHalStuff()
     KnobAttackTime.updateKnob(hw.adc.GetFloat(1));
     KnobSustain.updateKnob(hw.adc.GetFloat(2));
     KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
-
-    envSmoother.set_attack(Map::mapClip(KnobAttackTime.getValue(), 0, 1, 0.1, 40));
-	envSmoother.set_release(Map::mapClip(KnobSustainTime.getValue(), 0, 1, 1, 500));
 
     osc.SetFreq(Map::mapClip(Map::mapSkew(KnobAttack.getValue(), 0.2), 0, 1, 0.1, 30));
 }

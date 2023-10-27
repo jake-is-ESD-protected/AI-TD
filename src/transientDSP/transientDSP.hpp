@@ -3,9 +3,9 @@
 #include "SmootherExponential.h"
 #include "EnvelopeFollowerPeakHold.h"
 
-extern SmootherExponential envSmoother;
-
 void processTransientDSP(double in);
+
+void uiProcessTransientDSP();
 
 void initTransientDSP();
 

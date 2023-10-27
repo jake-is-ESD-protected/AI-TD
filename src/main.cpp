@@ -76,5 +76,6 @@ int main(void)
 		*/
 
 		doHalStuff();
+		uiProcessTransientDSP();
  	}
 }
