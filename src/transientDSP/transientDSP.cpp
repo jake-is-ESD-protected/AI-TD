@@ -6,9 +6,11 @@
 
 #define ATTACK_FILTER_DEFAULT_RELEASE_TIME 20
 #define ATTACK_FILTER_FAST_ATTACK_TIME 0.1
-#define SUSTAIN_FILTER_DEFAULT_ATTACK_TIME 100
-#define SUSTAIN_FILTER_SLOW_RELEASE_TIME 800
-#define BASE_GAIN 0.5
+#define SUSTAIN_FILTER_DEFAULT_ATTACK_TIME 50
+#define SUSTAIN_FILTER_SLOW_RELEASE_TIME 600
+#define BASE_GAIN 0.8
+#define ATTACK_GAIN 0.8
+#define RELEASE_GAIN 1.2
 
 static EnvelopeFollowerPeakHold envFollower;
 
@@ -25,18 +27,13 @@ void processTransientDSP(double in)
     const double aSFilterV = aSFilter.process(env);
     const double sFFilterV = sFFilter.process(env);
     const double sSFilterV = sSFilter.process(env);
-    const double outputGain = BASE_GAIN + (getBipolarAttackValue() * fabs(aFFilterV - aSFilterV)) + (getBipolarSustainValue() * fabs(sSFilterV - sFFilterV));
+    const double outputGain = BASE_GAIN + (getBipolarAttackValue() * fabs(aFFilterV - aSFilterV)) + (getBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
     write2VCA(outputGain);
 }
 
 void uiProcessTransientDSP()
 {
     aSFilter.set_attack(Map::mapClip(KnobAttackTime.getValue(), 0, 1, 0.1, 400));
-    aSFilter.set_release(ATTACK_FILTER_DEFAULT_RELEASE_TIME);
-    aFFilter.set_release(ATTACK_FILTER_DEFAULT_RELEASE_TIME);
-
-    sSFilter.set_attack(SUSTAIN_FILTER_DEFAULT_ATTACK_TIME);
-    sFFilter.set_attack(SUSTAIN_FILTER_DEFAULT_ATTACK_TIME);
     sFFilter.set_release(Map::mapClip(KnobSustainTime.getValue(), 1, 0, 0.1, 500));
 }
 
