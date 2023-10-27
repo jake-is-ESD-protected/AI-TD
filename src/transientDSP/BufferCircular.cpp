@@ -7,7 +7,7 @@ namespace bdsp
 
     template <typename T>
     BufferCircular<T>::BufferCircular()
-        : index_write(0), len_buffer(1024), wrap_mask(1023)
+        : index_write(0), len_buffer(64), wrap_mask(63)
     {
     }
 
@@ -17,7 +17,7 @@ namespace bdsp
     template <typename T>
     void BufferCircular<T>::init(unsigned int num_samples)
     {
-        init_power_of_two((unsigned int)(pow(2, ceil(log(num_samples) / log(2)))));
+        init_power_of_two(64);
     }
 
     template <typename T>
@@ -28,8 +28,6 @@ namespace bdsp
         len_buffer = num_samples_power_of_two;
 
         wrap_mask = len_buffer - 1;
-
-        buffer.reset(new T[len_buffer]);
 
         clear();
     }
@@ -63,10 +61,10 @@ namespace bdsp
     }
 
     template <typename T>
-    T BufferCircular<T>::max()
+    T BufferCircular<T>::max() 
     {
         double max = buffer[0];
-        for (int i = 1; i < len_buffer; ++i)
+        for (unsigned int i = 0; i < len_buffer; i++)
         {
             if (buffer[i] > max)
             {

@@ -15,7 +15,7 @@ void EnvelopeFollowerPeakHold::init(double _sample_rate, double window_size_ms)
 double EnvelopeFollowerPeakHold::process(double x)
 {
     state.push_sample(x);
-    const double max = state.max();
+    const double max = state.max(); //THIS NEEDS BLOCK PROCESSING
 
     return max;
 }

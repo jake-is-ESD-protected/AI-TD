@@ -21,7 +21,6 @@ using namespace daisysp;
 
 int main(void)
 {
-	initTransientDSP();
 	initHal();
 
 	ai_float out_data[AI_NN_OUT_1_SIZE];
@@ -45,7 +44,10 @@ int main(void)
 
     for(;;)
 	{
-		System::Delay(10);
+		System::Delay(500);
+		setLed(true);
+		System::Delay(500);
+		setLed(false);
 
 		/*ai_input = ai_nn_inputs_get(pNN, NULL);
 		ai_output = ai_nn_outputs_get(pNN, NULL);

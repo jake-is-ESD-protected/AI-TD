@@ -3,10 +3,10 @@
 #include "SmootherExponential.h"
 #include "EnvelopeFollowerPeakHold.h"
 
+extern SmootherExponential envSmoother;
+
 void processTransientDSP(double in);
 
 void initTransientDSP();
-
-void setAttackTime(double aT);
 
 #endif

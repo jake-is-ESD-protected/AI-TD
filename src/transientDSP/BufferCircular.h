@@ -26,7 +26,7 @@ namespace bdsp
         T max();
 
     private:
-        std::unique_ptr<T[]> buffer;
+        double buffer[64];
         unsigned int index_write;
         unsigned int len_buffer; // Must be nearest power of 2
         unsigned int wrap_mask;  // Must be (len_buffer - 1)
