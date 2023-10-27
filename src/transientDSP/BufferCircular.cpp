@@ -7,7 +7,7 @@ namespace bdsp
 
     template <typename T>
     BufferCircular<T>::BufferCircular()
-        : index_write(0), len_buffer(64), wrap_mask(63)
+        : index_write(0), len_buffer(512), wrap_mask(512-1)
     {
     }
 
@@ -17,7 +17,7 @@ namespace bdsp
     template <typename T>
     void BufferCircular<T>::init(unsigned int num_samples)
     {
-        init_power_of_two(64);
+        init_power_of_two(512);
     }
 
     template <typename T>

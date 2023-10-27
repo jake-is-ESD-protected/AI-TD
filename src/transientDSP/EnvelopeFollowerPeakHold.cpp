@@ -12,10 +12,20 @@ void EnvelopeFollowerPeakHold::init(double _sample_rate, double window_size_ms)
     state.init((unsigned int)(window_size_ms / 1000.0 * sample_rate));
 }
 
+uint16_t blockCounter = 0;
+uint16_t blockThreshold = 4;
+double heldMax = 0;
+
 double EnvelopeFollowerPeakHold::process(double x)
 {
     state.push_sample(x);
-    const double max = state.max(); //THIS NEEDS BLOCK PROCESSING
+    if(blockCounter > blockThreshold)
+    {
+        blockCounter = 0;
+        heldMax = state.max();
+    }
+        
+    blockCounter++;
 
-    return max;
+    return heldMax;
 }
