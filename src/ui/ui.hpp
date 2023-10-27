@@ -13,4 +13,8 @@ void initUI();
 
 void processUI();
 
+double getBipolarAttackValue();
+
+double getBipolarSustainValue();
+
 #endif

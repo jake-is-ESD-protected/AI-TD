@@ -36,7 +36,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 void write2VCA(double value)
 {
     hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
-    // hw.dac.WriteValue(DacHandle::Channel::ONE, -1861 * value + 2344);
 }
 
 void doHalStuff()
@@ -56,7 +55,6 @@ void initHal()
     hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
     hw.SetAudioBlockSize(1);
 
-    float sampleRate = hw.AudioSampleRate();
     osc.Init(sampleRate);
     osc.SetWaveform(Oscillator::WAVE_SIN);
     osc.SetAmp(1.0);
