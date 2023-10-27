@@ -4,6 +4,8 @@
 #include <cmath>
 #include <memory>
 
+#define ENVELOPE_FOLLOWER_BUFFER_SIZE 512
+
 namespace bdsp
 {
 
@@ -26,7 +28,7 @@ namespace bdsp
         T max();
 
     private:
-        double buffer[512];
+        double buffer[ENVELOPE_FOLLOWER_BUFFER_SIZE];
         unsigned int index_write;
         unsigned int len_buffer; // Must be nearest power of 2
         unsigned int wrap_mask;  // Must be (len_buffer - 1)
