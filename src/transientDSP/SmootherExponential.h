@@ -1,13 +1,13 @@
 #pragma once
 
+#include "./envDeps/constants.h"
 #include <cmath>
 #include <memory>
-#include "./envDeps/constants.h"
 
 // Exponential smoother (single stage)
 class SmootherExponentialSingleStage
 {
-public:
+  public:
     SmootherExponentialSingleStage();
     ~SmootherExponentialSingleStage() = default;
 
@@ -18,7 +18,7 @@ public:
 
     double process(double x);
 
-private:
+  private:
     double sample_rate;
     double state;
 
@@ -31,7 +31,7 @@ private:
 // Exponential smoother (n-stage)
 class SmootherExponential
 {
-public:
+  public:
     SmootherExponential();
     ~SmootherExponential() = default;
 
@@ -44,7 +44,7 @@ public:
 
     double process(double x);
 
-private:
+  private:
     int num_stages;
     std::unique_ptr<SmootherExponentialSingleStage[]> smoothers;
 };

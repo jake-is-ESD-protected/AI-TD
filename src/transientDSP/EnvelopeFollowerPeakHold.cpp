@@ -1,14 +1,13 @@
 #include "EnvelopeFollowerPeakHold.h"
 
-EnvelopeFollowerPeakHold::EnvelopeFollowerPeakHold()
-    : sample_rate(0.0)
+EnvelopeFollowerPeakHold::EnvelopeFollowerPeakHold() : sample_rate(0.0)
 {
 }
 
 void EnvelopeFollowerPeakHold::init(double _sample_rate, double window_size_ms)
 {
     sample_rate = _sample_rate;
-    //prev_max = 0.0;
+    // prev_max = 0.0;
     state.init((unsigned int)(window_size_ms / 1000.0 * sample_rate));
 }
 
@@ -19,12 +18,12 @@ double heldMax = 0;
 double EnvelopeFollowerPeakHold::process(double x)
 {
     state.push_sample(x);
-    if(blockCounter > blockThreshold)
+    if (blockCounter > blockThreshold)
     {
         blockCounter = 0;
         heldMax = state.max();
     }
-        
+
     blockCounter++;
 
     return heldMax;

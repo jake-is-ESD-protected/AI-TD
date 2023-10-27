@@ -1,10 +1,6 @@
 #include "SmootherExponential.h"
 
-SmootherExponentialSingleStage::SmootherExponentialSingleStage()
-    : sample_rate(0.0),
-      state(0.0),
-      alpha_attack(0.0),
-      alpha_release(0.0)
+SmootherExponentialSingleStage::SmootherExponentialSingleStage() : sample_rate(0.0), state(0.0), alpha_attack(0.0), alpha_release(0.0)
 {
 }
 
@@ -59,7 +55,8 @@ double SmootherExponentialSingleStage::process(double x)
 
 double SmootherExponentialSingleStage::cutoff_multiplier(int num_stages)
 {
-    // Helper function to be used in correction of time constants when cascading stages
+    // Helper function to be used in correction of time constants when cascading
+    // stages
 
     const double cm = 1.0 / (sqrt(pow(2.0, 1.0 / num_stages) - 1.0));
     return cm;
