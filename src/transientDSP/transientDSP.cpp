@@ -29,7 +29,7 @@ void processTransientDSP(double in)
     const double sFFilterV = sFFilter.process(env);
     const double sSFilterV = sSFilter.process(env);
     const double varGain = (getBipolarAttackValue() * fabs(aFFilterV - aSFilterV) * ATTACK_GAIN) + (getBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
-    setFadingLed(fabs(varGain) * LED_DISPLAY_GAIN); // THIS SHOULD BE MOVED TO A WAAAAY LOWER UPDATE FUNCTION
+    setFadingLed(fabs(varGain) * LED_DISPLAY_GAIN); // THIS SHOULD BE MOVED TO A WAAAAY LOWER RATE OF UPDATE FUNCTION
     if (readButton())
         write2VCA(BASE_GAIN + varGain);
     else

@@ -42,7 +42,7 @@ void doHalStuff()
 void initHal()
 {
     hw.Configure();
-    hw.Init();
+    hw.Init(true); // ENABLE BOOST MODE
     hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
     hw.SetAudioBlockSize(1);
 
