@@ -11,8 +11,6 @@ extern Knob KnobSustainTime;
 
 void initUI();
 
-void processUI();
-
 double getBipolarAttackValue();
 
 double getBipolarSustainValue();

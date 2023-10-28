@@ -5,14 +5,12 @@
 
 void write2VCA(double value);
 
-void doHalStuff();
-
 void initHal();
 
 void setLed(bool b);
 
-void setFadingLed(double value);
-
 bool readButton();
+
+void initTimer();
 
 #endif

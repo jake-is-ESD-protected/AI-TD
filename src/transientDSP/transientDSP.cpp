@@ -11,9 +11,10 @@
 #define BASE_GAIN 0.8
 #define ATTACK_GAIN 0.9
 #define RELEASE_GAIN 1.2
-#define LED_DISPLAY_GAIN 3.5
 
 static EnvelopeFollowerPeakHold envFollower;
+
+double lastVarGainValue = 0;
 
 SmootherExponential aFFilter;
 SmootherExponential aSFilter;
@@ -28,10 +29,9 @@ void processTransientDSP(double in)
     const double aSFilterV = aSFilter.process(env);
     const double sFFilterV = sFFilter.process(env);
     const double sSFilterV = sSFilter.process(env);
-    const double varGain = (getBipolarAttackValue() * fabs(aFFilterV - aSFilterV) * ATTACK_GAIN) + (getBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
-    setFadingLed(fabs(varGain) * LED_DISPLAY_GAIN); // THIS SHOULD BE MOVED TO A WAAAAY LOWER RATE OF UPDATE FUNCTION
+    lastVarGainValue = (getBipolarAttackValue() * fabs(aFFilterV - aSFilterV) * ATTACK_GAIN) + (getBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
     if (readButton())
-        write2VCA(BASE_GAIN + varGain);
+        write2VCA(BASE_GAIN + lastVarGainValue);
     else
         write2VCA(BASE_GAIN);
 }

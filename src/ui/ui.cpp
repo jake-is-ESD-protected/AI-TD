@@ -15,10 +15,6 @@ void initUI()
 {
 }
 
-void processUI()
-{
-}
-
 double getBipolarAttackValue()
 {
     return 2.0 * (KnobAttack.getValue() - 0.5);

@@ -1,7 +1,6 @@
 #include "hal.hpp"
 
 #include "daisy_seed.h"
-#include "daisysp.h"
 #include <math.h>
 
 #include "../../libK/Utilities/Map.hpp"
@@ -9,34 +8,41 @@
 #include "../../src/ui/ui.hpp"
 
 using namespace daisy;
-using namespace daisysp;
 using namespace k;
+
+#define LED_DISPLAY_GAIN 3.5
 
 static DaisySeed hw;
 
 static Led BlueLed;
 static GPIO ButtonA;
-static Oscillator osc;
-double oscScaledValue;
+
+static TimerHandle timerUI;
+static TimerHandle timerVisual;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     processTransientDSP(in[0][0]);
 }
 
-void write2VCA(double value)
-{
-    hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
-}
-
-void doHalStuff()
+void UICallback(void *data)
 {
     KnobAttack.updateKnob(hw.adc.GetFloat(0));
     KnobAttackTime.updateKnob(hw.adc.GetFloat(1));
     KnobSustain.updateKnob(hw.adc.GetFloat(2));
     KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
+    uiProcessTransientDSP();
+}
 
-    osc.SetFreq(Map::mapClip(Map::mapSkew(KnobAttack.getValue(), 0.2), 0, 1, 0.1, 30));
+void VisualCallback(void *data)
+{
+    BlueLed.Set(fabs(lastVarGainValue) * LED_DISPLAY_GAIN);
+    BlueLed.Update();
+}
+
+void write2VCA(double value)
+{
+    hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
 }
 
 void initHal()
@@ -45,11 +51,6 @@ void initHal()
     hw.Init(true); // ENABLE BOOST MODE
     hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
     hw.SetAudioBlockSize(1);
-
-    osc.Init(sampleRate);
-    osc.SetWaveform(Oscillator::WAVE_SIN);
-    osc.SetAmp(1.0);
-    osc.SetFreq(0.25);
 
     DacHandle::Config config = hw.dac.GetConfig();
     config.mode = DacHandle::Mode::POLLING;
@@ -73,15 +74,33 @@ void initHal()
     hw.StartAudio(AudioCallback);
 }
 
+void initTimer()
+{
+    TimerHandle::Config timcfg;
+    timcfg.periph = daisy::TimerHandle::Config::Peripheral::TIM_5;
+    timcfg.dir = daisy::TimerHandle::Config::CounterDir::UP;
+    uint32_t tim_base_freq = daisy::System::GetPClk2Freq();
+    unsigned long tim_period = tim_base_freq / 5;
+    timcfg.period = tim_period;
+    timcfg.enable_irq = true;
+    timerUI.Init(timcfg);
+    timerUI.SetCallback(UICallback, nullptr);
+    timerUI.Start();
+
+    TimerHandle::Config timcfgB;
+    timcfgB.periph = daisy::TimerHandle::Config::Peripheral::TIM_4;
+    timcfgB.dir = daisy::TimerHandle::Config::CounterDir::UP;
+    unsigned long tim_periodB = tim_base_freq / 30;
+    timcfgB.period = tim_periodB;
+    timcfgB.enable_irq = true;
+    timerVisual.Init(timcfgB);
+    timerVisual.SetCallback(VisualCallback, nullptr);
+    timerVisual.Start();
+}
+
 void setLed(bool b)
 {
     hw.SetLed(b);
-}
-
-void setFadingLed(double value)
-{
-    BlueLed.Set(value);
-    BlueLed.Update();
 }
 
 bool readButton()

@@ -3,6 +3,8 @@
 #include "EnvelopeFollowerPeakHold.h"
 #include "SmootherExponential.h"
 
+extern double lastVarGainValue;
+
 void processTransientDSP(double in);
 
 void uiProcessTransientDSP();
