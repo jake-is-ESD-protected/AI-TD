@@ -12,7 +12,7 @@ void EnvelopeFollowerPeakHold::init(double _sample_rate, double window_size_ms)
 }
 
 uint16_t blockCounter = 0;
-uint16_t blockThreshold = 4;
+uint16_t blockThreshold = 8;
 double heldMax = 0;
 
 double EnvelopeFollowerPeakHold::process(double x)

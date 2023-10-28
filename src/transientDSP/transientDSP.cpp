@@ -4,13 +4,14 @@
 #include "hal.hpp"
 #include <math.h>
 
-#define ATTACK_FILTER_DEFAULT_RELEASE_TIME 20
-#define ATTACK_FILTER_FAST_ATTACK_TIME 0.1
+#define ATTACK_FILTER_DEFAULT_RELEASE_TIME 450 // TO LOW VALUES CAN LEAD TO ISSUES IN TALE OF NOTE //THE MORE RELEASE THE SOUND THE LONGER THIS NEEDS TO BE
+#define ATTACK_FILTER_FAST_ATTACK_TIME 1
 #define SUSTAIN_FILTER_DEFAULT_ATTACK_TIME 50
 #define SUSTAIN_FILTER_SLOW_RELEASE_TIME 600
 #define BASE_GAIN 0.8
-#define ATTACK_GAIN 0.8
+#define ATTACK_GAIN 0.9
 #define RELEASE_GAIN 1.2
+#define LED_DISPLAY_GAIN 3.5
 
 static EnvelopeFollowerPeakHold envFollower;
 
@@ -27,8 +28,12 @@ void processTransientDSP(double in)
     const double aSFilterV = aSFilter.process(env);
     const double sFFilterV = sFFilter.process(env);
     const double sSFilterV = sSFilter.process(env);
-    const double outputGain = BASE_GAIN + (getBipolarAttackValue() * fabs(aFFilterV - aSFilterV)) + (getBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
-    write2VCA(outputGain);
+    const double varGain = (getBipolarAttackValue() * fabs(aFFilterV - aSFilterV) * ATTACK_GAIN) + (getBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
+    setFadingLed(fabs(varGain) * LED_DISPLAY_GAIN); // THIS SHOULD BE MOVED TO A WAAAAY LOWER UPDATE FUNCTION
+    if (readButton())
+        write2VCA(BASE_GAIN + varGain);
+    else
+        write2VCA(BASE_GAIN);
 }
 
 void uiProcessTransientDSP()

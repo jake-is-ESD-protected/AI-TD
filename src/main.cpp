@@ -1,5 +1,6 @@
 #include "./hal/hal.hpp"
 #include "./transientDSP/transientDSP.hpp"
+#include "./ui/ui.hpp"
 #include "daisy_seed.h"
 #include "daisysp.h"
 
@@ -44,9 +45,9 @@ int main(void)
 
     for (;;)
     {
-        System::Delay(500);
+        System::Delay(50);
         setLed(true);
-        System::Delay(500);
+        System::Delay(50);
         setLed(false);
 
         /*ai_input = ai_nn_inputs_get(pNN, NULL);
@@ -77,5 +78,6 @@ int main(void)
 
         doHalStuff();
         uiProcessTransientDSP();
+        processUI();
     }
 }

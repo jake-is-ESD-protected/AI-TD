@@ -15,21 +15,12 @@ using namespace k;
 static DaisySeed hw;
 
 static Led BlueLed;
-static GPIO blue;
+static GPIO ButtonA;
 static Oscillator osc;
 double oscScaledValue;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
-
-    // write2VCA(fabs(in[0][0]));
-    /*oscScaledValue = (osc.Process() + 1.0) / 2.0;
-    BlueLed.Set(Map::mapClip(Map::mapSkew(oscScaledValue *
-    KnobAttackTime.getValue(), 3) + KnobSustainTime.getValue(), 0, 1 ,0.08,
-    0.6)); BlueLed.Update();*/
-    // write2VCA(Map::mapSkew(Map::mapClip(oscScaledValue *
-    // KnobAttackTime.getValue() + KnobSustainTime.getValue() ,0, 1, 0, 1), 5));
-
     processTransientDSP(in[0][0]);
 }
 
@@ -66,6 +57,7 @@ void initHal()
     hw.dac.Init(config);
 
     BlueLed.Init(seed::D26, false, sampleRate);
+    ButtonA.Init(daisy::seed::D27, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
 
     AdcChannelConfig adcConfig[4];
     adcConfig[0].InitSingle(hw.GetPin(15));
@@ -84,4 +76,15 @@ void initHal()
 void setLed(bool b)
 {
     hw.SetLed(b);
+}
+
+void setFadingLed(double value)
+{
+    BlueLed.Set(value);
+    BlueLed.Update();
+}
+
+bool readButton()
+{
+    return ButtonA.Read();
 }

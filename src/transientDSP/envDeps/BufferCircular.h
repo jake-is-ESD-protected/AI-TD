@@ -4,7 +4,7 @@
 #include <cmath>
 #include <memory>
 
-#define ENVELOPE_FOLLOWER_BUFFER_SIZE 512
+#define ENVELOPE_FOLLOWER_BUFFER_SIZE 1024
 
 namespace bdsp
 {

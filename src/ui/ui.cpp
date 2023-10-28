@@ -1,6 +1,8 @@
 #include "ui.hpp"
+#include "hal.hpp"
 
 #include "../../libK/Utilities/Knob.hpp"
+#include "../../libK/Utilities/Map.hpp"
 
 using namespace k;
 

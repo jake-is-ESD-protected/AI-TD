@@ -11,4 +11,8 @@ void initHal();
 
 void setLed(bool b);
 
+void setFadingLed(double value);
+
+bool readButton();
+
 #endif
