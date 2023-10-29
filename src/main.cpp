@@ -20,8 +20,9 @@ using namespace daisy;
 int main(void)
 {
     initHal();
+    cliInit();
     initTimer();
-
+    
     ai_float out_data[AI_NN_OUT_1_SIZE];
     ai_float in_data[AI_NN_IN_1_SIZE];
     ai_handle pNN = AI_HANDLE_NULL;
