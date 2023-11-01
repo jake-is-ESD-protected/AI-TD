@@ -1,4 +1,3 @@
-#include "./cli/cli.hpp"
 #include "./hal/hal.hpp"
 #include "./transientDSP/transientDSP.hpp"
 #include "./ui/ui.hpp"
@@ -18,13 +17,9 @@ extern "C"
 
 using namespace daisy;
 
-static DaisySeed hw;
-
 int main(void)
 {
-    halInit(&hw);
-    cliInit(&hw);
-    halTimerInit();
+    halInit();
 
     ai_float out_data[AI_NN_OUT_1_SIZE];
     ai_float in_data[AI_NN_IN_1_SIZE];

@@ -10,7 +10,7 @@
 using namespace daisy;
 using namespace k;
 
-static DaisySeed *pHw;
+static DaisySeed hw;
 
 static Led BlueLed;
 static GPIO ButtonA;
@@ -25,10 +25,10 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
 void UICallback(void *data)
 {
-    KnobAttack.updateKnob(pHw->adc.GetFloat(0));
-    KnobAttackTime.updateKnob(pHw->adc.GetFloat(1));
-    KnobSustain.updateKnob(pHw->adc.GetFloat(2));
-    KnobSustainTime.updateKnob(pHw->adc.GetFloat(3));
+    KnobAttack.updateKnob(hw.adc.GetFloat(0));
+    KnobAttackTime.updateKnob(hw.adc.GetFloat(1));
+    KnobSustain.updateKnob(hw.adc.GetFloat(2));
+    KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
     transientDSPuiProcess();
 }
 
@@ -38,39 +38,40 @@ void VisualCallback(void *data)
     BlueLed.Update();
 }
 
-void halInit(DaisySeed *_pHw)
+void halInit()
 {
-    pHw = _pHw;
-    pHw->Configure();
-    pHw->Init(true); // ENABLE BOOST MODE
-    pHw->SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
-    pHw->SetAudioBlockSize(1);
+    hw.Configure();
+    hw.Init(true); // ENABLE BOOST MODE
+    hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
+    hw.SetAudioBlockSize(1);
 
-    DacHandle::Config config = pHw->dac.GetConfig();
+    DacHandle::Config config = hw.dac.GetConfig();
     config.mode = DacHandle::Mode::POLLING;
     config.bitdepth = DacHandle::BitDepth::BITS_12;
-    pHw->dac.Init(config);
+    hw.dac.Init(config);
 
     BlueLed.Init(seed::D26, false, sampleRate);
     ButtonA.Init(daisy::seed::D27, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
 
     AdcChannelConfig adcConfig[4];
-    adcConfig[0].InitSingle(pHw->GetPin(15));
-    adcConfig[1].InitSingle(pHw->GetPin(16));
-    adcConfig[2].InitSingle(pHw->GetPin(17));
-    adcConfig[3].InitSingle(pHw->GetPin(18));
-    pHw->adc.Init(adcConfig, 4);
+    adcConfig[0].InitSingle(hw.GetPin(15));
+    adcConfig[1].InitSingle(hw.GetPin(16));
+    adcConfig[2].InitSingle(hw.GetPin(17));
+    adcConfig[3].InitSingle(hw.GetPin(18));
+    hw.adc.Init(adcConfig, 4);
 
-    pHw->adc.Start();
+    hw.adc.Start();
 
+    cliInit(&hw);
     transientDSPinit();
+    halTimerInit();
 
-    pHw->StartAudio(AudioCallback);
+    hw.StartAudio(AudioCallback);
 }
 
 void halVCAwrite(double value)
 {
-    pHw->dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
+    hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
 }
 
 void halTimerInit()
@@ -99,7 +100,7 @@ void halTimerInit()
 
 void halLEDset(bool b)
 {
-    pHw->SetLed(b);
+    hw.SetLed(b);
 }
 
 bool halButtonRead()

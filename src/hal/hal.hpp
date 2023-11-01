@@ -8,8 +8,7 @@
 using namespace daisy;
 
 /// @brief
-/// @param _pHw
-void halInit(DaisySeed *_pHw);
+void halInit();
 
 /// @brief
 /// @param value
