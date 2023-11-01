@@ -29,3 +29,13 @@ void cliPrintStr(const char *str)
 {
     cliPrintBuf((uint8_t *)str, strlen(str));
 }
+
+void cliParse(void *cmd, uint32_t len)
+{
+    /// TODO:
+}
+
+void cliPipe(void *src_buf, consumer process)
+{
+    /// TODO:
+}
