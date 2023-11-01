@@ -4,14 +4,15 @@
 #include <math.h>
 
 #include "../../libK/Utilities/Map.hpp"
+#include "../../src/cli/cli.hpp"
 #include "../../src/transientDSP/transientDSP.hpp"
 #include "../../src/ui/ui.hpp"
+
 
 using namespace daisy;
 using namespace k;
 
 #define LED_DISPLAY_GAIN 3.5
-#define CLI_RX_BUF_SIZE     1024
 
 static DaisySeed hw;
 
@@ -20,8 +21,6 @@ static GPIO ButtonA;
 
 static TimerHandle timerUI;
 static TimerHandle timerVisual;
-
-static uint8_t rxBuf[CLI_RX_BUF_SIZE] = {0};
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
@@ -72,6 +71,8 @@ void initHal()
 
     hw.adc.Start();
 
+    cliInit(&hw);
+
     initTransientDSP();
 
     hw.StartAudio(AudioCallback);
@@ -109,30 +110,4 @@ void setLed(bool b)
 bool readButton()
 {
     return ButtonA.Read();
-}
-
-void cliInit()
-{
-    hw.usb_handle.Init(UsbHandle::FS_INTERNAL);
-    hw.usb_handle.SetReceiveCallback(cliRXCallback, UsbHandle::FS_INTERNAL);
-
-}
-
-void cliRXCallback(uint8_t* buf, uint32_t* len)
-{
-    uint32_t i = 0;
-    while(i < *len && i < CLI_RX_BUF_SIZE){
-        rxBuf[i] = buf[i];
-        i++;
-    }
-}
-
-void cliPrintBuf(uint8_t* buf, uint32_t len)
-{
-    hw.usb_handle.TransmitInternal((uint8_t*)buf, len);
-}
-
-void cliPrintStr(const char* str)
-{
-    cliPrintBuf((uint8_t*)str, strlen(str));
 }
