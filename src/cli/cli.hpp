@@ -1,5 +1,4 @@
-#ifndef _CLI_HPP_
-#define _CLI_HPP_
+#pragma once
 
 #include "daisy_seed.h"
 
@@ -24,7 +23,7 @@ typedef void (*consumer)(void *, uint32_t);
 /// communication.
 /// @param phw pointer to singleton Daisy Seed hardware instance
 /// @note Without further config, the default baud rate is 115200
-void cliInit(DaisySeed *_phw);
+void cliInit(DaisySeed *_pHw);
 
 /// @brief Callback function on receiving data via the virtual COM port.
 /// @param buf Buffer filled by HAL-internal call containing the received bytes.
@@ -51,5 +50,3 @@ void cliParse(void *cmd, uint32_t len);
 /// @param process Function pointer to executing function. Has to
 /// be of type `consumer` (*function)(void *, uint32_t).
 void cliPipe(void *src_buf, consumer process);
-
-#endif

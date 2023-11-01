@@ -1,5 +1,4 @@
-#ifndef BUFFER_CIRCULAR_H
-#define BUFFER_CIRCULAR_H
+#pragma once
 
 #include <cmath>
 #include <memory>
@@ -34,5 +33,3 @@ template <typename T> class BufferCircular
 };
 
 } // namespace bdsp
-
-#endif // BUFFER_CIRCULAR_H

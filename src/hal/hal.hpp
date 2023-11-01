@@ -1,18 +1,27 @@
-#ifndef HAL_H
-#define HAL_H
+#pragma once
 
 #include "daisy_seed.h"
 
 #define sampleRate 96000
+#define LED_DISPLAY_GAIN 3.5
 
-void write2VCA(double value);
+using namespace daisy;
 
-void initHal();
+/// @brief
+/// @param _pHw
+void halInit(DaisySeed *_pHw);
 
-void setLed(bool b);
+/// @brief
+/// @param value
+void halVCAwrite(double value);
 
-bool readButton();
+/// @brief
+void halTimerInit();
 
-void initTimer();
+/// @brief
+/// @param b
+void halLEDset(bool b);
 
-#endif
+/// @brief
+/// @return
+bool halButtonRead();

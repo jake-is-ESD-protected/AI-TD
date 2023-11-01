@@ -1,13 +1,13 @@
 #include "cli.hpp"
 
 static uint8_t rxBuf[CLI_RX_BUF_SIZE] = {0};
-static DaisySeed *phw = NULL;
+static DaisySeed *pHw = NULL;
 
-void cliInit(DaisySeed *_phw)
+void cliInit(DaisySeed *_pHw)
 {
-    phw = _phw;
-    phw->usb_handle.Init(UsbHandle::FS_INTERNAL);
-    phw->usb_handle.SetReceiveCallback(cliRXCallback, UsbHandle::FS_INTERNAL);
+    pHw = _pHw;
+    pHw->usb_handle.Init(UsbHandle::FS_INTERNAL);
+    pHw->usb_handle.SetReceiveCallback(cliRXCallback, UsbHandle::FS_INTERNAL);
 }
 
 void cliRXCallback(uint8_t *buf, uint32_t *len)
@@ -22,7 +22,7 @@ void cliRXCallback(uint8_t *buf, uint32_t *len)
 
 void cliPrintBuf(uint8_t *buf, uint32_t len)
 {
-    phw->usb_handle.TransmitInternal((uint8_t *)buf, len);
+    pHw->usb_handle.TransmitInternal((uint8_t *)buf, len);
 }
 
 void cliPrintStr(const char *str)

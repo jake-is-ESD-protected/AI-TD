@@ -22,27 +22,7 @@ SmootherExponential aSFilter;
 SmootherExponential sFFilter;
 SmootherExponential sSFilter;
 
-void processTransientDSP(double in)
-{
-    const double env = envFollower.process(fabs(in));
-    const double aFFilterV = aFFilter.process(env);
-    const double aSFilterV = aSFilter.process(env);
-    const double sFFilterV = sFFilter.process(env);
-    const double sSFilterV = sSFilter.process(env);
-    lastVarGainValue = (getBipolarAttackValue() * fabs(aFFilterV - aSFilterV) * ATTACK_GAIN) + (getBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
-    if (readButton())
-        write2VCA(BASE_GAIN + lastVarGainValue);
-    else
-        write2VCA(BASE_GAIN);
-}
-
-void uiProcessTransientDSP()
-{
-    aSFilter.set_attack(Map::mapClip(KnobAttackTime.getValue(), 0, 1, 0.1, 400));
-    sFFilter.set_release(Map::mapClip(KnobSustainTime.getValue(), 1, 0, 0.1, 500));
-}
-
-void initTransientDSP()
+void transientDSPinit()
 {
     envFollower.init(sampleRate, 1);
 
@@ -65,4 +45,24 @@ void initTransientDSP()
     sSFilter.reset(sampleRate);
     sSFilter.set_attack(SUSTAIN_FILTER_DEFAULT_ATTACK_TIME);
     sSFilter.set_release(SUSTAIN_FILTER_SLOW_RELEASE_TIME);
+}
+
+void transientDSPprocess(double in)
+{
+    const double env = envFollower.process(fabs(in));
+    const double aFFilterV = aFFilter.process(env);
+    const double aSFilterV = aSFilter.process(env);
+    const double sFFilterV = sFFilter.process(env);
+    const double sSFilterV = sSFilter.process(env);
+    lastVarGainValue = (UIgetBipolarAttackValue() * fabs(aFFilterV - aSFilterV) * ATTACK_GAIN) + (UIgetBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
+    if (halButtonRead())
+        halVCAwrite(BASE_GAIN + lastVarGainValue);
+    else
+        halVCAwrite(BASE_GAIN);
+}
+
+void transientDSPuiProcess()
+{
+    aSFilter.set_attack(Map::mapClip(KnobAttackTime.getValue(), 0, 1, 0.1, 400));
+    sFFilter.set_release(Map::mapClip(KnobSustainTime.getValue(), 1, 0, 0.1, 500));
 }

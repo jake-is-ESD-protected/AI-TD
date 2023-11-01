@@ -1,5 +1,4 @@
-#ifndef MAPPINGS_H
-#define MAPPINGS_H
+#pragma once
 
 #include "constants.h"
 #include <cmath>
@@ -175,5 +174,3 @@ inline double prewarp(const double freq, const double sample_rate)
 }
 
 } // namespace bdsp::mappings
-
-#endif // MAPPINGS_H

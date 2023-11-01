@@ -1,14 +1,11 @@
-#ifndef TRANSIENTDSP_H
-#define TRANSIENTDSP_H
+#pragma once
 #include "EnvelopeFollowerPeakHold.h"
 #include "SmootherExponential.h"
 
 extern double lastVarGainValue;
 
-void processTransientDSP(double in);
+void transientDSPinit();
 
-void uiProcessTransientDSP();
+void transientDSPprocess(double in);
 
-void initTransientDSP();
-
-#endif
+void transientDSPuiProcess();

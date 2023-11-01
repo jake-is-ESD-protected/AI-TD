@@ -1,5 +1,4 @@
 #include "hal.hpp"
-
 #include "daisy_seed.h"
 #include <math.h>
 
@@ -8,13 +7,10 @@
 #include "../../src/transientDSP/transientDSP.hpp"
 #include "../../src/ui/ui.hpp"
 
-
 using namespace daisy;
 using namespace k;
 
-#define LED_DISPLAY_GAIN 3.5
-
-static DaisySeed hw;
+static DaisySeed *pHw;
 
 static Led BlueLed;
 static GPIO ButtonA;
@@ -24,16 +20,16 @@ static TimerHandle timerVisual;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
-    processTransientDSP(in[0][0]);
+    transientDSPprocess(in[0][0]);
 }
 
 void UICallback(void *data)
 {
-    KnobAttack.updateKnob(hw.adc.GetFloat(0));
-    KnobAttackTime.updateKnob(hw.adc.GetFloat(1));
-    KnobSustain.updateKnob(hw.adc.GetFloat(2));
-    KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
-    uiProcessTransientDSP();
+    KnobAttack.updateKnob(pHw->adc.GetFloat(0));
+    KnobAttackTime.updateKnob(pHw->adc.GetFloat(1));
+    KnobSustain.updateKnob(pHw->adc.GetFloat(2));
+    KnobSustainTime.updateKnob(pHw->adc.GetFloat(3));
+    transientDSPuiProcess();
 }
 
 void VisualCallback(void *data)
@@ -42,43 +38,42 @@ void VisualCallback(void *data)
     BlueLed.Update();
 }
 
-void write2VCA(double value)
+void halInit(DaisySeed *_pHw)
 {
-    hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
-}
+    pHw = _pHw;
+    pHw->Configure();
+    pHw->Init(true); // ENABLE BOOST MODE
+    pHw->SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
+    pHw->SetAudioBlockSize(1);
 
-void initHal()
-{
-    hw.Configure();
-    hw.Init(true); // ENABLE BOOST MODE
-    hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
-    hw.SetAudioBlockSize(1);
-
-    DacHandle::Config config = hw.dac.GetConfig();
+    DacHandle::Config config = pHw->dac.GetConfig();
     config.mode = DacHandle::Mode::POLLING;
     config.bitdepth = DacHandle::BitDepth::BITS_12;
-    hw.dac.Init(config);
+    pHw->dac.Init(config);
 
     BlueLed.Init(seed::D26, false, sampleRate);
     ButtonA.Init(daisy::seed::D27, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
 
     AdcChannelConfig adcConfig[4];
-    adcConfig[0].InitSingle(hw.GetPin(15));
-    adcConfig[1].InitSingle(hw.GetPin(16));
-    adcConfig[2].InitSingle(hw.GetPin(17));
-    adcConfig[3].InitSingle(hw.GetPin(18));
-    hw.adc.Init(adcConfig, 4);
+    adcConfig[0].InitSingle(pHw->GetPin(15));
+    adcConfig[1].InitSingle(pHw->GetPin(16));
+    adcConfig[2].InitSingle(pHw->GetPin(17));
+    adcConfig[3].InitSingle(pHw->GetPin(18));
+    pHw->adc.Init(adcConfig, 4);
 
-    hw.adc.Start();
+    pHw->adc.Start();
 
-    cliInit(&hw);
+    transientDSPinit();
 
-    initTransientDSP();
-
-    hw.StartAudio(AudioCallback);
+    pHw->StartAudio(AudioCallback);
 }
 
-void initTimer()
+void halVCAwrite(double value)
+{
+    pHw->dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
+}
+
+void halTimerInit()
 {
     TimerHandle::Config timcfg;
     timcfg.periph = daisy::TimerHandle::Config::Peripheral::TIM_5;
@@ -102,12 +97,12 @@ void initTimer()
     timerVisual.Start();
 }
 
-void setLed(bool b)
+void halLEDset(bool b)
 {
-    hw.SetLed(b);
+    pHw->SetLed(b);
 }
 
-bool readButton()
+bool halButtonRead()
 {
     return ButtonA.Read();
 }

@@ -1,5 +1,4 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#pragma once
 
 #include <cmath>
 
@@ -29,5 +28,3 @@ constexpr double MIN_FILTER_FREQ = 20.0;
 constexpr double MAX_FILTER_FREQ = 20480.0;
 
 } // namespace bdsp::constants
-
-#endif // CONSTANTS_H

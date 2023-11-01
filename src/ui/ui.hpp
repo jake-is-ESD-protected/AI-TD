@@ -1,5 +1,4 @@
-#ifndef UI_H
-#define UI_H
+#pragma once
 #include "../../libK/Utilities/Knob.hpp"
 
 using namespace k;
@@ -9,10 +8,8 @@ extern Knob KnobAttackTime;
 extern Knob KnobSustain;
 extern Knob KnobSustainTime;
 
-void initUI();
+void UIinit();
 
-double getBipolarAttackValue();
+double UIgetBipolarAttackValue();
 
-double getBipolarSustainValue();
-
-#endif
+double UIgetBipolarSustainValue();

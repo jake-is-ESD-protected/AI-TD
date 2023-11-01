@@ -1,3 +1,4 @@
+#include "./cli/cli.hpp"
 #include "./hal/hal.hpp"
 #include "./transientDSP/transientDSP.hpp"
 #include "./ui/ui.hpp"
@@ -17,10 +18,13 @@ extern "C"
 
 using namespace daisy;
 
+static DaisySeed hw;
+
 int main(void)
 {
-    initHal();
-    initTimer();
+    halInit(&hw);
+    cliInit(&hw);
+    halTimerInit();
 
     ai_float out_data[AI_NN_OUT_1_SIZE];
     ai_float in_data[AI_NN_IN_1_SIZE];
@@ -38,16 +42,16 @@ int main(void)
     {
         while (1)
         {
-            setLed(true);
+            halLEDset(true);
         }
     }
 
     for (;;)
     {
         System::Delay(50);
-        setLed(true);
+        halLEDset(true);
         System::Delay(50);
-        setLed(false);
+        halLEDset(false);
 
         /*ai_input = ai_nn_inputs_get(pNN, NULL);
             ai_output = ai_nn_outputs_get(pNN, NULL);

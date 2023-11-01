@@ -11,16 +11,16 @@ Knob KnobAttackTime = Knob(0.1);
 Knob KnobSustain = Knob(0.1);
 Knob KnobSustainTime = Knob(0.1);
 
-void initUI()
+void UIinit()
 {
 }
 
-double getBipolarAttackValue()
+double UIgetBipolarAttackValue()
 {
     return 2.0 * (KnobAttack.getValue() - 0.5);
 }
 
-double getBipolarSustainValue()
+double UIgetBipolarSustainValue()
 {
     return 2.0 * (KnobSustain.getValue() - 0.5);
 }
