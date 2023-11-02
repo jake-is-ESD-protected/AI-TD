@@ -6,15 +6,25 @@ using namespace daisy;
 
 #define CLI_RX_BUF_SIZE 1024
 
-#define CMD_GET_STAT
+#define CMD_GET_STAT "stat"
+#define CMD_START_TRANSFER "send"
+#define CMD_STOP_TRANSFER "stop"
 
 typedef enum cmd
 {
-    CMD_unknown_cmd,
     CMD_get_stat,
     CMD_start_transfer,
-    CMD_stop_transfer
+    CMD_stop_transfer,
+    CMD_num_cmds
 } cmd_t;
+
+typedef enum cli_state
+{
+    CLI_STATE_closed,
+    CLI_STATE_idle,
+    CLI_STATE_stream,
+    CLI_STATE_num_states
+} cli_state_t;
 
 typedef void (*consumer)(void *, uint32_t);
 
@@ -45,8 +55,7 @@ void cliPrintStr(const char *str);
 /// @param len Length of command in bytes.
 void cliParse(void *cmd, uint32_t len);
 
-/// @brief Send source data to a function which processes it.
-/// @param src_buf Data source buffer.
-/// @param process Function pointer to executing function. Has to
-/// be of type `consumer` (*function)(void *, uint32_t).
-void cliPipe(void *src_buf, consumer process);
+/// @brief
+/// @param err
+/// @param len
+void cliErrHandler(void *err, uint32_t len);
