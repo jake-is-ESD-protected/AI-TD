@@ -24,3 +24,9 @@ void halLEDset(bool b);
 /// @brief
 /// @return
 bool halButtonRead();
+
+/// @brief
+void halStartAudio();
+
+/// @brief
+void halStopAudio();

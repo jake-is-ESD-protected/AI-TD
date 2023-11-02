@@ -65,8 +65,7 @@ void halInit()
     cliInit(&hw);
     transientDSPinit();
     halTimerInit();
-
-    hw.StartAudio(AudioCallback);
+    // halStartAudio();
 }
 
 void halVCAwrite(double value)
@@ -106,4 +105,14 @@ void halLEDset(bool b)
 bool halButtonRead()
 {
     return ButtonA.Read();
+}
+
+void halStartAudio()
+{
+    hw.StartAudio(AudioCallback);
+}
+
+void halStopAudio()
+{
+    hw.StopAudio();
 }
