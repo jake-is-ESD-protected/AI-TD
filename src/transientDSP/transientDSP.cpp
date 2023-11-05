@@ -7,6 +7,7 @@
 #define ATTACK_FILTER_DEFAULT_RELEASE_TIME 450 // TO LOW VALUES CAN LEAD TO ISSUES IN TALE OF NOTE //THE MORE RELEASE THE SOUND THE LONGER THIS NEEDS TO BE
 #define ATTACK_FILTER_FAST_ATTACK_TIME 1
 #define SUSTAIN_FILTER_DEFAULT_ATTACK_TIME 50
+#define SUSTAIN_FILTER_FAST_RELEASE_TIME 100
 #define SUSTAIN_FILTER_SLOW_RELEASE_TIME 600
 #define BASE_GAIN 0.8
 #define ATTACK_GAIN 0.9
@@ -39,7 +40,7 @@ void transientDSPinit()
     sFFilter.init(2);
     sFFilter.reset(sampleRate);
     sFFilter.set_attack(SUSTAIN_FILTER_DEFAULT_ATTACK_TIME);
-    sFFilter.set_release(50);
+    sFFilter.set_release(SUSTAIN_FILTER_FAST_RELEASE_TIME);
 
     sSFilter.init(4);
     sSFilter.reset(sampleRate);
@@ -64,5 +65,5 @@ void transientDSPprocess(double in)
 void transientDSPuiProcess()
 {
     aSFilter.set_attack(Map::mapClip(KnobAttackTime.getValue(), 0, 1, 0.1, 400));
-    sFFilter.set_release(Map::mapClip(KnobSustainTime.getValue(), 1, 0, 0.1, 500));
+    sSFilter.set_release(Map::mapClip(KnobSustainTime.getValue(), 1, 0, 0.1, 3000));
 }
