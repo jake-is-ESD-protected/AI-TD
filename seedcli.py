@@ -1,24 +1,18 @@
 import serial
-import platform
+from serial.tools import list_ports
 import sys
-
-opsys = platform.platform()
-print(f"Starting script from a {opsys} system")
+from time import sleep
 
 
-def getPorts(verbose=True):
-    ser = serial.Serial()
-    print("discovering devices...")
-    for ns in range(20):
-        try:
-            ser.port = "COM" + str(ns)
-            ser.open()
-            print(ser.port + " available")
-            print(ser.get_settings())
-            ser.close()
-
-        except serial.SerialException:
-            pass
+def getDaisyPort(verbose=False):
+    DAISY_HW_IDENTIFIER = "VID:PID=0483:5740"
+    ports = list(list_ports.comports())
+    for port in ports:
+        if DAISY_HW_IDENTIFIER in port.hwid:
+            if verbose:
+                print(f"Found Daisy Seed ({port.hwid}) on port {port.name}")
+            return port.name
+    return None
 
 
 def seedcli():
@@ -26,7 +20,14 @@ def seedcli():
     args = sys.argv[1:]
 
     # NOTE: maybe move this assertion to the bash script?
-    valid_cmds = ["stat", "send", "stop"]
+    valid_cmds = ["stat", "send", "stop", "echo"]
     assert cmd in valid_cmds
 
-    ser = serial.Serial()
+    ser = serial.Serial(getDaisyPort())
+    ser.write(cmd.encode())
+    sleep(0.01)
+    print(ser.readline().decode())
+
+
+if __name__ == "__main__":
+    seedcli()
