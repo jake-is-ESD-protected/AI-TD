@@ -1,32 +1,46 @@
 #pragma once
 
 #include "daisy_seed.h"
+#include "mem/mem.hpp"
 
 using namespace daisy;
 
-#define CLI_RX_BUF_SIZE 1024
+#define CLI_RX_BUF_SIZE BLOCKSIZE
+#define CLI_TX_BUF_SIZE 64
 
-#define CMD_GET_STAT "stat"
-#define CMD_START_TRANSFER "send"
-#define CMD_STOP_TRANSFER "stop"
+#define CLI_STAT_ERR 0
+#define CLI_STAT_OK 1
 
-typedef enum cmd
-{
-    CMD_get_stat,
-    CMD_start_transfer,
-    CMD_stop_transfer,
-    CMD_num_cmds
-} cmd_t;
+#define CLI_PREFIX "[SEED]:"
+#define FLAGPREFIX "--"
+
+#define CMD_GET "get"
+#define CMD_SET "set"
+#define CMD_SEND "send"
+#define CMD_DATA "data"
+
+#define CMD_SEND_FLAG_SDRAM "--sdram"
+#define CMD_SEND_FLAG_QSPI "--qspi"
+
+#define RESPONSE_OK "OK"
+#define RESPONSE_ERR "ERR"
+#define RESPONSE_WARN "WARN"
+#define RESPONSE_RDY "RDY"
+#define RESPONSE_FNSH "FNSH"
+
+#define PAD_BYTE '0'
+#define EOF_FLAG "stop"
 
 typedef enum cli_state
 {
     CLI_STATE_closed,
     CLI_STATE_idle,
-    CLI_STATE_stream,
+    CLI_STATE_stream_sdram,
+    CLI_STATE_stream_qspi,
     CLI_STATE_num_states
 } cli_state_t;
 
-typedef void (*consumer)(void *, uint32_t);
+typedef uint8_t (*consumer)(void *, uint32_t);
 
 /// @brief Initialize CLI. Sets physical micro-USB port as USB-CDC device
 /// which can be addressed as normal COM port or ttyACM device for serial
@@ -48,14 +62,17 @@ void cliPrintBuf(uint8_t *buf, uint32_t len);
 /// @brief Print a string via the virtual COM port.
 /// @param str String to print. EOL is determined by the `\0` symbol. Use
 /// `cliPrintBuf` to print raw data without the `\0` terminator.
-void cliPrintStr(const char *str);
+/// @param type Designator string. Use the defines listed as "RESPONSE_X".
+void cliPrintStr(const char *type, const char *str);
 
 /// @brief Parse an incoming command from string format to a `cmd_t` enum.
 /// @param cmd Incoming command in string format (buffer).
 /// @param len Length of command in bytes.
-void cliParse(void *cmd, uint32_t len);
+/// @return Status flag.
+uint8_t cliParse(void *cmd, uint32_t len);
 
 /// @brief
 /// @param err
 /// @param len
-void cliErrHandler(void *err, uint32_t len);
+/// @return Status flag.
+uint8_t cliErrHandler(void *err, uint32_t len);
