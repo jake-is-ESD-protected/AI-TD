@@ -2,10 +2,10 @@
 #include "daisy_seed.h"
 #include <math.h>
 
-#include "../../libK/Utilities/Map.hpp"
-#include "../../src/cli/cli.hpp"
-#include "../../src/transientDSP/transientDSP.hpp"
-#include "../../src/ui/ui.hpp"
+#include "Utilities/Map.hpp"
+#include "cli.hpp"
+#include "transientDSP.hpp"
+#include "ui.hpp"
 
 using namespace daisy;
 using namespace k;
