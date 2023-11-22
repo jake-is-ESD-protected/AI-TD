@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "cStandard": "${default}",
+      "compilerPath": "gcc",
+      "cppStandard": "${default}",
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${env:LIBDAISY_DIR}/**",
+        "${env:DAISYSP_DIR}/**",
+        "${env:LIBK_DIR}/**"
+      ],
+      "name": "windows-gcc-x64",
+      "windowsSdkVersion": "10.0.17763.0",
+      "intelliSenseMode": "windows-gcc-x64"
+    }
+  ],
+  "version": 4
+}

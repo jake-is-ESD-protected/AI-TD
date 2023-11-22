@@ -35,7 +35,7 @@
 /build
 
 # vscode stuff
-.vscode
+.vscode/extensions.json
 
 # PlatformIO stuff (Jakob's toolchain)
 # local build:
