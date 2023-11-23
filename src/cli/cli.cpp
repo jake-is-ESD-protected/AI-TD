@@ -42,14 +42,17 @@ void cliRXCallback(uint8_t *buf, uint32_t *len)
         consFunction = cliErrHandler;
         break;
     }
-    uint8_t stat = consFunction((void *)rxBuf, *len);
+    uint16_t argReturn = 0;
+    uint8_t stat = consFunction((void *)rxBuf, *len, (void *)&argReturn);
     if (stat == MEM_BLOCK_OK)
     {
         cliPrintStr(RESPONSE_OK, NULL);
     }
     if (stat == MEM_FINISH)
     {
-        cliPrintStr(RESPONSE_FNSH, "Transmission done.");
+        char txBuf[CLI_TX_BUF_SIZE] = {0};
+        sprintf(txBuf, "Transmission done. CRC: %d", argReturn);
+        cliPrintStr(RESPONSE_FNSH, txBuf);
         state = CLI_STATE_idle;
     }
 
@@ -75,7 +78,7 @@ void cliPrintStr(const char *type, const char *str)
     cliPrintBuf((uint8_t *)txBuf, strlen(txBuf));
 }
 
-uint8_t cliParse(void *cmd, uint32_t len)
+uint8_t cliParse(void *cmd, uint32_t len, void *args)
 {
     char *msg = (char *)cmd;
     char *mainCmd = strtok(msg, " ");
@@ -114,6 +117,6 @@ uint8_t cliParse(void *cmd, uint32_t len)
     return CLI_STAT_OK;
 }
 
-uint8_t cliErrHandler(void *err, uint32_t len)
+uint8_t cliErrHandler(void *err, uint32_t len, void *args)
 {
 }

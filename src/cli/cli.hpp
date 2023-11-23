@@ -3,7 +3,6 @@
 #include "daisy_seed.h"
 #include "mem.hpp"
 
-
 using namespace daisy;
 
 #define CLI_RX_BUF_SIZE BLOCKSIZE
@@ -42,7 +41,7 @@ typedef enum cli_state
     CLI_STATE_num_states
 } cli_state_t;
 
-typedef uint8_t (*consumer)(void *, uint32_t);
+typedef uint8_t (*consumer)(void *, uint32_t, void *args);
 
 /// @brief Initialize CLI. Sets physical micro-USB port as USB-CDC device
 /// which can be addressed as normal COM port or ttyACM device for serial
@@ -70,11 +69,13 @@ void cliPrintStr(const char *type, const char *str);
 /// @brief Parse an incoming command from string format to a `cmd_t` enum.
 /// @param cmd Incoming command in string format (buffer).
 /// @param len Length of command in bytes.
+/// @param args Optional arguments.
 /// @return Status flag.
-uint8_t cliParse(void *cmd, uint32_t len);
+uint8_t cliParse(void *cmd, uint32_t len, void *args);
 
 /// @brief
 /// @param err
 /// @param len
+/// @param args Optional arguments.
 /// @return Status flag.
-uint8_t cliErrHandler(void *err, uint32_t len);
+uint8_t cliErrHandler(void *err, uint32_t len, void *args);

@@ -14,14 +14,19 @@
 #define BLOCKSIZE_RAW 64
 #define BLOCKSIZE_DATA (BLOCKSIZE_RAW - BLOCK_PREFIX_LEN)
 
+#define CRC_POLYNOMIAL 0x8408
+#define CRC_INITIAL_VALUE 0xFFFF
+
 using namespace daisy;
 
 void memInit(DaisySeed *_pHw);
 
-uint8_t memSdramWrite(void *buf, uint32_t len);
+uint8_t memSdramWrite(void *buf, uint32_t len, void *args);
 
-uint8_t memQspiWrite(void *buf, uint32_t len);
+uint8_t memQspiWrite(void *buf, uint32_t len, void *args);
 
 bool isEOF(void *buf);
+
+uint16_t crc16(const uint8_t *data, uint32_t len);
 
 #endif
