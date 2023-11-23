@@ -1,18 +1,20 @@
 #pragma once
 
 #include "daisy_seed.h"
-#include "mem/mem.hpp"
+#include "mem.hpp"
+
 
 using namespace daisy;
 
 #define CLI_RX_BUF_SIZE BLOCKSIZE
 #define CLI_TX_BUF_SIZE 64
 
-#define CLI_STAT_ERR 0
-#define CLI_STAT_OK 1
+#define CLI_STAT_ERR 10
+#define CLI_STAT_OK 11
 
 #define CLI_PREFIX "[SEED]:"
 #define FLAGPREFIX "--"
+#define LINE_ENDING "\n\r"
 
 #define CMD_GET "get"
 #define CMD_SET "set"
