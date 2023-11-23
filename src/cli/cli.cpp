@@ -1,10 +1,10 @@
 #include "cli.hpp"
 #include "hal.hpp"
-#include "mem/mem.hpp"
+#include "mem.hpp"
 
-static uint8_t DSY_SDRAM_DATA rxBuf[CLI_RX_BUF_SIZE] = {0};
+static uint8_t rxBuf[CLI_RX_BUF_SIZE] = {0};
 static DaisySeed *pHw = NULL;
-static cli_state_t stat = CLI_STATE_idle;
+static cli_state_t state = CLI_STATE_idle;
 
 void cliInit(DaisySeed *_pHw)
 {
@@ -27,7 +27,7 @@ void cliRXCallback(uint8_t *buf, uint32_t *len)
         i++;
     }
 
-    switch (stat)
+    switch (state)
     {
     case CLI_STATE_idle:
         consFunction = cliParse;
@@ -43,9 +43,14 @@ void cliRXCallback(uint8_t *buf, uint32_t *len)
         break;
     }
     uint8_t stat = consFunction((void *)rxBuf, *len);
+    if (stat == MEM_BLOCK_OK)
+    {
+        cliPrintStr(RESPONSE_OK, NULL);
+    }
     if (stat == MEM_FINISH)
     {
-        stat = CLI_STATE_idle;
+        cliPrintStr(RESPONSE_FNSH, "Transmission done.");
+        state = CLI_STATE_idle;
     }
 
     // halStartAudio();
@@ -59,7 +64,14 @@ void cliPrintBuf(uint8_t *buf, uint32_t len)
 void cliPrintStr(const char *type, const char *str)
 {
     char txBuf[CLI_TX_BUF_SIZE] = {0};
-    sprintf(txBuf, "%s %s: %s", CLI_PREFIX, type, str);
+    if (str == NULL)
+    {
+        sprintf(txBuf, "%s %s%s", CLI_PREFIX, type, LINE_ENDING);
+    }
+    else
+    {
+        sprintf(txBuf, "%s %s: %s%s", CLI_PREFIX, type, str, LINE_ENDING);
+    }
     cliPrintBuf((uint8_t *)txBuf, strlen(txBuf));
 }
 
@@ -70,33 +82,33 @@ uint8_t cliParse(void *cmd, uint32_t len)
 
     if (!strcmp(mainCmd, CMD_GET))
     {
-        cliPrintStr(RESPONSE_ERR, "Getter not yet implemented.\n\r");
-        stat = CLI_STATE_idle;
+        cliPrintStr(RESPONSE_ERR, "Getter not yet implemented.");
+        state = CLI_STATE_idle;
     }
     else if (!strcmp(mainCmd, CMD_SET))
     {
-        cliPrintStr(RESPONSE_ERR, "Setter not yet implemented.\n\r");
-        stat = CLI_STATE_idle;
+        cliPrintStr(RESPONSE_ERR, "Setter not yet implemented.");
+        state = CLI_STATE_idle;
     }
     else if (!strcmp(mainCmd, CMD_SEND))
     {
         char *arg = strtok(NULL, " ");
         if (!strcmp(arg, CMD_SEND_FLAG_SDRAM))
         {
-            stat = CLI_STATE_stream_sdram;
-            cliPrintStr(RESPONSE_RDY, "Awaiting data transfer to SDRAM...\n\r");
+            state = CLI_STATE_stream_sdram;
+            cliPrintStr(RESPONSE_RDY, "Awaiting data transfer to SDRAM...");
         }
         else
         {
-            stat = CLI_STATE_stream_qspi;
-            cliPrintStr(RESPONSE_RDY, "Awaiting data transfer to QSPI...\n\r");
+            state = CLI_STATE_stream_qspi;
+            cliPrintStr(RESPONSE_RDY, "Awaiting data transfer to QSPI...");
         }
     }
     else
     {
         /// TODO: Something went wrong
         char txBuf[CLI_TX_BUF_SIZE] = {0};
-        sprintf(txBuf, "Parse error: unknown command <%s>\n\r", mainCmd);
+        sprintf(txBuf, "Parse error: unknown command <%s>", mainCmd);
         cliPrintStr(RESPONSE_ERR, txBuf);
     }
     return CLI_STAT_OK;
