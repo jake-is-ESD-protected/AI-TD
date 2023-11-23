@@ -1,7 +1,7 @@
-#include "./hal/hal.hpp"
-#include "./transientDSP/transientDSP.hpp"
-#include "./ui/ui.hpp"
 #include "daisy_seed.h"
+#include "hal.hpp"
+#include "transientDSP.hpp"
+#include "ui.hpp"
 
 #include "stm32h7xx_hal_rcc.h"
 
