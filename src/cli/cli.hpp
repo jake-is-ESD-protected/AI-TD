@@ -5,7 +5,7 @@
 
 using namespace daisy;
 
-#define CLI_RX_BUF_SIZE BLOCKSIZE
+#define CLI_RX_BUF_SIZE BLOCKSIZE_RAW
 #define CLI_TX_BUF_SIZE 64
 
 #define CLI_STAT_ERR 10
@@ -34,7 +34,6 @@ using namespace daisy;
 
 typedef enum cli_state
 {
-    CLI_STATE_closed,
     CLI_STATE_idle,
     CLI_STATE_stream_sdram,
     CLI_STATE_stream_qspi,
@@ -46,9 +45,8 @@ typedef uint8_t (*consumer)(void *, uint32_t, void *args);
 /// @brief Initialize CLI. Sets physical micro-USB port as USB-CDC device
 /// which can be addressed as normal COM port or ttyACM device for serial
 /// communication.
-/// @param phw pointer to singleton Daisy Seed hardware instance
 /// @note Without further config, the default baud rate is 115200
-void cliInit(DaisySeed *_pHw);
+void cliInit(void);
 
 /// @brief Callback function on receiving data via the virtual COM port.
 /// @param buf Buffer filled by HAL-internal call containing the received bytes.
@@ -79,3 +77,8 @@ uint8_t cliParse(void *cmd, uint32_t len, void *args);
 /// @param args Optional arguments.
 /// @return Status flag.
 uint8_t cliErrHandler(void *err, uint32_t len, void *args);
+
+/// @brief
+/// @param buf
+/// @param len
+void cliServer(uint8_t *buf, uint32_t *len);

@@ -3,65 +3,23 @@
 #include "mem.hpp"
 
 static uint8_t rxBuf[CLI_RX_BUF_SIZE] = {0};
-static DaisySeed *pHw = NULL;
 static cli_state_t state = CLI_STATE_idle;
 
-void cliInit(DaisySeed *_pHw)
+void cliInit(void)
 {
-    pHw = _pHw;
-    pHw->usb_handle.Init(UsbHandle::FS_INTERNAL);
-    System::Delay(1000);
-    pHw->usb_handle.SetReceiveCallback(cliRXCallback, UsbHandle::FS_INTERNAL);
-    System::Delay(1000);
+    halUsbCdcInit(cliRXCallback);
 }
 
 void cliRXCallback(uint8_t *buf, uint32_t *len)
 {
     // halStopAudio();
-    static consumer consFunction = NULL;
-    uint32_t i = 0;
-
-    while (i < *len && i < CLI_RX_BUF_SIZE)
-    {
-        rxBuf[i] = buf[i];
-        i++;
-    }
-
-    switch (state)
-    {
-    case CLI_STATE_idle:
-        consFunction = cliParse;
-        break;
-    case CLI_STATE_stream_sdram:
-        consFunction = memSdramWrite;
-        break;
-    case CLI_STATE_stream_qspi:
-        consFunction = memQspiWrite;
-        break;
-    default:
-        consFunction = cliErrHandler;
-        break;
-    }
-    uint16_t argReturn = 0;
-    uint8_t stat = consFunction((void *)rxBuf, *len, (void *)&argReturn);
-    if (stat == MEM_BLOCK_OK)
-    {
-        cliPrintStr(RESPONSE_OK, NULL);
-    }
-    if (stat == MEM_FINISH)
-    {
-        char txBuf[CLI_TX_BUF_SIZE] = {0};
-        sprintf(txBuf, "Transmission done. CRC: %d", argReturn);
-        cliPrintStr(RESPONSE_FNSH, txBuf);
-        state = CLI_STATE_idle;
-    }
-
+    cliServer(buf, len);
     // halStartAudio();
 }
 
 void cliPrintBuf(uint8_t *buf, uint32_t len)
 {
-    pHw->usb_handle.TransmitInternal((uint8_t *)buf, len);
+    halUsbCdcTransmit((uint8_t *)buf, len);
 }
 
 void cliPrintStr(const char *type, const char *str)
@@ -119,4 +77,45 @@ uint8_t cliParse(void *cmd, uint32_t len, void *args)
 
 uint8_t cliErrHandler(void *err, uint32_t len, void *args)
 {
+    return CLI_STAT_OK;
+}
+
+void cliServer(uint8_t *buf, uint32_t *len)
+{
+    uint32_t i = 0;
+    while (i < *len && i < CLI_RX_BUF_SIZE)
+    {
+        rxBuf[i] = buf[i];
+        i++;
+    }
+    static consumer consFunction = NULL;
+    switch (state)
+    {
+    case CLI_STATE_idle:
+        consFunction = cliParse;
+        break;
+    case CLI_STATE_stream_sdram:
+        consFunction = memSdramWrite;
+        break;
+    case CLI_STATE_stream_qspi:
+        consFunction = memQspiWrite;
+        break;
+    default:
+        consFunction = cliErrHandler;
+        break;
+    }
+    uint16_t argReturn = 0;
+    uint8_t stat = consFunction((void *)rxBuf, *len, (void *)&argReturn);
+    if (stat == MEM_BLOCK_OK)
+    {
+        cliPrintStr(RESPONSE_OK, NULL);
+    }
+    if (stat == MEM_FINISH)
+    {
+        char txBuf[CLI_TX_BUF_SIZE] = {0};
+        sprintf(txBuf, "Transmission done. CRC: %d", argReturn);
+        cliPrintStr(RESPONSE_FNSH, txBuf);
+        state = CLI_STATE_idle;
+    }
+    // TODO: catch mem overflow and default err
 }
