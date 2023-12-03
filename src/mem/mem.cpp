@@ -1,14 +1,9 @@
 #include "mem.hpp"
 #include "cli.hpp"
-
-static DaisySeed *pHw = NULL;
+#include "hal.hpp"
 
 static char DSY_SDRAM_BSS sdramBuf[SDRAM_BUF_SIZE];
-
-void memInit(DaisySeed *_pHw)
-{
-    pHw = _pHw;
-}
+char DSY_QSPI_BSS qspiBuf[QSPI_BUF_SIZE];
 
 uint8_t memSdramWrite(void *buf, uint32_t len, void *args)
 {
@@ -26,16 +21,25 @@ uint8_t memSdramWrite(void *buf, uint32_t len, void *args)
     i++;
     if ((i * BLOCKSIZE_DATA) >= SDRAM_BUF_SIZE)
     {
-        // buffer is full
+        i = 0;
+        return MEM_OVERFLOW;
     }
-    // check if data is valid
     return MEM_BLOCK_OK;
 }
 
 uint8_t memQspiWrite(void *buf, uint32_t len, void *args)
 {
-    // check if data is valid or EOF
-    return MEM_BLOCK_OK;
+    static uint32_t i = 0;
+    uint8_t stat = memSdramWrite(buf, len, args);
+    if (stat == MEM_FINISH)
+    {
+        size_t startAddr = (size_t)qspiBuf;
+        halEraseQspiFlash((uint8_t *)qspiBuf, (i * BLOCKSIZE_DATA));
+        halWriteQspiFlash(startAddr, (i * BLOCKSIZE_DATA), (uint8_t *)sdramBuf);
+        i = 0;
+    }
+    i++;
+    return stat;
 }
 
 bool isEOF(void *buf)

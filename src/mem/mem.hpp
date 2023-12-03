@@ -7,8 +7,10 @@
 #define MEM_BLOCK_ERR 0
 #define MEM_BLOCK_OK 1
 #define MEM_FINISH 2
+#define MEM_OVERFLOW 3
 
 #define SDRAM_BUF_SIZE 65536
+#define QSPI_BUF_SIZE SDRAM_BUF_SIZE
 #define BLOCK_PREFIX_LEN 4
 #define BLOCK_POSTFIX_LEN 4
 #define BLOCKSIZE_RAW 64
@@ -17,9 +19,9 @@
 #define CRC_POLYNOMIAL 0x8408
 #define CRC_INITIAL_VALUE 0xFFFF
 
-using namespace daisy;
+#define QSPI_FLASH_PAGE_SIZE 4096
 
-void memInit(DaisySeed *_pHw);
+using namespace daisy;
 
 uint8_t memSdramWrite(void *buf, uint32_t len, void *args);
 
