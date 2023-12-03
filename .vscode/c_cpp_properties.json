@@ -11,13 +11,17 @@
       ],
       "includePath": [
         "${workspaceFolder}/**",
+        "{workspaceFolder}/src/cli",
+        "{workspaceFolder}/src/hal",
+        "{workspaceFolder}/src/mem",
+        "{workspaceFolder}/src/transientDSP",
+        "{workspaceFolder}/src/ui",
         "${env:LIBDAISY_DIR}/**",
         "${env:DAISYSP_DIR}/**",
         "${env:LIBK_DIR}/**"
       ],
       "name": "windows-gcc-x64",
-      "windowsSdkVersion": "10.0.17763.0",
-      "intelliSenseMode": "windows-gcc-x64"
+      "windowsSdkVersion": "10.0.17763.0"
     }
   ],
   "version": 4
