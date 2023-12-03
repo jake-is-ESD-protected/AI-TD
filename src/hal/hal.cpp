@@ -4,6 +4,7 @@
 
 #include "Utilities/Map.hpp"
 #include "cli.hpp"
+#include "mem.hpp"
 #include "transientDSP.hpp"
 #include "ui.hpp"
 
@@ -41,7 +42,7 @@ void VisualCallback(void *data)
 void halInit()
 {
     hw.Configure();
-    hw.Init(true); // ENABLE BOOST MODE
+    hw.Init(false); // ENABLE BOOST MODE
     hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
     hw.SetAudioBlockSize(1);
 
@@ -62,7 +63,7 @@ void halInit()
 
     hw.adc.Start();
 
-    cliInit(&hw);
+    cliInit();
     transientDSPinit();
     halTimerInit();
     // halStartAudio();
@@ -115,4 +116,30 @@ void halStartAudio()
 void halStopAudio()
 {
     hw.StopAudio();
+}
+
+void halUsbCdcInit(void (*cb)(uint8_t *buf, uint32_t *len))
+{
+    hw.usb_handle.Init(UsbHandle::FS_INTERNAL);
+    System::Delay(1000);
+    hw.usb_handle.SetReceiveCallback(cb, UsbHandle::FS_INTERNAL);
+    System::Delay(1000);
+}
+
+void halUsbCdcTransmit(uint8_t *buf, uint32_t len)
+{
+    hw.usb_handle.TransmitInternal(buf, len);
+}
+
+void halEraseQspiFlash(uint8_t *mem, uint32_t len)
+{
+    uint32_t startAddr = (uint32_t)mem;
+    uint32_t padLen = ((len + QSPI_FLASH_PAGE_SIZE - 1) / QSPI_FLASH_PAGE_SIZE) * QSPI_FLASH_PAGE_SIZE;
+    hw.qspi.Erase(startAddr, startAddr + padLen);
+}
+
+void halWriteQspiFlash(uint32_t start, uint32_t len, uint8_t *content)
+{
+    uint32_t padLen = ((len + QSPI_FLASH_PAGE_SIZE - 1) / QSPI_FLASH_PAGE_SIZE) * QSPI_FLASH_PAGE_SIZE;
+    hw.qspi.Write(start, padLen, content);
 }

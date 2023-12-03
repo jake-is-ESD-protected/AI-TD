@@ -30,3 +30,23 @@ void halStartAudio();
 
 /// @brief
 void halStopAudio();
+
+/// @brief
+/// @param cb
+void halUsbCdcInit(void (*cb)(uint8_t *buf, uint32_t *len));
+
+/// @brief
+/// @param buf
+/// @param len
+void halUsbCdcTransmit(uint8_t *buf, uint32_t len);
+
+/// @brief
+/// @param mem
+/// @param len
+void halEraseQspiFlash(uint8_t *mem, uint32_t len);
+
+/// @brief
+/// @param start
+/// @param len
+/// @param content
+void halWriteQspiFlash(uint32_t start, uint32_t len, uint8_t *content);
