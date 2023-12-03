@@ -71,7 +71,7 @@ void halInit()
 
 void halVCAwrite(double value)
 {
-    hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 483, 2344));
+    hw.dac.WriteValue(DacHandle::Channel::ONE, Map::mapClip(value, 1, 0, 440, 2344));
 }
 
 void halTimerInit()
