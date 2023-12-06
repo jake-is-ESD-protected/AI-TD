@@ -1,6 +1,4 @@
-// #pragma once
-#ifndef _MEM_HPP_
-#define _MEM_HPP_
+#pragma once
 
 #include "daisy_seed.h"
 
@@ -23,12 +21,38 @@
 
 using namespace daisy;
 
+/// @brief Write to the internal buffer in SDRAM.
+/// @param buf Data source buffer.
+/// @param len Length of data to write.
+/// @param args Optional args.
+/// @return MEM status flag.
 uint8_t memSdramWrite(void *buf, uint32_t len, void *args);
 
+/// @brief Write to the external flash buffer over QSPI.
+/// @param buf Data source buffer.
+/// @param len Length of data to write.
+/// @param args Optional args.
+/// @return MEM status flag.
 uint8_t memQspiWrite(void *buf, uint32_t len, void *args);
 
-bool isEOF(void *buf);
+/// @brief Check if an incoming data frame is an EOF frame.
+/// @param buf Buffer to check.
+/// @return truth of statement.
+bool memIsEOF(void *buf);
 
-uint16_t crc16(const uint8_t *data, uint32_t len);
+/// @brief Calculate CRC-value from data buffer.
+/// @param data Data buffer.
+/// @param len Length of data.
+/// @return CRC16 value.
+uint16_t memCrc16(const uint8_t *data, uint32_t len);
 
-#endif
+/// @brief Erase (prime) the external flash memory.
+/// @param mem Start address of memory.
+/// @param len Length of data.
+void __memEraseQspiFlash(uint8_t *mem, uint32_t len);
+
+/// @brief Write to external flash memory.
+/// @param start Start address of memory.
+/// @param len Length of buffer.
+/// @param content Buffer data to write to memory.
+void __memWriteQspiFlash(uint32_t start, uint32_t len, uint8_t *content);

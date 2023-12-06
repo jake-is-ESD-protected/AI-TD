@@ -71,14 +71,16 @@ void cliPrintStr(const char *type, const char *str);
 /// @return Status flag.
 uint8_t cliParse(void *cmd, uint32_t len, void *args);
 
-/// @brief
-/// @param err
-/// @param len
+/// @brief Handle errors originating from the CLI. Not yet implemented.
+/// @param err Pointer to arbitrary error variable.
+/// @param len Length of error message (for arrays).
 /// @param args Optional arguments.
 /// @return Status flag.
 uint8_t cliErrHandler(void *err, uint32_t len, void *args);
 
-/// @brief
-/// @param buf
-/// @param len
+/// @brief Finite state machine for CLI
+/// @param buf Buffer to store incoming data.
+/// @param len Length of incoming data.
 void cliServer(uint8_t *buf, uint32_t *len);
+
+extern DaisySeed hw;

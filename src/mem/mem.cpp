@@ -8,9 +8,9 @@ char DSY_QSPI_BSS qspiBuf[QSPI_BUF_SIZE];
 uint8_t memSdramWrite(void *buf, uint32_t len, void *args)
 {
     static uint32_t i = 0;
-    if (isEOF(buf))
+    if (memIsEOF(buf))
     {
-        uint16_t crc = crc16(&((const uint8_t *)sdramBuf)[0], i * BLOCKSIZE_DATA);
+        uint16_t crc = memCrc16(&((const uint8_t *)sdramBuf)[0], i * BLOCKSIZE_DATA);
         memcpy((void *)&(sdramBuf[i * BLOCKSIZE_DATA]), (void *)&crc, sizeof(crc));
         *(uint16_t *)args = crc;
         i = 0;
@@ -34,15 +34,15 @@ uint8_t memQspiWrite(void *buf, uint32_t len, void *args)
     if (stat == MEM_FINISH)
     {
         size_t startAddr = (size_t)qspiBuf;
-        halEraseQspiFlash((uint8_t *)qspiBuf, (i * BLOCKSIZE_DATA));
-        halWriteQspiFlash(startAddr, (i * BLOCKSIZE_DATA), (uint8_t *)sdramBuf);
+        __memEraseQspiFlash((uint8_t *)qspiBuf, (i * BLOCKSIZE_DATA));
+        __memWriteQspiFlash(startAddr, (i * BLOCKSIZE_DATA), (uint8_t *)sdramBuf);
         i = 0;
     }
     i++;
     return stat;
 }
 
-bool isEOF(void *buf)
+bool memIsEOF(void *buf)
 {
     char blockIndicator[BLOCK_PREFIX_LEN + 1] = {0};
     strncpy(blockIndicator, (char *)buf, BLOCK_PREFIX_LEN);
@@ -53,7 +53,7 @@ bool isEOF(void *buf)
     return false;
 }
 
-uint16_t crc16(const uint8_t *data, uint32_t len)
+uint16_t memCrc16(const uint8_t *data, uint32_t len)
 {
     uint16_t crc = CRC_INITIAL_VALUE;
     uint32_t i, j;
@@ -73,4 +73,17 @@ uint16_t crc16(const uint8_t *data, uint32_t len)
         }
     }
     return crc;
+}
+
+void __memEraseQspiFlash(uint8_t *mem, uint32_t len)
+{
+    uint32_t startAddr = (uint32_t)mem;
+    uint32_t padLen = ((len + QSPI_FLASH_PAGE_SIZE - 1) / QSPI_FLASH_PAGE_SIZE) * QSPI_FLASH_PAGE_SIZE;
+    hw.qspi.Erase(startAddr, startAddr + padLen);
+}
+
+void __memWriteQspiFlash(uint32_t start, uint32_t len, uint8_t *content)
+{
+    uint32_t padLen = ((len + QSPI_FLASH_PAGE_SIZE - 1) / QSPI_FLASH_PAGE_SIZE) * QSPI_FLASH_PAGE_SIZE;
+    hw.qspi.Write(start, padLen, content);
 }

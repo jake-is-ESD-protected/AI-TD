@@ -7,7 +7,10 @@ static cli_state_t state = CLI_STATE_idle;
 
 void cliInit(void)
 {
-    halUsbCdcInit(cliRXCallback);
+    hw.usb_handle.Init(UsbHandle::FS_INTERNAL);
+    System::Delay(1000);
+    hw.usb_handle.SetReceiveCallback(cliRXCallback, UsbHandle::FS_INTERNAL);
+    System::Delay(1000);
 }
 
 void cliRXCallback(uint8_t *buf, uint32_t *len)
@@ -21,7 +24,7 @@ void cliRXCallback(uint8_t *buf, uint32_t *len)
 
 void cliPrintBuf(uint8_t *buf, uint32_t len)
 {
-    halUsbCdcTransmit((uint8_t *)buf, len);
+    hw.usb_handle.TransmitInternal(buf, len);
 }
 
 void cliPrintStr(const char *type, const char *str)
