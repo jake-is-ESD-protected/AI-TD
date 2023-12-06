@@ -6,13 +6,13 @@ TARGET = AITD
 # Sources
 CPP_SOURCES += src/main.cpp
 CPP_SOURCES += src/hal/hal.cpp
-CPP_SOURCES += src/cli/cli.cpp
-CPP_SOURCES += src/mem/mem.cpp
 CPP_SOURCES += src/transientDSP/transientDSP.cpp
 CPP_SOURCES += src/ui/ui.cpp
 CPP_SOURCES += src/transientDSP/EnvelopeFollowerPeakHold.cpp
 CPP_SOURCES += src/transientDSP/SmootherExponential.cpp
 CPP_SOURCES += src/transientDSP/envDeps/BufferCircular.cpp
+CPP_SOURCES += seedcli/seedcli_src/cli.cpp
+CPP_SOURCES += seedcli/seedcli_src/mem.cpp
 
 C_SOURCES = $(shell ls lib/AI_model/*.c)
 
@@ -21,10 +21,9 @@ C_INCLUDES += \
 -I./lib/AI_model \
 -I./src/transientDSP \
 -I./src/hal \
--I./src/cli \
--I./src/mem \
 -I./src/ui \
--I$(LIBK_DIR)
+-I$(LIBK_DIR) \
+-I./seedcli/seedcli_src
 
 LDFLAGS += -L./Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
 
