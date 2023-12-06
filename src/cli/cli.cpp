@@ -12,9 +12,11 @@ void cliInit(void)
 
 void cliRXCallback(uint8_t *buf, uint32_t *len)
 {
-    // halStopAudio();
+    if (state == CLI_STATE_idle)
+        halStopAudio();
     cliServer(buf, len);
-    // halStartAudio();
+    if (state == CLI_STATE_idle)
+        halStartAudio();
 }
 
 void cliPrintBuf(uint8_t *buf, uint32_t len)
