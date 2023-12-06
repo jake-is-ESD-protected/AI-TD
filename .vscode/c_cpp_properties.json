@@ -17,6 +17,7 @@
         "{workspaceFolder}/src/transientDSP",
         "{workspaceFolder}/src/ui",
         "${env:LIBDAISY_DIR}/**",
+        "${env:LIBDAISY_DIR}/src",
         "${env:DAISYSP_DIR}/**",
         "${env:LIBK_DIR}/**"
       ],
