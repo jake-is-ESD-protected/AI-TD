@@ -42,7 +42,7 @@ void VisualCallback(void *data)
 void halInit()
 {
     hw.Configure();
-    hw.Init(false); // ENABLE BOOST MODE
+    hw.Init(true); // ENABLE BOOST MODE
     hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
     hw.SetAudioBlockSize(1);
 
@@ -66,7 +66,7 @@ void halInit()
     cliInit();
     transientDSPinit();
     halTimerInit();
-    // halStartAudio();
+    halStartAudio();
 }
 
 void halVCAwrite(double value)
