@@ -50,10 +50,9 @@ void aiRun(void)
     {
         while (1)
         {
+            halLEDset(true);
         }
     }
-
-    // Read output (predicted y) of neural network
     y_val = ((float *)out_data)[0];
 }
 
