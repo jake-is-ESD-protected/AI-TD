@@ -11,7 +11,7 @@ CPP_SOURCES += src/ui/ui.cpp
 CPP_SOURCES += src/transientDSP/EnvelopeFollowerPeakHold.cpp
 CPP_SOURCES += src/transientDSP/SmootherExponential.cpp
 CPP_SOURCES += src/transientDSP/envDeps/BufferCircular.cpp
-CPP_SOURCES += src/ai/ai.cpp.cpp
+CPP_SOURCES += src/ai/ai.cpp
 CPP_SOURCES += seedcli/seedcli_src/cli.cpp
 CPP_SOURCES += seedcli/seedcli_src/mem.cpp
 
@@ -31,7 +31,6 @@ LDFLAGS += -L./lib/Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
 
 OPT = -O0
 
-LIBDAISY_DIR = C:/Users/J/TUB_local/repos/libDaisy
 # Core location, and generic makefile.
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
 include $(SYSTEM_FILES_DIR)/Makefile
