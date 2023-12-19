@@ -37,8 +37,13 @@
 # vscode stuff
 .vscode/extensions.json
 
-# PlatformIO stuff (Jakob's toolchain)
-# local build:
-.pio
+# venv stuff
+.venv
+
 # unneeded:
 include
+
+# IP
+transient_shaper.ipynb
+transient_shaper_lib.ipynb
+renders
