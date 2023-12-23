@@ -56,10 +56,12 @@ void transientDSPprocess(double in)
     const double sFFilterV = sFFilter.process(env);
     const double sSFilterV = sSFilter.process(env);
     lastVarGainValue = (UIgetBipolarAttackValue() * fabs(aFFilterV - aSFilterV) * ATTACK_GAIN) + (UIgetBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
-    if (halButtonRead())
+    /*if (halButtonRead())
         halVCAwrite(BASE_GAIN + lastVarGainValue);
     else
         halVCAwrite(BASE_GAIN);
+        */
+    halVCAwrite(1);
 }
 
 void transientDSPuiProcess()
