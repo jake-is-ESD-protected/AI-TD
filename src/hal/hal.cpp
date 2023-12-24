@@ -24,9 +24,24 @@ static TimerHandle timerVisual;
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     transientDSPprocess(in[0][0]);
-    BlueLed.Set(KnobAttackTime.getValue());
-    RedLed.Set(KnobSustainTime.getValue());
-    PurpleLed.Set(KnobAttack.getValue());
+    if (LeftButton.Read())
+    {
+        PurpleLed.Set(KnobAttack.getValue());
+    }
+    else
+    {
+        PurpleLed.Set(0);
+    }
+    if (RightButton.Read())
+    {
+        BlueLed.Set(KnobAttackTime.getValue());
+        RedLed.Set(KnobSustainTime.getValue());
+    }
+    else
+    {
+        BlueLed.Set(0);
+        RedLed.Set(0);
+    }
     RedLed.Update();
     BlueLed.Update();
     PurpleLed.Update();
