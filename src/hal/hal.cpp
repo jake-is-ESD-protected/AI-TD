@@ -13,7 +13,10 @@ using namespace k;
 static DaisySeed hw;
 
 static Led BlueLed;
-static GPIO ButtonA;
+static Led RedLed;
+static Led PurpleLed;
+static GPIO LeftButton;
+static GPIO RightButton;
 
 static TimerHandle timerUI;
 static TimerHandle timerVisual;
@@ -21,6 +24,12 @@ static TimerHandle timerVisual;
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     transientDSPprocess(in[0][0]);
+    BlueLed.Set(KnobAttackTime.getValue());
+    RedLed.Set(KnobSustainTime.getValue());
+    PurpleLed.Set(KnobAttack.getValue());
+    RedLed.Update();
+    BlueLed.Update();
+    PurpleLed.Update();
 }
 
 void UICallback(void *data)
@@ -34,8 +43,6 @@ void UICallback(void *data)
 
 void VisualCallback(void *data)
 {
-    BlueLed.Set(fabs(lastVarGainValue) * LED_DISPLAY_GAIN);
-    BlueLed.Update();
 }
 
 void halInit()
@@ -50,8 +57,11 @@ void halInit()
     config.bitdepth = DacHandle::BitDepth::BITS_12;
     hw.dac.Init(config);
 
-    BlueLed.Init(seed::D26, false, sampleRate);
-    ButtonA.Init(daisy::seed::D27, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
+    BlueLed.Init(seed::D1, true, sampleRate);
+    PurpleLed.Init(seed::D6, false, sampleRate);
+    RedLed.Init(seed::D2, true, sampleRate);
+    LeftButton.Init(daisy::seed::D3, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
+    RightButton.Init(daisy::seed::D4, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
 
     AdcChannelConfig adcConfig[4];
     adcConfig[0].InitSingle(hw.GetPin(15));
@@ -71,7 +81,7 @@ void halInit()
 
 void halVCAwrite(double value)
 {
-    hw.dac.WriteValue(DacHandle::Channel::BOTH, Map::mapClip(KnobAttack.getValue(), 1, 0, 0, 4095));
+    hw.dac.WriteValue(DacHandle::Channel::BOTH, Map::mapClip(KnobSustain.getValue(), 1, 0, 0, 4095));
 }
 
 void halTimerInit()
@@ -105,5 +115,5 @@ void halLEDset(bool b)
 
 bool halButtonRead()
 {
-    return ButtonA.Read();
+    return LeftButton.Read();
 }
