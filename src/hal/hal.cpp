@@ -26,8 +26,8 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 void UICallback(void *data)
 {
     KnobAttack.updateKnob(hw.adc.GetFloat(0));
-    KnobAttackTime.updateKnob(hw.adc.GetFloat(1));
-    KnobSustain.updateKnob(hw.adc.GetFloat(2));
+    KnobAttackTime.updateKnob(hw.adc.GetFloat(2));
+    KnobSustain.updateKnob(hw.adc.GetFloat(1));
     KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
     transientDSPuiProcess();
 }
@@ -71,7 +71,7 @@ void halInit()
 
 void halVCAwrite(double value)
 {
-    hw.dac.WriteValue(DacHandle::Channel::BOTH, Map::mapClip(KnobSustainTime.getValue(), 1, 0, 0, 4095));
+    hw.dac.WriteValue(DacHandle::Channel::BOTH, Map::mapClip(KnobAttack.getValue(), 1, 0, 0, 4095));
 }
 
 void halTimerInit()
