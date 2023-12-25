@@ -9,9 +9,9 @@
 #define SUSTAIN_FILTER_DEFAULT_ATTACK_TIME 50
 #define SUSTAIN_FILTER_FAST_RELEASE_TIME 100
 #define SUSTAIN_FILTER_SLOW_RELEASE_TIME 600
-#define BASE_GAIN 0.8
-#define ATTACK_GAIN 0.9
-#define RELEASE_GAIN 1.2
+#define BASE_GAIN 0.85
+#define ATTACK_GAIN 0.6
+#define RELEASE_GAIN 0.8
 
 static EnvelopeFollowerPeakHold envFollower;
 
@@ -56,12 +56,10 @@ void transientDSPprocess(double in)
     const double sFFilterV = sFFilter.process(env);
     const double sSFilterV = sSFilter.process(env);
     lastVarGainValue = (UIgetBipolarAttackValue() * fabs(aFFilterV - aSFilterV) * ATTACK_GAIN) + (UIgetBipolarSustainValue() * fabs(sFFilterV - sSFilterV) * RELEASE_GAIN);
-    /*if (halButtonRead())
+    if (halButtonRead())
         halVCAwrite(BASE_GAIN + lastVarGainValue);
     else
         halVCAwrite(BASE_GAIN);
-        */
-    halVCAwrite(1);
 }
 
 void transientDSPuiProcess()

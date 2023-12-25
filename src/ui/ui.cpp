@@ -17,10 +17,30 @@ void UIinit()
 
 double UIgetBipolarAttackValue()
 {
-    return 2.0 * (KnobAttack.getValue() - 0.5);
+    const double window = 0.1;
+    if (KnobAttack.getValue() > 0.5 + window)
+    {
+        return 2.0 * (KnobAttack.getValue() - 0.5); // PLUS
+    }
+    else if (KnobAttack.getValue() < 0.5 - window)
+    {
+        return 2.0 * (KnobAttack.getValue() - 0.5); // MINUS
+    }
+    else
+        return 0;
 }
 
 double UIgetBipolarSustainValue()
 {
-    return 2.0 * (KnobSustain.getValue() - 0.5);
+    const double window = 0.1;
+    if (KnobSustain.getValue() > 0.5 + window)
+    {
+        return 2.0 * (KnobSustain.getValue() - 0.5); // PLUS
+    }
+    else if (KnobSustain.getValue() < 0.5 - window)
+    {
+        return 2.0 * (KnobSustain.getValue() - 0.5); // MINUS
+    }
+    else
+        return 0;
 }

@@ -24,23 +24,17 @@ static TimerHandle timerVisual;
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     transientDSPprocess(in[0][0]);
-    if (LeftButton.Read())
-    {
-        PurpleLed.Set(KnobAttack.getValue());
-    }
-    else
-    {
-        PurpleLed.Set(0);
-    }
     if (RightButton.Read())
     {
         BlueLed.Set(KnobAttackTime.getValue());
         RedLed.Set(KnobSustainTime.getValue());
+        PurpleLed.Set(fabs(lastVarGainValue) * LED_DISPLAY_GAIN);
     }
     else
     {
         BlueLed.Set(0);
         RedLed.Set(0);
+        PurpleLed.Set(0);
     }
     RedLed.Update();
     BlueLed.Update();
@@ -96,7 +90,7 @@ void halInit()
 
 void halVCAwrite(double value)
 {
-    hw.dac.WriteValue(DacHandle::Channel::BOTH, Map::mapClip(KnobSustain.getValue(), 1, 0, 0, 4095));
+    hw.dac.WriteValue(DacHandle::Channel::BOTH, Map::mapClip(value, 1, 0, 0, 4095));
 }
 
 void halTimerInit()
@@ -130,5 +124,5 @@ void halLEDset(bool b)
 
 bool halButtonRead()
 {
-    return LeftButton.Read();
+    return RightButton.Read();
 }
