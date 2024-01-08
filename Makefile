@@ -16,7 +16,7 @@ CPP_SOURCES += src/ai/ai.cpp
 CPP_SOURCES += seedcli/seedcli_src/cli.cpp
 CPP_SOURCES += seedcli/seedcli_src/mem.cpp
 
-C_SOURCES = $(shell ls lib/AI_model/*.c)
+C_SOURCES += $(shell ls lib/AI_model/*.c)
 
 C_INCLUDES += \
 -I./lib/Ai_driver/inc \

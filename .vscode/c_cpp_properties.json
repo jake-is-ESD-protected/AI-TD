@@ -13,16 +13,15 @@
         "${workspaceFolder}/**",
         "${workspaceFolder}/lib/AI_driver/inc",
         "${workspaceFolder}/lib/AI_model",
-        "${workspaceFolder}/src/cli",
+        "${workspaceFolder}/seedcli/seedcli_src",
         "${workspaceFolder}/src/hal",
-        "${workspaceFolder}/src/mem",
         "${workspaceFolder}/src/transientDSP",
         "${workspaceFolder}/src/ui",
         "${workspaceFolder}/src/ai",
-        "${env:LIBDAISY_DIR}/**",
-        "${env:LIBDAISY_DIR}/src",
-        "${env:DAISYSP_DIR}/**",
-        "${env:LIBK_DIR}/**"
+        "${LIBDAISY_DIR}/**",
+        "${LIBDAISY_DIR}/src",
+        "${DAISYSP_DIR}/**",
+        "${LIBK_DIR}/**"
       ],
       "name": "windows-gcc-x64",
       "windowsSdkVersion": "10.0.17763.0"
