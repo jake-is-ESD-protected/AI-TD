@@ -35,10 +35,17 @@
 /build
 
 # vscode stuff
-.vscode
+.vscode/extensions.json
+.vscode/.cortex*
+.vscode/STM32H750x.svd
 
-# PlatformIO stuff (Jakob's toolchain)
-# local build:
-.pio
+# venv stuff
+.venv
+
 # unneeded:
 include
+
+# IP
+transient_shaper.ipynb
+transient_shaper_lib.ipynb
+renders

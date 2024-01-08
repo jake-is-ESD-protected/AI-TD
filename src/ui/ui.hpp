@@ -1,5 +1,5 @@
 #pragma once
-#include "../../libK/Utilities/Knob.hpp"
+#include "Utilities/Knob.hpp"
 
 using namespace k;
 

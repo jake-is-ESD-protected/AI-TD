@@ -2,15 +2,16 @@
 #include "daisy_seed.h"
 #include <math.h>
 
-#include "../../libK/Utilities/Map.hpp"
-#include "../../src/cli/cli.hpp"
-#include "../../src/transientDSP/transientDSP.hpp"
-#include "../../src/ui/ui.hpp"
+#include "Utilities/Map.hpp"
+#include "cli.hpp"
+#include "mem.hpp"
+#include "transientDSP.hpp"
+#include "ui.hpp"
 
 using namespace daisy;
 using namespace k;
 
-static DaisySeed hw;
+DaisySeed hw;
 
 static Led BlueLed;
 static Led RedLed;
@@ -81,11 +82,10 @@ void halInit()
 
     hw.adc.Start();
 
-    cliInit(&hw);
+    cliInit();
     transientDSPinit();
     halTimerInit();
-
-    hw.StartAudio(AudioCallback);
+    halStartAudio();
 }
 
 void halVCAwrite(double value)
@@ -125,4 +125,14 @@ void halLEDset(bool b)
 bool halButtonRead()
 {
     return RightButton.Read();
+}
+
+void halStartAudio()
+{
+    hw.StartAudio(AudioCallback);
+}
+
+void halStopAudio()
+{
+    hw.StopAudio();
 }

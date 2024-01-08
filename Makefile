@@ -1,5 +1,5 @@
 # Project Name
-TARGET = AIBoiler
+TARGET = AITD
 
 #APP_TYPE = BOOT_NONE
 
@@ -12,24 +12,23 @@ CPP_SOURCES += src/transientDSP/EnvelopeFollowerPeakHold.cpp
 CPP_SOURCES += src/transientDSP/SmootherExponential.cpp
 CPP_SOURCES += src/cli/cli.cpp
 CPP_SOURCES += src/transientDSP/envDeps/BufferCircular.cpp
+CPP_SOURCES += src/ai/ai.cpp
+CPP_SOURCES += seedcli/seedcli_src/cli.cpp
+CPP_SOURCES += seedcli/seedcli_src/mem.cpp
 
 C_SOURCES = $(shell ls lib/AI_model/*.c)
 
-# Library Locations
-LIBDAISY_DIR = ../../libDaisy
-DAISYSP_DIR = ../../DaisySP
-
 C_INCLUDES += \
--I./Ai_driver/inc \
--I./AI/Inc \
+-I./lib/Ai_driver/inc \
 -I./lib/AI_model \
 -I./src/transientDSP \
 -I./src/hal \
--I./src/cli \
--I./src/ui 
+-I./src/ui \
+-I./src/ai \
+-I$(LIBK_DIR) \
+-I./seedcli/seedcli_src
 
-
-LDFLAGS += -L./Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
+LDFLAGS += -L./lib/Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
 
 OPT = -O0
 
