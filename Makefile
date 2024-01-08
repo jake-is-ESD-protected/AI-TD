@@ -10,7 +10,6 @@ CPP_SOURCES += src/transientDSP/transientDSP.cpp
 CPP_SOURCES += src/ui/ui.cpp
 CPP_SOURCES += src/transientDSP/EnvelopeFollowerPeakHold.cpp
 CPP_SOURCES += src/transientDSP/SmootherExponential.cpp
-CPP_SOURCES += src/cli/cli.cpp
 CPP_SOURCES += src/transientDSP/envDeps/BufferCircular.cpp
 CPP_SOURCES += src/ai/ai.cpp
 CPP_SOURCES += seedcli/seedcli_src/cli.cpp
