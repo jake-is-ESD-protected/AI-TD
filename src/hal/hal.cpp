@@ -7,6 +7,7 @@
 #include "mem.hpp"
 #include "transientDSP.hpp"
 #include "ui.hpp"
+#include "ai.hpp"
 
 using namespace daisy;
 using namespace k;
@@ -85,6 +86,7 @@ void halInit()
     cliInit();
     transientDSPinit();
     halTimerInit();
+    aiInit();
     halStartAudio();
 }
 
