@@ -72,7 +72,8 @@
     "new": "cpp",
     "thread": "cpp",
     "cinttypes": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "nn_data_params.h": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [
@@ -131,5 +132,5 @@
     "**/.vscode/**"
   ],
   "C_Cpp_Runner.useAddressSanitizer": false,
-  "cortex-debug.variableUseNaturalFormat": true
+  "cortex-debug.variableUseNaturalFormat": false
 }
