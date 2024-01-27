@@ -24,24 +24,25 @@ static TimerHandle timerVisual;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
-    KnobAttack.updateKnob(hw.adc.GetFloat(0));
-    KnobAttackTime.updateKnob(hw.adc.GetFloat(2));
-    KnobSustain.updateKnob(hw.adc.GetFloat(1));
-    KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
-    transientDSPuiProcess();
+    KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Read());
+    KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Read());
+    KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Read());
+    KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Read());
 
+    transientDSPuiProcess();
     transientDSPprocess(in[0][0]);
     if (RightButton.Read())
     {
         BlueLed.Set(KnobAttackTime.getValue());
         RedLed.Set(KnobSustainTime.getValue());
-        PurpleLed.Set(fabs(lastVarGainValue) * LED_DISPLAY_GAIN);
+        PurpleLed.Set(LeftButton.Read());
+        // PurpleLed.Set(fabs(lastVarGainValue) * LED_DISPLAY_GAIN);
     }
     else
     {
         BlueLed.Set(0);
         RedLed.Set(0);
-        PurpleLed.Set(0);
+        PurpleLed.Set(LeftButton.Read());
     }
     RedLed.Update();
     BlueLed.Update();
