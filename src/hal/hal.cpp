@@ -24,6 +24,12 @@ static TimerHandle timerVisual;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
+    KnobAttack.updateKnob(hw.adc.GetFloat(0));
+    KnobAttackTime.updateKnob(hw.adc.GetFloat(2));
+    KnobSustain.updateKnob(hw.adc.GetFloat(1));
+    KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
+    transientDSPuiProcess();
+
     transientDSPprocess(in[0][0]);
     if (RightButton.Read())
     {
@@ -44,11 +50,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
 void UICallback(void *data)
 {
-    KnobAttack.updateKnob(hw.adc.GetFloat(0));
-    KnobAttackTime.updateKnob(hw.adc.GetFloat(2));
-    KnobSustain.updateKnob(hw.adc.GetFloat(1));
-    KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
-    transientDSPuiProcess();
 }
 
 void VisualCallback(void *data)
@@ -84,7 +85,7 @@ void halInit()
 
     cliInit();
     transientDSPinit();
-    halTimerInit();
+    // halTimerInit();
     halStartAudio();
 }
 

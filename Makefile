@@ -29,7 +29,7 @@ C_INCLUDES += \
 
 LDFLAGS += -L./lib/Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
 
-OPT = -O0
+OPT = -O2
 
 # Core location, and generic makefile.
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core

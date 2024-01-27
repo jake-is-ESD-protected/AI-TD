@@ -8,12 +8,13 @@ using namespace daisy;
 int main(void)
 {
     halInit();
-
+    halLEDset(true);
     for (;;)
     {
-        System::Delay(50);
+        /*System::Delay(50);
         halLEDset(true);
         System::Delay(50);
-        halLEDset(false);
+        halLEDset(false);*/
+        // EVERYTHING IS INTERRUPT DRIVEN
     }
 }
