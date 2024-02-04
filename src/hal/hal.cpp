@@ -31,19 +31,23 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
     transientDSPuiProcess();
     transientDSPprocess(in[0][0]);
+
+    // BlueLed.Set(RightButton.Read() ? 1 : 0);
+    // RedLed.Set(RightButton.Read() ? 0 : 1);
+
     if (RightButton.Read())
     {
         BlueLed.Set(KnobAttackTime.getValue());
         RedLed.Set(KnobSustainTime.getValue());
-        PurpleLed.Set(LeftButton.Read());
-        // PurpleLed.Set(fabs(lastVarGainValue) * LED_DISPLAY_GAIN);
     }
     else
     {
         BlueLed.Set(0);
         RedLed.Set(0);
-        PurpleLed.Set(LeftButton.Read());
     }
+
+    PurpleLed.Set(LeftButton.Read() ? 0 : Map::mapSkew(fabs(lastVarGainValue), 1.0) * LED_DISPLAY_GAIN); // TUNE ME DADDY
+
     RedLed.Update();
     BlueLed.Update();
     PurpleLed.Update();
