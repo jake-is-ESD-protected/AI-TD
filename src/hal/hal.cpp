@@ -46,7 +46,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         RedLed.Set(0);
     }
 
-    PurpleLed.Set(LeftButton.Read() ? 0 : Map::mapSkew(fabs(lastVarGainValue), 1.0) * LED_DISPLAY_GAIN); // TUNE ME DADDY
+    PurpleLed.Set(LeftButton.Read() ? 1 : Map::mapSkew(fabs(lastVarGainValue), 0.3) * LED_DISPLAY_GAIN); // TUNE ME DADDY
 
     RedLed.Update();
     BlueLed.Update();
