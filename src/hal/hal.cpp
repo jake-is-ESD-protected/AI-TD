@@ -37,16 +37,16 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
     if (RightButton.Read())
     {
-        BlueLed.Set(KnobAttackTime.getValue());
-        RedLed.Set(KnobSustainTime.getValue());
+        BlueLed.Set(0);
+        RedLed.Set(0.8);
     }
     else
     {
-        BlueLed.Set(0);
+        BlueLed.Set(0.8);
         RedLed.Set(0);
     }
 
-    PurpleLed.Set(LeftButton.Read() ? 1 : Map::mapSkew(fabs(lastVarGainValue), 0.3) * LED_DISPLAY_GAIN); // TUNE ME DADDY
+    PurpleLed.Set(LeftButton.Read() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY
 
     RedLed.Update();
     BlueLed.Update();

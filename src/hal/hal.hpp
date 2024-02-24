@@ -3,7 +3,7 @@
 #include "daisy_seed.h"
 
 #define sampleRate 96000
-#define LED_DISPLAY_GAIN 4
+#define LED_DISPLAY_GAIN 10
 
 using namespace daisy;
 
