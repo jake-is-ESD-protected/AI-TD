@@ -10,12 +10,10 @@
 #include "af.h"
 #include "transientDSP.hpp"
 
-static SmootherExponential expSmooth;
-double lastVarGainValue = 0;
-
 
 void __afGetEnvelope(double* sig, double* env, uint32_t len)
 {
+    SmootherExponential expSmooth;
     expSmooth.init(ENV_SMOOTH_ORDER);
     expSmooth.reset(SAMPLE_RATE);
     expSmooth.set_attack(ENV_SMOOTH_ATTACK);
