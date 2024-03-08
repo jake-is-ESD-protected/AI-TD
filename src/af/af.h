@@ -54,9 +54,13 @@ uint32_t afGetG1H(void);
 
 uint32_t afGetG2H(void);
 
+void resetBuffer();
+
 double afGetSpectralFlatnessDB();
 
 double afGetSpectralCentroid();
+
+double afGetTempo();
 
 double afGetPBandL();
 

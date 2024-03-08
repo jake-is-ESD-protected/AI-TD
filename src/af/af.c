@@ -7,12 +7,13 @@
  *
  */
 
-#include "af.hpp"
-#include "transientDSP.hpp"
+#include "af.h"
+//#include "transientDSP.hpp"
 
 #include "../hal/globalDefinitions.hpp"
 #include "beatDetectionDSP/BTT.h"
 #include <inttypes.h>
+#include <math.h>
 #include <stdio.h>
 
 BTT *btt;
@@ -67,7 +68,7 @@ void AFInCProcess()
 
 void __afGetEnvelope(double *sig, double *env, uint32_t len)
 {
-    SmootherExponential expSmooth;
+    /*SmootherExponential expSmooth;
     expSmooth.init(ENV_SMOOTH_ORDER);
     expSmooth.reset(sampleRate);
     expSmooth.set_attack(ENV_SMOOTH_ATTACK);
@@ -76,7 +77,7 @@ void __afGetEnvelope(double *sig, double *env, uint32_t len)
     for (uint32_t i = 0; i < len; i++)
     {
         env[i] = expSmooth.process(sig[i]);
-    }
+    }*/
 }
 
 uint32_t __afGetIdxOfMax(double *sig, uint32_t len, uint32_t fromIdx, uint32_t toIdx)
@@ -153,6 +154,10 @@ double afGetT2A() {
 
 double afGetSpectralFlatnessDB() {
     return 1;
+}
+
+double afGetTempo() {
+    return btt_get_tempo_bpm(btt);
 }
 
 double afGetPBandL() {
