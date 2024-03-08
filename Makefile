@@ -14,6 +14,7 @@ CPP_SOURCES += src/transientDSP/envDeps/BufferCircular.cpp
 CPP_SOURCES += src/ai/ai.cpp
 CPP_SOURCES += seedcli/seedcli_src/cli.cpp
 CPP_SOURCES += seedcli/seedcli_src/mem.cpp
+CPP_SOURCES += src/af/af.cpp
 
 C_SOURCES += $(shell ls lib/AI_model/*.c)
 
@@ -25,7 +26,8 @@ C_INCLUDES += \
 -I./src/ui \
 -I./src/ai \
 -I$(LIBK_DIR) \
--I./seedcli/seedcli_src
+-I./seedcli/seedcli_src \
+-I./src/af
 
 LDFLAGS += -L./lib/Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
 
