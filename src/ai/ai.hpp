@@ -1,9 +1,9 @@
 #pragma once
 
-/// @brief 
-/// @param  
+/// @brief
+/// @param
 void aiInit(void);
 
-/// @brief 
-/// @param  
+/// @brief
+/// @param
 void aiRun(void);

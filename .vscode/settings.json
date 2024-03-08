@@ -73,7 +73,9 @@
     "thread": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp",
-    "nn_data_params.h": "c"
+    "nn_data_params.h": "c",
+    "hal.hpp": "c",
+    "transientdsp.hpp": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [

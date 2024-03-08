@@ -1,8 +1,8 @@
 #pragma once
 
 #include "daisy_seed.h"
+#include "globalDefinitions.hpp"
 
-#define sampleRate 96000
 #define LED_DISPLAY_GAIN 3.5
 
 using namespace daisy;
