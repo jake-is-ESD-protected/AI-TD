@@ -1,6 +1,9 @@
 #pragma once
 #include "EnvelopeFollowerPeakHold.h"
+extern "C"
+{
 #include "SmootherExponential.h"
+}
 
 extern double lastVarGainValue;
 

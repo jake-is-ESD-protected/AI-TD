@@ -75,7 +75,9 @@
     "typeinfo": "cpp",
     "nn_data_params.h": "c",
     "hal.hpp": "c",
-    "transientdsp.hpp": "c"
+    "transientdsp.hpp": "c",
+    "af.h": "c",
+    "smootherexponential.h": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [

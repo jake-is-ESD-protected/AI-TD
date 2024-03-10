@@ -8,8 +8,7 @@
  */
 
 #include "af.h"
-//#include "transientDSP.hpp"
-
+#include "transientDetectionDSP/SmootherExponential.h"
 #include "../hal/globalDefinitions.hpp"
 #include "beatDetectionDSP/BTT.h"
 #include <inttypes.h>
@@ -68,7 +67,7 @@ void AFInCProcess()
 
 void __afGetEnvelope(double *sig, double *env, uint32_t len)
 {
-    /*SmootherExponential expSmooth;
+    SmootherExponential expSmooth;
     expSmooth.init(ENV_SMOOTH_ORDER);
     expSmooth.reset(sampleRate);
     expSmooth.set_attack(ENV_SMOOTH_ATTACK);
@@ -77,7 +76,7 @@ void __afGetEnvelope(double *sig, double *env, uint32_t len)
     for (uint32_t i = 0; i < len; i++)
     {
         env[i] = expSmooth.process(sig[i]);
-    }*/
+    }
 }
 
 uint32_t __afGetIdxOfMax(double *sig, uint32_t len, uint32_t fromIdx, uint32_t toIdx)
