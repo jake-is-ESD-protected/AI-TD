@@ -8,7 +8,7 @@
  */
 
 #include "af.h"
-#include "transientDetectionDSP/SmootherExponential.h"
+#include "transientDetectionDSP/Smoother4Exponential.h"
 #include "../hal/globalDefinitions.hpp"
 #include "beatDetectionDSP/BTT.h"
 #include <inttypes.h>
@@ -19,7 +19,8 @@ BTT *btt;
 #define BEAT_DETECTION_BUFFER_SIZE 64
 #define AUDIO_BUFFER_SIZE sampleRate * 8
 __attribute__((section(".sdram_bss"))) double audioBuffer[AUDIO_BUFFER_SIZE];
-uint64_t audioBufferPointer = 0;
+__attribute__((section(".sdram_bss"))) double envBuffer[AUDIO_BUFFER_SIZE];
+uint64_t audioBufferIndex = 0;
 dft_sample_t buffer[BEAT_DETECTION_BUFFER_SIZE];
 
 double T1A = 0;
@@ -27,7 +28,7 @@ double T2A = 0;
 
 void resetBuffer()
 {
-    audioBufferPointer = 0;
+    audioBufferIndex = 0;
 }
 
 void BeatDetectionInit()
@@ -49,33 +50,33 @@ void BeatDetectionInit()
 
 void AFInCAppend(double in)
 {
-    if (audioBufferPointer < AUDIO_BUFFER_SIZE)
+    if (audioBufferIndex < AUDIO_BUFFER_SIZE)
     {
-        audioBuffer[audioBufferPointer] = in;
-        audioBufferPointer++;
+        audioBuffer[audioBufferIndex] = in;
+        audioBufferIndex++;
     }
 }
 
 void AFInCProcess()
 {
-    for (uint64_t i = 0; i < audioBufferPointer; i++)
+    for (uint64_t i = 0; i < audioBufferIndex; i++)
     {
         buffer[0] = audioBuffer[i];
         btt_process(btt, buffer, 1);
     }
+    __afGetEnvelope(audioBuffer, envBuffer, audioBufferIndex);
+    afGetTA(audioBuffer, audioBufferIndex, 4000);
 }
 
 void __afGetEnvelope(double *sig, double *env, uint32_t len)
 {
-    SmootherExponential expSmooth;
-    expSmooth.init(ENV_SMOOTH_ORDER);
-    expSmooth.reset(sampleRate);
-    expSmooth.set_attack(ENV_SMOOTH_ATTACK);
-    expSmooth.set_release(ENV_SMOOTH_RELEASE);
+    initAll4();
+    setAttackAll4(ENV_SMOOTH_ATTACK);
+    setReleaseAll4(ENV_SMOOTH_RELEASE);
 
     for (uint32_t i = 0; i < len; i++)
     {
-        env[i] = expSmooth.process(sig[i]);
+        env[i] = processAll4(sig[i]);
     }
 }
 
@@ -105,13 +106,18 @@ uint32_t __afGetIdxOfMin(double *sig, uint32_t len, uint32_t fromIdx, uint32_t t
     return idxMin;
 }
 
-void afGetTA(double *sig, uint32_t len, uint32_t searchInterval, double *res)
+void afGetTA(double *sig, uint32_t len, uint32_t searchInterval)
 {
+    T1A = 0;
+    T2A = 0;
+    double test = 0;
+    double test2 = 0;
     uint32_t nFrames = len / (FRAME_LEN * sampleRate);
     for (uint32_t i = 0; i < nFrames; i++)
     {
         uint32_t lBound = i * sampleRate;
-        uint32_t uBound = (i + 1) * sampleRate;
+        uint32_t uBound = (i + 1) * sampleRate - 1;
+
         uint32_t idxMax = __afGetIdxOfMax(sig, len, lBound, uBound);
 
         uint32_t start = 0;
@@ -125,7 +131,7 @@ void afGetTA(double *sig, uint32_t len, uint32_t searchInterval, double *res)
             start = idxMax - searchInterval;
         }
         uint32_t idxMinPre = __afGetIdxOfMin(sig, len, start, idxMax);
-
+        
         if ((idxMax + searchInterval) > uBound)
         {
             stop = uBound;
@@ -135,11 +141,13 @@ void afGetTA(double *sig, uint32_t len, uint32_t searchInterval, double *res)
             stop = idxMax + searchInterval;
         }
         uint32_t idxMinPost = __afGetIdxOfMin(sig, len, idxMax, stop);
+        test = ((idxMax - idxMinPre) / sampleRate);
+        test2 = ((idxMinPost - idxMax) / sampleRate);
         T1A += ((idxMax - idxMinPre) / sampleRate);
         T2A += ((idxMinPost - idxMax) / sampleRate);
     }
-    T1A = T1A / nFrames;
-    T2A = T2A / nFrames;
+    T1A = test; //T1A / nFrames;
+    T2A = test2; //T2A / nFrames;
 }
 
 // clang-format off
@@ -149,6 +157,11 @@ double afGetT1A() {
 
 double afGetT2A() {
     return T2A;
+}
+
+double afGetSpectralCentroid()
+{
+
 }
 
 double afGetSpectralFlatnessDB() {
@@ -174,16 +187,16 @@ double afGetCrestFactor() {
     double rms = 0.0;
     double abs_sample = 0.0;
 
-    for(int i = 0; i < audioBufferPointer;i++)
+    for(int i = 0; i < audioBufferIndex;i++)
     {
         abs_sample = abs(buffer[i]);
         if(abs_sample > max_sample)
             max_sample = abs_sample;
     }
 
-    for(int i = 0; i < audioBufferPointer;i++)
+    for(int i = 0; i < audioBufferIndex;i++)
         rms += buffer[i] * buffer[i];
-    rms = rms / audioBufferPointer;
+    rms = rms / audioBufferIndex;
     rms = pow(rms, 0.5);
 
     if(rms == 0.0)

@@ -1,8 +1,9 @@
-TARGET_EXEC = AFInC.so
+TARGET_EXEC = AFInC.dll
 BUILD_DIR = build
 
 SRCS ?= af.c #BEWARE INC FOR CPP IS NOT IMPLEMENTED YET DUE TO LINKING ERROR
 SRCS += $(shell ls beatDetectionDSP/*.c)
+SRCS += $(shell ls transientDetectionDSP/*.c)
 
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
@@ -16,6 +17,7 @@ CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -fPIC
 
 LDFLAGS = -shared
 
+#CPP = C:\msys64\mingw64\bin\g++.exe
 CC = gcc
 CFLAGS = -fPIC
 
@@ -33,7 +35,7 @@ $(BUILD_DIR)/%.c.o: %.c
 
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CPP) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 
 .PHONY: clean

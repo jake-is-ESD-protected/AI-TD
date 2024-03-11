@@ -16,6 +16,7 @@
         "${workspaceFolder}/seedcli/seedcli_src",
         "${workspaceFolder}/src/hal",
         "${workspaceFolder}/src/transientDSP",
+        "${workspaceFolder}/af/transientDetectionDSP",
         "${workspaceFolder}/src/ui",
         "${workspaceFolder}/src/ai",
         "${LIBDAISY_DIR}/**",

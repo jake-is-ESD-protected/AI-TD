@@ -19,6 +19,14 @@
 
 #define FRAME_LEN 1 // in s
 
+void resetBuffer();
+
+void BeatDetectionInit();
+
+void AFInCAppend(double in);
+
+void AFInCProcess();
+
 /// @brief Get the envelope of a given signal.
 /// @param sig Given signal.
 /// @param len Length of given signal.
@@ -46,19 +54,12 @@ uint32_t __afGetIdxOfMin(double *sig, uint32_t len, uint32_t fromIdx, uint32_t t
 /// @param sig Given signal.
 /// @param len Length of given signal.
 /// @param searchInterval Window size for search of peaks and valleys in the signal.
-/// @param res Storage buffer for results (has size of 2 double).
 /// @return Attack time.
-void afGetTA(double *sig, uint32_t len, uint32_t searchInterval, double *res);
-
-uint32_t afGetG1H(void);
-
-uint32_t afGetG2H(void);
-
-void resetBuffer();
-
-double afGetSpectralFlatnessDB();
+void afGetTA(double *sig, uint32_t len, uint32_t searchInterval);
 
 double afGetSpectralCentroid();
+
+double afGetSpectralFlatnessDB();
 
 double afGetTempo();
 

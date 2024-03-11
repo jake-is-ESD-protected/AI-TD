@@ -77,7 +77,13 @@
     "hal.hpp": "c",
     "transientdsp.hpp": "c",
     "af.h": "c",
-    "smootherexponential.h": "c"
+    "smootherexponential.h": "c",
+    "inttypes.h": "c",
+    "*.tpp": "c",
+    "any": "c",
+    "bitset": "c",
+    "smoother4exponential.h": "c",
+    "globaldefinitions.hpp": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [
