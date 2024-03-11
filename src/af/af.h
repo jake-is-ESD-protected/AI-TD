@@ -15,7 +15,8 @@
 #define ENV_SMOOTH_ORDER 4           // in n
 #define ENV_SMOOTH_ATTACK 2          // in ms
 #define ENV_SMOOTH_RELEASE 200       // in ms
-#define EXTREMA_SEARCH_INTERVAL 4000 // in samples
+#define EXTREMA_SEARCH_INTERVAL 8000 // in samples
+#define ONSET_DETECTION_COMPENSATION_N 20 * 0.001 * sampleRate // The onset detection algorithm is about 10ms to late for proper attack detection
 
 #define FRAME_LEN 1 // in s
 

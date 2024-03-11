@@ -17,10 +17,15 @@
 
 BTT *btt;
 #define BEAT_DETECTION_BUFFER_SIZE 64
-#define AUDIO_BUFFER_SIZE sampleRate * 8
+#define AUDIO_BUFFER_SIZE_S 8
+#define AUDIO_BUFFER_SIZE sampleRate * AUDIO_BUFFER_SIZE_S
+#define MAX_ONSETS 4 * AUDIO_BUFFER_SIZE_S // 4 BPS IS 240 BPM
 __attribute__((section(".sdram_bss"))) double audioBuffer[AUDIO_BUFFER_SIZE];
 __attribute__((section(".sdram_bss"))) double envBuffer[AUDIO_BUFFER_SIZE];
+__attribute__((section(".sdram_bss"))) uint32_t onsetBuffer[MAX_ONSETS];
 uint64_t audioBufferIndex = 0;
+uint64_t audioBufferRuntimeIndex = 0;
+uint64_t onsetBufferIndex = 0;
 dft_sample_t buffer[BEAT_DETECTION_BUFFER_SIZE];
 
 double T1A = 0;
@@ -29,6 +34,19 @@ double T2A = 0;
 void resetBuffer()
 {
     audioBufferIndex = 0;
+    audioBufferRuntimeIndex = 0;
+    onsetBufferIndex = 0;
+    T1A = 0;
+    T2A = 0;
+}
+
+void onset_detected_callback(void *SELF, unsigned long long sample_time)
+{
+    if(onsetBufferIndex < MAX_ONSETS)
+    {
+        onsetBuffer[onsetBufferIndex] = audioBufferRuntimeIndex;
+        onsetBufferIndex++;
+    }
 }
 
 void BeatDetectionInit()
@@ -46,6 +64,7 @@ void BeatDetectionInit()
                     );
     // clang-format on
     btt_set_tracking_mode(btt, BTT_ONSET_AND_TEMPO_AND_BEAT_TRACKING);
+    btt_set_onset_tracking_callback(btt, onset_detected_callback, NULL);
 }
 
 void AFInCAppend(double in)
@@ -63,9 +82,21 @@ void AFInCProcess()
     {
         buffer[0] = audioBuffer[i];
         btt_process(btt, buffer, 1);
+        audioBufferRuntimeIndex++;
     }
-    __afGetEnvelope(audioBuffer, envBuffer, audioBufferIndex);
-    afGetTA(audioBuffer, audioBufferIndex, 4000);
+
+    for (uint64_t i = 0; i < onsetBufferIndex-1; i++)
+    {
+        uint32_t startSample = onsetBuffer[i];
+        if(startSample > ONSET_DETECTION_COMPENSATION_N)
+        {
+            startSample -= ONSET_DETECTION_COMPENSATION_N;
+        }
+
+        afGetTA(&audioBuffer[startSample], onsetBuffer[i+1], EXTREMA_SEARCH_INTERVAL);
+    }
+    T1A = T1A / onsetBufferIndex;
+    T2A = T2A / onsetBufferIndex;
 }
 
 void __afGetEnvelope(double *sig, double *env, uint32_t len)
@@ -108,46 +139,34 @@ uint32_t __afGetIdxOfMin(double *sig, uint32_t len, uint32_t fromIdx, uint32_t t
 
 void afGetTA(double *sig, uint32_t len, uint32_t searchInterval)
 {
-    T1A = 0;
-    T2A = 0;
-    double test = 0;
-    double test2 = 0;
-    uint32_t nFrames = len / (FRAME_LEN * sampleRate);
-    for (uint32_t i = 0; i < nFrames; i++)
+    __afGetEnvelope(sig, envBuffer, len);
+
+    uint32_t idxMax = __afGetIdxOfMax(envBuffer, len, 0, len - 1);
+
+    uint32_t start = 0;
+    uint32_t stop = 0;
+    if (idxMax < searchInterval)
     {
-        uint32_t lBound = i * sampleRate;
-        uint32_t uBound = (i + 1) * sampleRate - 1;
-
-        uint32_t idxMax = __afGetIdxOfMax(sig, len, lBound, uBound);
-
-        uint32_t start = 0;
-        uint32_t stop = 0;
-        if (idxMax < searchInterval)
-        {
-            start = lBound;
-        }
-        else
-        {
-            start = idxMax - searchInterval;
-        }
-        uint32_t idxMinPre = __afGetIdxOfMin(sig, len, start, idxMax);
-        
-        if ((idxMax + searchInterval) > uBound)
-        {
-            stop = uBound;
-        }
-        else
-        {
-            stop = idxMax + searchInterval;
-        }
-        uint32_t idxMinPost = __afGetIdxOfMin(sig, len, idxMax, stop);
-        test = ((idxMax - idxMinPre) / sampleRate);
-        test2 = ((idxMinPost - idxMax) / sampleRate);
-        T1A += ((idxMax - idxMinPre) / sampleRate);
-        T2A += ((idxMinPost - idxMax) / sampleRate);
+        start = 0;
     }
-    T1A = test; //T1A / nFrames;
-    T2A = test2; //T2A / nFrames;
+    else
+    {
+        start = idxMax - searchInterval;
+    }
+    uint32_t idxMinPre = __afGetIdxOfMin(envBuffer, len, start, idxMax);
+    
+    if ((idxMax + searchInterval) > len - 1)
+    {
+        stop = len - 1;
+    }
+    else
+    {
+        stop = idxMax + searchInterval;
+    }
+    uint32_t idxMinPost = __afGetIdxOfMin(envBuffer, len, idxMax, stop);
+
+    T1A += ( (double) (idxMax - idxMinPre) / (double) sampleRate);
+    T2A += ( (double) (idxMinPost - idxMax) / (double) sampleRate);
 }
 
 // clang-format off
@@ -175,9 +194,11 @@ double afGetTempo() {
 double afGetPBandL() {
     return 1;
 }
+
 double afGetPBandML() {
     return 1;
 }
+
 double afGetPBandMH() {
     return 1;
 }
@@ -187,16 +208,16 @@ double afGetCrestFactor() {
     double rms = 0.0;
     double abs_sample = 0.0;
 
-    for(int i = 0; i < audioBufferIndex;i++)
+    for(int i = 0; i < audioBufferRuntimeIndex;i++)
     {
         abs_sample = abs(buffer[i]);
         if(abs_sample > max_sample)
             max_sample = abs_sample;
     }
 
-    for(int i = 0; i < audioBufferIndex;i++)
+    for(int i = 0; i < audioBufferRuntimeIndex;i++)
         rms += buffer[i] * buffer[i];
-    rms = rms / audioBufferIndex;
+    rms = rms / audioBufferRuntimeIndex;
     rms = pow(rms, 0.5);
 
     if(rms == 0.0)
