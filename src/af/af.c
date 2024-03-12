@@ -87,16 +87,15 @@ void AFInCProcess()
 
     for (uint64_t i = 0; i < onsetBufferIndex-1; i++)
     {
-        uint32_t startSample = onsetBuffer[i];
-        if(startSample > ONSET_DETECTION_COMPENSATION_N)
+        if(onsetBuffer[i] > ONSET_DETECTION_COMPENSATION_N)
         {
-            startSample -= ONSET_DETECTION_COMPENSATION_N;
+            onsetBuffer[i] -= ONSET_DETECTION_COMPENSATION_N;
         }
 
-        afGetTA(&audioBuffer[startSample], onsetBuffer[i+1], EXTREMA_SEARCH_INTERVAL);
+        afGetTA(audioBuffer, onsetBuffer[i], onsetBuffer[i+1], onsetBuffer[i+1] - onsetBuffer[i]);
     }
-    T1A = T1A / onsetBufferIndex;
-    T2A = T2A / onsetBufferIndex;
+    T1A = T1A / (onsetBufferIndex - 1);
+    T2A = T2A / (onsetBufferIndex - 1);
 }
 
 void __afGetEnvelope(double *sig, double *env, uint32_t len)
@@ -107,11 +106,13 @@ void __afGetEnvelope(double *sig, double *env, uint32_t len)
 
     for (uint32_t i = 0; i < len; i++)
     {
-        env[i] = processAll4(sig[i]);
+        *env = processAll4(*sig);
+        sig++;
+        env++;
     }
 }
 
-uint32_t __afGetIdxOfMax(double *sig, uint32_t len, uint32_t fromIdx, uint32_t toIdx)
+uint32_t __afGetIdxOfMax(double *sig, uint32_t fromIdx, uint32_t toIdx)
 {
     uint32_t idxMax = fromIdx;
     for (uint32_t i = fromIdx; i < toIdx; i++)
@@ -124,46 +125,50 @@ uint32_t __afGetIdxOfMax(double *sig, uint32_t len, uint32_t fromIdx, uint32_t t
     return idxMax;
 }
 
-uint32_t __afGetIdxOfMin(double *sig, uint32_t len, uint32_t fromIdx, uint32_t toIdx)
+uint32_t __afGetIdxOfMin(double *sig, uint32_t fromIdx, uint32_t toIdx)
 {
     uint32_t idxMin = fromIdx;
-    for (uint32_t i = fromIdx; i < toIdx; i++)
+    for (uint32_t i = fromIdx + 1; i < toIdx; i++)
     {
         if (sig[i] < sig[idxMin])
         {
             idxMin = i;
         }
+        else if (sig[i] > sig[i - 1]) 
+        {
+            break;
+        }
     }
     return idxMin;
 }
 
-void afGetTA(double *sig, uint32_t len, uint32_t searchInterval)
+void afGetTA(double *sig, uint32_t fromIdx, uint32_t toIdx, uint32_t searchInterval)
 {
-    __afGetEnvelope(sig, envBuffer, len);
+    __afGetEnvelope(&sig[fromIdx], &envBuffer[fromIdx], toIdx - fromIdx);
 
-    uint32_t idxMax = __afGetIdxOfMax(envBuffer, len, 0, len - 1);
+    uint32_t idxMax = __afGetIdxOfMax(envBuffer, fromIdx, toIdx);
 
     uint32_t start = 0;
     uint32_t stop = 0;
-    if (idxMax < searchInterval)
+    if ((idxMax - searchInterval) < fromIdx)
     {
-        start = 0;
+        start = fromIdx;
     }
     else
     {
         start = idxMax - searchInterval;
     }
-    uint32_t idxMinPre = __afGetIdxOfMin(envBuffer, len, start, idxMax);
+    uint32_t idxMinPre = __afGetIdxOfMin(envBuffer, start, idxMax);
     
-    if ((idxMax + searchInterval) > len - 1)
+    if ((idxMax + searchInterval) > toIdx)
     {
-        stop = len - 1;
+        stop = toIdx;
     }
     else
     {
         stop = idxMax + searchInterval;
     }
-    uint32_t idxMinPost = __afGetIdxOfMin(envBuffer, len, idxMax, stop);
+    uint32_t idxMinPost = __afGetIdxOfMin(envBuffer, idxMax, stop);
 
     T1A += ( (double) (idxMax - idxMinPre) / (double) sampleRate);
     T2A += ( (double) (idxMinPost - idxMax) / (double) sampleRate);
@@ -224,4 +229,39 @@ double afGetCrestFactor() {
         return 0.0;
 
     return max_sample / rms;
+}
+
+
+// --------------------------------------------------------------------------
+// helper functions for dev debugging
+// --------------------------------------------------------------------------
+
+uint64_t __audioIndex = 0;
+double __getAudioBuffer(void){
+    double sample = audioBuffer[__audioIndex];
+    __audioIndex++;
+    if(__audioIndex == AUDIO_BUFFER_SIZE) { __audioIndex = 0; }
+    return sample; 
+}
+
+uint64_t __envIndex = 0;
+double __getEnvBuffer(void){
+    double sample = envBuffer[__envIndex];
+    __envIndex++;
+    if(__envIndex == AUDIO_BUFFER_SIZE) { __envIndex = 0; }
+    return sample; 
+}
+
+uint64_t __onsetIndex = 0;
+uint32_t __getOnsetBuffer(void){
+    double sample = onsetBuffer[__onsetIndex];
+    __onsetIndex++;
+    if(__onsetIndex == MAX_ONSETS) { __onsetIndex = 0; }
+    return sample; 
+}
+
+void __resetIndexDebug(void){
+    __audioIndex = 0;
+    __envIndex = 0;
+    __onsetIndex = 0;
 }
