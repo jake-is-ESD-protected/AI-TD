@@ -28,4 +28,4 @@ void setAttackAll4(double time_ms);
 
 void setReleaseAll4(double time_ms);
 
-double processAll4(double x);
+double processEnvelope(double x);

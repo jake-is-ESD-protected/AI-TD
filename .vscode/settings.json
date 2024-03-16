@@ -83,7 +83,11 @@
     "any": "c",
     "bitset": "c",
     "smoother4exponential.h": "c",
-    "globaldefinitions.hpp": "c"
+    "globaldefinitions.hpp": "c",
+    "buffercircular.h": "c",
+    "ranges": "c",
+    "percentilecalculator.h": "c",
+    "stdio.h": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [

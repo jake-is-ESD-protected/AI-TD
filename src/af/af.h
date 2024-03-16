@@ -14,11 +14,8 @@
 
 #define ENV_SMOOTH_ORDER 4           // in n
 #define ENV_SMOOTH_ATTACK 2          // in ms
-#define ENV_SMOOTH_RELEASE 400       // in ms
-#define EXTREMA_SEARCH_INTERVAL 8000 // in samples
+#define ENV_SMOOTH_RELEASE 200       // in ms
 #define ONSET_DETECTION_COMPENSATION_N (uint64_t)(20 * 0.001 * sampleRate) // The onset detection algorithm is about 10ms to late for proper attack detection
-
-#define FRAME_LEN 1 // in s
 
 void resetBuffer();
 
@@ -52,12 +49,6 @@ uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx);
 /// @param toIdx Index to stop the search at.
 /// @return Index of lowest value in interval.
 uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx);
-
-/// @brief Get the analytical attack time (rise time) of a given signal.
-/// @param fromIdx Index to start the search from.
-/// @param toIdx Index to stop the search at.
-/// @return Attack time.
-void afGetTA(uint64_t fromIdx, uint64_t toIdx);
 
 double afGetSpectralCentroid();
 

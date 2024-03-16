@@ -9,6 +9,8 @@
 
 #include "af.h"
 #include "transientDetectionDSP/Smoother4Exponential.h"
+#include "transientDetectionDSP/EnvelopeFollowerPeakHold.h"
+#include "percentileCalculator/percentileCalculator.h"
 #include "../hal/globalDefinitions.hpp"
 #include "beatDetectionDSP/BTT.h"
 #include <inttypes.h>
@@ -42,8 +44,6 @@ void resetBuffer()
     audioBufferIndex = 0;
     audioBufferRuntimeIndex = 0;
     onsetBufferIndex = 0;
-    T1A = 0;
-    T2A = 0;
 }
 
 void onset_detected_callback(void *SELF, unsigned long long sample_time)
@@ -63,6 +63,7 @@ void initAf()
 
 void EnvFollowerInit()
 {
+    EnvelopeFollowerPeakHoldInit(1);
     initAll4();
     setAttackAll4(ENV_SMOOTH_ATTACK);
     setReleaseAll4(ENV_SMOOTH_RELEASE);
@@ -101,23 +102,41 @@ void AFInCProcess()
     {
         buffer[0] = audioBuffer[i];
         btt_process(btt, buffer, 1);
-        envBuffer[i] = processEnvelope(audioBuffer[i]);
+        envBuffer[i] = processEnvelope(EnvelopeFollowerPeakHoldProcess(audioBuffer[i]));
         audioBufferRuntimeIndex++;
     }
 
-    for (uint64_t i = 0; i < onsetBufferIndex-1; i++)
+    //TODO:
+    //Spectral Flattness (whole buffer) -- FREQUENCY DOMAIN
+    //Spectral Centroid (whole buffer) -- FREQUENCY DOMAIN
+    //Spectral flux (over each frame) -- FREQUENCY DOMAIN
+    //4 BAND EQ -- (whole buffer) -- FREQUENCY DOMAIN
+    //OK LETS JUST DO EVERYTHING FOR EACH FRAME CUS SPECTRAL FLUX DEMANDS IT AND SEEMS TO BE VERY USEFULL
+
+    //Crest Factor (whole buffer) -- TIME DOMAIN
+
+    for (uint64_t i = 0; i < onsetBufferIndex-1; i++) //COMPENSATE ALL ONSETS FIRST
     {
         if(onsetBuffer[i] > ONSET_DETECTION_COMPENSATION_N)
         {
             onsetBuffer[i] -= ONSET_DETECTION_COMPENSATION_N;
         }
-
-        afGetTA(onsetBuffer[i], onsetBuffer[i+1]);
-        onsetT1ABuffer[i] = T1A;
-        onsetT2ABuffer[i] = T2A;
     }
-    T1A = onsetT1ABuffer[2]; //T1A / (onsetBufferIndex - 1);
-    T2A = onsetT2ABuffer[2];//T2A / (onsetBufferIndex - 1);
+
+    for (uint64_t i = 0; i < onsetBufferIndex-1; i++)
+    {
+        uint64_t idxMax = __afGetIdxOfMax(envBuffer, onsetBuffer[i], onsetBuffer[i+1]);
+
+        uint64_t idxMinPre = __afGetIdxOfMin(envBuffer, onsetBuffer[i], idxMax);
+
+        uint64_t idxMinPost = __afGetIdxOfMin(envBuffer, idxMax, onsetBuffer[i+1]);
+
+        onsetT1ABuffer[i] = idxMax - idxMinPre;
+        onsetT2ABuffer[i] = idxMinPost - idxMax;
+    }
+
+    T1A = findPercentile(onsetT1ABuffer, onsetBufferIndex, 75);
+    T2A = findPercentile(onsetT2ABuffer, onsetBufferIndex, 75);
 }
 
 
@@ -137,30 +156,14 @@ uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx)
 uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx)
 {
     uint64_t idxMin = fromIdx;
-    for (uint64_t i = fromIdx + 1; i < toIdx; i++)
+    for (uint64_t i = fromIdx; i < toIdx; i++)
     {
         if (sig[i] < sig[idxMin])
         {
             idxMin = i;
         }
-        else if (sig[i] > sig[i - 1]) 
-        {
-            break;
-        }
     }
     return idxMin;
-}
-
-void afGetTA(uint64_t fromIdx, uint64_t toIdx)
-{
-    uint64_t idxMax = __afGetIdxOfMax(envBuffer, fromIdx, toIdx);
-
-    uint64_t idxMinPre = __afGetIdxOfMin(envBuffer, fromIdx, idxMax);
-
-    uint64_t idxMinPost = __afGetIdxOfMin(envBuffer, idxMax, toIdx);
-
-    T1A = idxMax;//( (double) (idxMax - idxMinPre) / (double) sampleRate);
-    T2A = idxMinPost;//( (double) (idxMinPost - idxMax) / (double) sampleRate);
 }
 
 // clang-format off
@@ -174,7 +177,7 @@ double afGetT2A() {
 
 double afGetSpectralCentroid()
 {
-
+    return 1;
 }
 
 double afGetSpectralFlatnessDB() {
@@ -249,8 +252,26 @@ uint64_t __getOnsetBuffer(void){
     return sample; 
 }
 
+uint64_t __TA1Index = 0;
+uint64_t __getTA1Buffer(void){
+    double sample = onsetT1ABuffer[__TA1Index];
+    __TA1Index++;
+    if(__TA1Index == MAX_ONSETS) { __TA1Index = 0; }
+    return sample; 
+}
+
+uint64_t __TA2Index = 0;
+uint64_t __getTA2Buffer(void){
+    double sample = onsetT2ABuffer[__TA2Index];
+    __TA2Index++;
+    if(__TA2Index == MAX_ONSETS) { __TA2Index = 0; }
+    return sample; 
+}
+
 void __resetIndexDebug(void){
     __audioIndex = 0;
     __envIndex = 0;
     __onsetIndex = 0;
+    __TA1Index = 0;
+    __TA2Index = 0;
 }
