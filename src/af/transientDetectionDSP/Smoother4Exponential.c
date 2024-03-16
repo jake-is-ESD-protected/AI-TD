@@ -77,8 +77,10 @@ void setReleaseAll4(double time_ms)
     }
 }
 
-double processAll4(double x)
+double processEnvelope(double x)
 {
+    //ADD PEAK HOLD SCHEME HERE
+    
     for (int n = 0; n < 4; ++n)
     {
         x = process(&smoothers[n], x);

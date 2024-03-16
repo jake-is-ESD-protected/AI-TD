@@ -16,11 +16,15 @@
 #define ENV_SMOOTH_ATTACK 2          // in ms
 #define ENV_SMOOTH_RELEASE 400       // in ms
 #define EXTREMA_SEARCH_INTERVAL 8000 // in samples
-#define ONSET_DETECTION_COMPENSATION_N (uint32_t)(20 * 0.001 * sampleRate) // The onset detection algorithm is about 10ms to late for proper attack detection
+#define ONSET_DETECTION_COMPENSATION_N (uint64_t)(20 * 0.001 * sampleRate) // The onset detection algorithm is about 10ms to late for proper attack detection
 
 #define FRAME_LEN 1 // in s
 
 void resetBuffer();
+
+void initAf();
+
+void EnvFollowerInit();
 
 void BeatDetectionInit();
 
@@ -33,29 +37,27 @@ void AFInCProcess();
 /// @param len Length of given signal.
 /// @param env Empty buffer for storage of derived envelope.
 /// @attention Parameters for the envelope are fixed and defined above
-void __afGetEnvelope(double *sig, double *env, uint32_t len);
+void __afGetEnvelope(double *sig, double *env, uint64_t len);
 
 /// @brief argmax() for C.
 /// @param sig Given signal.
 /// @param fromIdx Index to start the search from.
 /// @param toIdx Index to stop the search at.
 /// @return Index of highest value in interval.
-uint32_t __afGetIdxOfMax(double *sig, uint32_t fromIdx, uint32_t toIdx);
+uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx);
 
 /// @brief argmin() for C.
 /// @param sig Given signal.
 /// @param fromIdx Index to start the search from.
 /// @param toIdx Index to stop the search at.
 /// @return Index of lowest value in interval.
-uint32_t __afGetIdxOfMin(double *sig, uint32_t fromIdx, uint32_t toIdx);
+uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx);
 
 /// @brief Get the analytical attack time (rise time) of a given signal.
-/// @param sig Given signal.
 /// @param fromIdx Index to start the search from.
 /// @param toIdx Index to stop the search at.
-/// @param searchInterval Window size for search of peaks and valleys in the signal.
 /// @return Attack time.
-void afGetTA(double *sig, uint32_t fromIdx, uint32_t toIdx, uint32_t searchInterval);
+void afGetTA(uint64_t fromIdx, uint64_t toIdx);
 
 double afGetSpectralCentroid();
 
@@ -80,6 +82,6 @@ double __getAudioBuffer(void);
 
 double __getEnvBuffer(void);
 
-uint32_t __getOnsetBuffer(void);
+uint64_t __getOnsetBuffer(void);
 
 #endif // _AF_H_

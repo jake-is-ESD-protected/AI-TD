@@ -20,9 +20,15 @@ BTT *btt;
 #define AUDIO_BUFFER_SIZE_S 8
 #define AUDIO_BUFFER_SIZE sampleRate * AUDIO_BUFFER_SIZE_S
 #define MAX_ONSETS 4 * AUDIO_BUFFER_SIZE_S // 4 BPS IS 240 BPM
+
 __attribute__((section(".sdram_bss"))) double audioBuffer[AUDIO_BUFFER_SIZE];
 __attribute__((section(".sdram_bss"))) double envBuffer[AUDIO_BUFFER_SIZE];
-__attribute__((section(".sdram_bss"))) uint32_t onsetBuffer[MAX_ONSETS];
+
+__attribute__((section(".sdram_bss"))) uint64_t onsetBuffer[MAX_ONSETS];
+
+__attribute__((section(".sdram_bss"))) double onsetT1ABuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) double onsetT2ABuffer[MAX_ONSETS];
+
 uint64_t audioBufferIndex = 0;
 uint64_t audioBufferRuntimeIndex = 0;
 uint64_t onsetBufferIndex = 0;
@@ -47,6 +53,19 @@ void onset_detected_callback(void *SELF, unsigned long long sample_time)
         onsetBuffer[onsetBufferIndex] = audioBufferRuntimeIndex;
         onsetBufferIndex++;
     }
+}
+
+void initAf()
+{
+    BeatDetectionInit();
+    EnvFollowerInit();
+}
+
+void EnvFollowerInit()
+{
+    initAll4();
+    setAttackAll4(ENV_SMOOTH_ATTACK);
+    setReleaseAll4(ENV_SMOOTH_RELEASE);
 }
 
 void BeatDetectionInit()
@@ -82,6 +101,7 @@ void AFInCProcess()
     {
         buffer[0] = audioBuffer[i];
         btt_process(btt, buffer, 1);
+        envBuffer[i] = processEnvelope(audioBuffer[i]);
         audioBufferRuntimeIndex++;
     }
 
@@ -92,30 +112,19 @@ void AFInCProcess()
             onsetBuffer[i] -= ONSET_DETECTION_COMPENSATION_N;
         }
 
-        afGetTA(audioBuffer, onsetBuffer[i], onsetBuffer[i+1], onsetBuffer[i+1] - onsetBuffer[i]);
+        afGetTA(onsetBuffer[i], onsetBuffer[i+1]);
+        onsetT1ABuffer[i] = T1A;
+        onsetT2ABuffer[i] = T2A;
     }
-    T1A = T1A / (onsetBufferIndex - 1);
-    T2A = T2A / (onsetBufferIndex - 1);
+    T1A = onsetT1ABuffer[2]; //T1A / (onsetBufferIndex - 1);
+    T2A = onsetT2ABuffer[2];//T2A / (onsetBufferIndex - 1);
 }
 
-void __afGetEnvelope(double *sig, double *env, uint32_t len)
-{
-    initAll4();
-    setAttackAll4(ENV_SMOOTH_ATTACK);
-    setReleaseAll4(ENV_SMOOTH_RELEASE);
 
-    for (uint32_t i = 0; i < len; i++)
-    {
-        *env = processAll4(*sig);
-        sig++;
-        env++;
-    }
-}
-
-uint32_t __afGetIdxOfMax(double *sig, uint32_t fromIdx, uint32_t toIdx)
+uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx)
 {
-    uint32_t idxMax = fromIdx;
-    for (uint32_t i = fromIdx; i < toIdx; i++)
+    uint64_t idxMax = fromIdx;
+    for (uint64_t i = fromIdx; i < toIdx; i++)
     {
         if (sig[i] > sig[idxMax])
         {
@@ -125,10 +134,10 @@ uint32_t __afGetIdxOfMax(double *sig, uint32_t fromIdx, uint32_t toIdx)
     return idxMax;
 }
 
-uint32_t __afGetIdxOfMin(double *sig, uint32_t fromIdx, uint32_t toIdx)
+uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx)
 {
-    uint32_t idxMin = fromIdx;
-    for (uint32_t i = fromIdx + 1; i < toIdx; i++)
+    uint64_t idxMin = fromIdx;
+    for (uint64_t i = fromIdx + 1; i < toIdx; i++)
     {
         if (sig[i] < sig[idxMin])
         {
@@ -142,36 +151,16 @@ uint32_t __afGetIdxOfMin(double *sig, uint32_t fromIdx, uint32_t toIdx)
     return idxMin;
 }
 
-void afGetTA(double *sig, uint32_t fromIdx, uint32_t toIdx, uint32_t searchInterval)
+void afGetTA(uint64_t fromIdx, uint64_t toIdx)
 {
-    __afGetEnvelope(&sig[fromIdx], &envBuffer[fromIdx], toIdx - fromIdx);
+    uint64_t idxMax = __afGetIdxOfMax(envBuffer, fromIdx, toIdx);
 
-    uint32_t idxMax = __afGetIdxOfMax(envBuffer, fromIdx, toIdx);
+    uint64_t idxMinPre = __afGetIdxOfMin(envBuffer, fromIdx, idxMax);
 
-    uint32_t start = 0;
-    uint32_t stop = 0;
-    if ((idxMax - searchInterval) < fromIdx)
-    {
-        start = fromIdx;
-    }
-    else
-    {
-        start = idxMax - searchInterval;
-    }
-    uint32_t idxMinPre = __afGetIdxOfMin(envBuffer, start, idxMax);
-    
-    if ((idxMax + searchInterval) > toIdx)
-    {
-        stop = toIdx;
-    }
-    else
-    {
-        stop = idxMax + searchInterval;
-    }
-    uint32_t idxMinPost = __afGetIdxOfMin(envBuffer, idxMax, stop);
+    uint64_t idxMinPost = __afGetIdxOfMin(envBuffer, idxMax, toIdx);
 
-    T1A += ( (double) (idxMax - idxMinPre) / (double) sampleRate);
-    T2A += ( (double) (idxMinPost - idxMax) / (double) sampleRate);
+    T1A = idxMax;//( (double) (idxMax - idxMinPre) / (double) sampleRate);
+    T2A = idxMinPost;//( (double) (idxMinPost - idxMax) / (double) sampleRate);
 }
 
 // clang-format off
@@ -253,7 +242,7 @@ double __getEnvBuffer(void){
 }
 
 uint64_t __onsetIndex = 0;
-uint32_t __getOnsetBuffer(void){
+uint64_t __getOnsetBuffer(void){
     double sample = onsetBuffer[__onsetIndex];
     __onsetIndex++;
     if(__onsetIndex == MAX_ONSETS) { __onsetIndex = 0; }
