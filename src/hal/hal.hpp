@@ -3,7 +3,7 @@
 #include "daisy_seed.h"
 #include "globalDefinitions.hpp"
 
-#define LED_DISPLAY_GAIN 3.5
+#define LED_DISPLAY_GAIN 10
 
 using namespace daisy;
 

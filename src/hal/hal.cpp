@@ -3,11 +3,11 @@
 #include <math.h>
 
 #include "Utilities/Map.hpp"
+#include "ai.hpp"
 #include "cli.hpp"
 #include "mem.hpp"
 #include "transientDSP.hpp"
 #include "ui.hpp"
-#include "ai.hpp"
 
 using namespace daisy;
 using namespace k;
@@ -25,19 +25,30 @@ static TimerHandle timerVisual;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
+    KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Read());
+    KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Read());
+    KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Read());
+    KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Read());
+
+    transientDSPuiProcess();
     transientDSPprocess(in[0][0]);
+
+    // BlueLed.Set(RightButton.Read() ? 1 : 0);
+    // RedLed.Set(RightButton.Read() ? 0 : 1);
+
     if (RightButton.Read())
     {
-        BlueLed.Set(KnobAttackTime.getValue());
-        RedLed.Set(KnobSustainTime.getValue());
-        PurpleLed.Set(fabs(lastVarGainValue) * LED_DISPLAY_GAIN);
+        BlueLed.Set(0);
+        RedLed.Set(0.8);
     }
     else
     {
-        BlueLed.Set(0);
+        BlueLed.Set(0.8);
         RedLed.Set(0);
-        PurpleLed.Set(0);
     }
+
+    PurpleLed.Set(LeftButton.Read() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY
+
     RedLed.Update();
     BlueLed.Update();
     PurpleLed.Update();
@@ -45,11 +56,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
 void UICallback(void *data)
 {
-    KnobAttack.updateKnob(hw.adc.GetFloat(0));
-    KnobAttackTime.updateKnob(hw.adc.GetFloat(2));
-    KnobSustain.updateKnob(hw.adc.GetFloat(1));
-    KnobSustainTime.updateKnob(hw.adc.GetFloat(3));
-    transientDSPuiProcess();
 }
 
 void VisualCallback(void *data)
@@ -85,7 +91,7 @@ void halInit()
 
     cliInit();
     transientDSPinit();
-    halTimerInit();
+    // halTimerInit();
     aiInit();
     halStartAudio();
 }
