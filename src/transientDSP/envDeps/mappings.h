@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../hal/globalDefinitions.hpp"
 #include "constants.h"
 #include <cmath>
 
@@ -149,7 +150,7 @@ inline double skew_norm(double val, double skew)
  */
 inline float prewarp(const float freq, const float sample_rate)
 {
-    const float wd = (float)constants::TWO_PI * freq;
+    const float wd = (float)TWO_PI * freq;
     const float wa = 2.0f * sample_rate * tanf(wd / (2.0f * sample_rate));
 
     return wa;
@@ -167,7 +168,7 @@ inline float prewarp(const float freq, const float sample_rate)
  */
 inline double prewarp(const double freq, const double sample_rate)
 {
-    const double wd = constants::TWO_PI * freq;
+    const double wd = TWO_PI * freq;
     const double wa = 2.0 * sample_rate * tan(wd / (2.0 * sample_rate));
 
     return wa;

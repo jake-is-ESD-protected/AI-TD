@@ -1,4 +1,5 @@
 #include "SmootherExponential.h"
+#include "../hal/globalDefinitions.hpp"
 
 SmootherExponentialSingleStage::SmootherExponentialSingleStage() : sample_rate(0.0), state(0.0), alpha_attack(0.0), alpha_release(0.0)
 {
@@ -18,7 +19,7 @@ void SmootherExponentialSingleStage::set_attack(double time_ms, int num_stages)
     // Correct time for cascaded stages
     const double cm = cutoff_multiplier(num_stages);
 
-    alpha_attack = exp(-bdsp::constants::TWO_PI * cm / (sample_rate * time_s));
+    alpha_attack = exp(-TWO_PI * cm / (sample_rate * time_s));
 }
 
 void SmootherExponentialSingleStage::set_release(double time_ms, int num_stages)
@@ -27,7 +28,7 @@ void SmootherExponentialSingleStage::set_release(double time_ms, int num_stages)
     const double time_s = time_ms / 1000.0;
 
     const double cm = cutoff_multiplier(num_stages);
-    alpha_release = exp(-bdsp::constants::TWO_PI * cm / (sample_rate * time_s));
+    alpha_release = exp(-TWO_PI * cm / (sample_rate * time_s));
 }
 
 double SmootherExponentialSingleStage::process(double x)
