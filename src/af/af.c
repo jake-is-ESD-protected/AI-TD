@@ -16,6 +16,7 @@
 #include <inttypes.h>
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 BTT *btt;
 #define BEAT_DETECTION_BUFFER_SIZE 64
@@ -41,6 +42,12 @@ double T2A = 0;
 
 void resetBuffer()
 {
+    memset(audioBuffer,0, sizeof(double) * AUDIO_BUFFER_SIZE);
+    memset(envBuffer,0, sizeof(double) * AUDIO_BUFFER_SIZE);
+    memset(onsetBuffer,0, sizeof(uint64_t) * MAX_ONSETS);
+    memset(onsetT1ABuffer,0, sizeof(double) * MAX_ONSETS);
+    memset(onsetT2ABuffer,0, sizeof(double) * MAX_ONSETS);
+    memset(buffer, 0, sizeof(dft_sample_t) * BEAT_DETECTION_BUFFER_SIZE);
     audioBufferIndex = 0;
     audioBufferRuntimeIndex = 0;
     onsetBufferIndex = 0;
@@ -107,11 +114,41 @@ void AFInCProcess()
     }
 
     //TODO:
-    //Spectral Flattness (whole buffer) -- FREQUENCY DOMAIN
-    //Spectral Centroid (whole buffer) -- FREQUENCY DOMAIN
-    //Spectral flux (over each frame) -- FREQUENCY DOMAIN
-    //4 BAND EQ -- (whole buffer) -- FREQUENCY DOMAIN
-    //OK LETS JUST DO EVERYTHING FOR EACH FRAME CUS SPECTRAL FLUX DEMANDS IT AND SEEMS TO BE VERY USEFULL
+    //Spectral Flattness (per frame) -- FREQUENCY DOMAIN
+    //Spectral Centroid (per frame) -- FREQUENCY DOMAIN
+    //Spectral flux (per frame) -- FREQUENCY DOMAIN
+    //4 BAND EQ -- (per frame) -- FREQUENCY DOMAIN
+
+    /*
+    OK HERES IS HOW WE GONNA DO IT
+    FFT_SIZE IS 2048 FOR DAISY REASONS
+    MAX FRAME IS HALF AUDIO BUFFER (4) * sample_rate = 384000
+    384000 / 2048 = 187.5 IS THE MAX AMOUNT OF WINDOWS PER MAX FRAME SIZE
+
+    WE USE THE CODE FROM THE SAXPEDAL (arm_cfft_f32) CMSIS DSP
+
+
+    */
+    //#define TARGET_DEVICE_DAISY 0
+
+    #ifdef TARGET_DEVICE_DAISY
+
+    arm_cfft_f32(&arm_cfft_sR_f32_len2048, input, 0 /*ifftFlag*/, 1 /*doBitReverse*/);
+    arm_cmplx_mag_f32(input, output, FFT_SIZE /*fftSize*/);
+
+    #else
+    //TODO:
+    /*
+    SOME IMPLEMENTATION THAT WORKS ON ALL PLATFORMS
+    dft_real_forward_dft(self->real, self->imag, self->fft_N); //FROM BEATDETECTION
+    //IN PLACE WE NEED TO GIVE IMAG BUFFER WITH 0s
+
+    //BUILD A FCUNTION FOR MAG VALUES!
+    
+    */
+    #endif
+
+
 
     //Crest Factor (whole buffer) -- TIME DOMAIN
 
@@ -185,6 +222,8 @@ double afGetSpectralFlatnessDB() {
 }
 
 double afGetTempo() {
+    //TODO:
+    //EVERYTHING ABOVE 160 IS //2
     return btt_get_tempo_bpm(btt);
 }
 

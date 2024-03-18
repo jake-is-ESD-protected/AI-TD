@@ -23,7 +23,7 @@ void initAf();
 
 void EnvFollowerInit();
 
-void BeatDetectionInit();
+void BeatDetectionInit(); 
 
 void AFInCAppend(double in);
 

@@ -1,4 +1,7 @@
 TARGET_EXEC = AFInC.dll
+
+
+
 BUILD_DIR = build
 
 SRCS ?= af.c #BEWARE INC FOR CPP IS NOT IMPLEMENTED YET DUE TO LINKING ERROR
@@ -22,6 +25,9 @@ LDFLAGS = -shared
 #CPP = C:\msys64\mingw64\bin\g++.exe
 CC = gcc
 CFLAGS = -fPIC
+
+TARGET_DEVICE_DAISY = 1
+CFLAGS += -DTARGET_DEVICE_DAISY
 
 $(TARGET_EXEC): $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $@ $(LDLIBS) 
