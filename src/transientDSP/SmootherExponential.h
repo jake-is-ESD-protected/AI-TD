@@ -12,8 +12,8 @@ class SmootherExponentialSingleStage
 
     void reset(double _sample_rate);
 
-    void set_attack(double time_ms, int num_stages = 1);
-    void set_release(double time_ms, int num_stages = 1);
+    void set_attack(double time_ms, double cm);
+    void set_release(double time_ms, double cm);
 
     double process(double x);
 
@@ -23,8 +23,6 @@ class SmootherExponentialSingleStage
 
     double alpha_attack;
     double alpha_release;
-
-    static double cutoff_multiplier(int num_stages);
 };
 
 // Exponential smoother (n-stage)
@@ -45,5 +43,6 @@ class SmootherExponential
 
   private:
     int num_stages;
+    double cm;
     std::unique_ptr<SmootherExponentialSingleStage[]> smoothers;
 };

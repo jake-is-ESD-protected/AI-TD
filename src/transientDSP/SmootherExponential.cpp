@@ -11,42 +11,25 @@ void SmootherExponentialSingleStage::reset(double _sample_rate)
     state = 0.0;
 }
 
-void SmootherExponentialSingleStage::set_attack(double time_ms, int num_stages)
+void SmootherExponentialSingleStage::set_attack(double time_ms, double cm)
 {
     // Convert time to seconds
     const double time_s = time_ms / 1000.0;
-
-    // Correct time for cascaded stages
-    const double cm = cutoff_multiplier(num_stages);
-
     alpha_attack = exp(-TWO_PI * cm / (sample_rate * time_s));
 }
 
-void SmootherExponentialSingleStage::set_release(double time_ms, int num_stages)
+void SmootherExponentialSingleStage::set_release(double time_ms, double cm)
 {
     // Convert time to seconds
     const double time_s = time_ms / 1000.0;
-
-    const double cm = cutoff_multiplier(num_stages);
     alpha_release = exp(-TWO_PI * cm / (sample_rate * time_s));
 }
 
 double SmootherExponentialSingleStage::process(double x)
 {
     // Find output
-
-    double y = 0.0;
-    double alpha = 0.0;
-    if (x > state)
-    {
-        alpha = alpha_attack;
-    }
-    else
-    {
-        alpha = alpha_release;
-    }
-
-    y = x + alpha * (state - x);
+    double alpha = (x > state) ? alpha_attack : alpha_release;
+    double y = alpha * (state - x) + x;
 
     // Update state
     state = y;
@@ -54,20 +37,12 @@ double SmootherExponentialSingleStage::process(double x)
     return y;
 }
 
-double SmootherExponentialSingleStage::cutoff_multiplier(int num_stages)
-{
-    // Helper function to be used in correction of time constants when cascading
-    // stages
-
-    const double cm = 1.0 / (sqrt(pow(2.0, 1.0 / num_stages) - 1.0));
-    return cm;
-}
-
 SmootherExponential::SmootherExponential() : num_stages(0){};
 
 void SmootherExponential::init(int _num_stages)
 {
     num_stages = _num_stages;
+    cm = 1.0 / (sqrt(pow(2.0, 1.0 / num_stages) - 1.0));
     smoothers.reset(new SmootherExponentialSingleStage[num_stages]);
 }
 
@@ -83,7 +58,7 @@ void SmootherExponential::set_attack(double time_ms, int num_stages)
 {
     for (int n = 0; n < num_stages; ++n)
     {
-        smoothers[n].set_attack(time_ms, num_stages);
+        smoothers[n].set_attack(time_ms, cm);
     }
 }
 
@@ -91,7 +66,7 @@ void SmootherExponential::set_release(double time_ms, int num_stages)
 {
     for (int n = 0; n < num_stages; ++n)
     {
-        smoothers[n].set_release(time_ms, num_stages);
+        smoothers[n].set_release(time_ms, cm);
     }
 }
 
@@ -101,6 +76,5 @@ double SmootherExponential::process(double x)
     {
         x = smoothers[n].process(x);
     }
-
     return x;
 }
