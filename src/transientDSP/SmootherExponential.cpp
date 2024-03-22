@@ -56,6 +56,7 @@ void SmootherExponential::reset(double sample_rate)
 
 void SmootherExponential::set_attack(double time_ms, int num_stages)
 {
+    attack_time = time_ms;
     for (int n = 0; n < num_stages; ++n)
     {
         smoothers[n].set_attack(time_ms, cm);
@@ -64,10 +65,21 @@ void SmootherExponential::set_attack(double time_ms, int num_stages)
 
 void SmootherExponential::set_release(double time_ms, int num_stages)
 {
+    release_time = time_ms;
     for (int n = 0; n < num_stages; ++n)
     {
         smoothers[n].set_release(time_ms, cm);
     }
+}
+
+double SmootherExponential::get_attack()
+{
+    return attack_time;
+}
+
+double SmootherExponential::get_release()
+{
+    return release_time;
 }
 
 double SmootherExponential::process(double x)

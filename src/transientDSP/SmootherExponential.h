@@ -39,9 +39,15 @@ class SmootherExponential
     void set_attack(double time_ms, int num_stages = 1);
     void set_release(double time_ms, int num_stages = 1);
 
+    double get_attack();
+    double get_release();
+
     double process(double x);
 
   private:
+    double attack_time;
+    double release_time;
+
     int num_stages;
     double cm;
     std::unique_ptr<SmootherExponentialSingleStage[]> smoothers;

@@ -24,37 +24,41 @@ static TimerHandle timerUI;
 static TimerHandle timerVisual;
 
 uint64_t uiProcessCounter = 0;
+uint64_t visualProcessCounter = 0;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
-    KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Read());
-    KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Read());
-    KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Read());
-    KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Read());
-
     if (uiProcessCounter == 3200)
     {
-        uiProcessCounter = 0;
+        KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Read());
+        KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Read());
+        KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Read());
+        KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Read());
+
         transientDSPuiProcess();
+        uiProcessCounter = 0;
     }
     uiProcessCounter++;
+
     transientDSPprocess(in[0][0]);
 
-    // BlueLed.Set(RightButton.Read() ? 1 : 0);
-    // RedLed.Set(RightButton.Read() ? 0 : 1);
-
-    if (RightButton.Read())
+    if (visualProcessCounter == 1600)
     {
-        BlueLed.Set(0);
-        RedLed.Set(0.8);
-    }
-    else
-    {
-        BlueLed.Set(0.8);
-        RedLed.Set(0);
-    }
+        if (RightButton.Read())
+        {
+            BlueLed.Set(0);
+            RedLed.Set(0.8);
+        }
+        else
+        {
+            BlueLed.Set(0.8);
+            RedLed.Set(0);
+        }
+        PurpleLed.Set(LeftButton.Read() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY
 
-    PurpleLed.Set(LeftButton.Read() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY
+        visualProcessCounter = 0;
+    }
+    visualProcessCounter++;
 
     RedLed.Update();
     BlueLed.Update();
