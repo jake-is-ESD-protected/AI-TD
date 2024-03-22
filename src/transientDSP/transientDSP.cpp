@@ -48,16 +48,21 @@ void transientDSPinit()
 
 void transientDSPprocess(double in)
 {
-    const double env = envFollower.process(fabs(in * inputVolume));
-    const double attackFastFV = attackFastF.process(env);
-    const double attackSlowFV = attackSlowF.process(env);
-    const double sustainFastFV = sustainFastF.process(env);
-    const double sustainSlowFV = sustainSlowF.process(env);
-    lastVarGainValue = (UIgetBipolarAttackValue() * fabs(attackFastFV - attackSlowFV)) + (UIgetBipolarSustainValue() * fabs(sustainFastFV - sustainSlowFV));
     if (halButtonRead())
+    {
+        const double env = envFollower.process(fabs(in * inputVolume));
+        const double attackFastFV = attackFastF.process(env);
+        const double attackSlowFV = attackSlowF.process(env);
+        const double sustainFastFV = sustainFastF.process(env);
+        const double sustainSlowFV = sustainSlowF.process(env);
+        lastVarGainValue = (UIgetBipolarAttackValue() * fabs(attackFastFV - attackSlowFV)) + (UIgetBipolarSustainValue() * fabs(sustainFastFV - sustainSlowFV));
+
         halVCAwrite(baseGain + lastVarGainValue);
+    }
     else
+    {
         halVCAwrite(baseGain);
+    }
 }
 
 void transientDSPuiProcess()

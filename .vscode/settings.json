@@ -87,7 +87,8 @@
     "buffercircular.h": "c",
     "ranges": "c",
     "percentilecalculator.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "math.h": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [

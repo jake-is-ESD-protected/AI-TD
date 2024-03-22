@@ -23,6 +23,8 @@ static GPIO RightButton;
 static TimerHandle timerUI;
 static TimerHandle timerVisual;
 
+uint64_t uiProcessCounter = 0;
+
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Read());
@@ -30,7 +32,12 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Read());
     KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Read());
 
-    transientDSPuiProcess();
+    if (uiProcessCounter == 3200)
+    {
+        uiProcessCounter = 0;
+        transientDSPuiProcess();
+    }
+    uiProcessCounter++;
     transientDSPprocess(in[0][0]);
 
     // BlueLed.Set(RightButton.Read() ? 1 : 0);

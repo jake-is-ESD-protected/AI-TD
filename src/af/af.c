@@ -15,6 +15,7 @@
 #include "beatDetectionDSP/BTT.h"
 #include <inttypes.h>
 #include <math.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
