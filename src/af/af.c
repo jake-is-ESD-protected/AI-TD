@@ -18,12 +18,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 BTT *btt;
 #define BEAT_DETECTION_BUFFER_SIZE 64
 #define AUDIO_BUFFER_SIZE_S 8
 #define AUDIO_BUFFER_SIZE sampleRate * AUDIO_BUFFER_SIZE_S
 #define MAX_ONSETS 4 * AUDIO_BUFFER_SIZE_S // 4 BPS IS 240 BPM
+
+#define FFT_N2_LENGTH 512
 
 __attribute__((section(".sdram_bss"))) double audioBuffer[AUDIO_BUFFER_SIZE];
 __attribute__((section(".sdram_bss"))) double envBuffer[AUDIO_BUFFER_SIZE];
@@ -33,10 +36,16 @@ __attribute__((section(".sdram_bss"))) uint64_t onsetBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double onsetT1ABuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double onsetT2ABuffer[MAX_ONSETS];
 
+__attribute__((section(".sdram_bss"))) float magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
+
+__attribute__((section(".sdram_bss"))) float magnitudeBuffer[FFT_N2_LENGTH];
+
 uint64_t audioBufferIndex = 0;
 uint64_t audioBufferRuntimeIndex = 0;
 uint64_t onsetBufferIndex = 0;
 dft_sample_t buffer[BEAT_DETECTION_BUFFER_SIZE];
+
+bool firstSepctrumFlag = true;
 
 double T1A = 0;
 double T2A = 0;
@@ -52,6 +61,7 @@ void resetBuffer()
     audioBufferIndex = 0;
     audioBufferRuntimeIndex = 0;
     onsetBufferIndex = 0;
+    firstSepctrumFlag = true;
 }
 
 void onset_detected_callback(void *SELF, unsigned long long sample_time)
@@ -59,6 +69,11 @@ void onset_detected_callback(void *SELF, unsigned long long sample_time)
     if(onsetBufferIndex < MAX_ONSETS)
     {
         onsetBuffer[onsetBufferIndex] = audioBufferRuntimeIndex;
+        for(int i = 0; i < FFT_N2_LENGTH; i++)
+        {
+            magnitudeBeatBuffer[onsetBufferIndex][i] = magnitudeBuffer[i];
+        }
+        firstSepctrumFlag = true;
         onsetBufferIndex++;
     }
 }
@@ -104,8 +119,31 @@ void AFInCAppend(double in)
     }
 }
 
+void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)
+{
+    if(N != FFT_N2_LENGTH)
+        return; //TODO: ERROR HANDLING
+
+    if(firstSepctrumFlag)
+    {
+        for(int i = 0; i < N; i ++)
+        {
+            magnitudeBuffer[i] = mag[i];
+        }
+        firstSepctrumFlag = false;
+    }
+    else
+    {
+        for(int i = 0; i < N; i ++)
+        {
+            magnitudeBuffer[i] = (magnitudeBuffer[i] + mag[i]) / 2.0;
+        }
+    }
+}
+
 void AFInCProcess()
 {
+
     for (uint64_t i = 0; i < audioBufferIndex; i++)
     {
         buffer[0] = audioBuffer[i];
@@ -117,7 +155,7 @@ void AFInCProcess()
     //TODO:
     //Spectral Flattness (per frame) -- FREQUENCY DOMAIN
     //Spectral Centroid (per frame) -- FREQUENCY DOMAIN
-    //Spectral flux (per frame) -- FREQUENCY DOMAIN
+    //Spectral flux (per frame) -- FREQUENCY DOMAIN //THIS IS PROPABLY A PER BUFFER THING
     //4 BAND EQ -- (per frame) -- FREQUENCY DOMAIN
 
     /*
@@ -134,8 +172,8 @@ void AFInCProcess()
 
     #ifdef TARGET_DEVICE_DAISY
 
-    arm_cfft_f32(&arm_cfft_sR_f32_len2048, input, 0 /*ifftFlag*/, 1 /*doBitReverse*/);
-    arm_cmplx_mag_f32(input, output, FFT_SIZE /*fftSize*/);
+    //arm_cfft_f32(&arm_cfft_sR_f32_len2048, input, 0 /*ifftFlag*/, 1 /*doBitReverse*/);
+    //arm_cmplx_mag_f32(input, output, FFT_SIZE /*fftSize*/);
 
     #else
     //TODO:
@@ -308,10 +346,19 @@ uint64_t __getTA2Buffer(void){
     return sample; 
 }
 
+uint64_t __MagnitudeIndex = 0;
+double __getBeatMagnitude(int beatIndex){
+    double sample = magnitudeBeatBuffer[beatIndex][__MagnitudeIndex];
+    __MagnitudeIndex++;
+    if(__MagnitudeIndex == FFT_N2_LENGTH) { __MagnitudeIndex = 0; }
+    return sample; 
+}
+
 void __resetIndexDebug(void){
     __audioIndex = 0;
     __envIndex = 0;
     __onsetIndex = 0;
     __TA1Index = 0;
     __TA2Index = 0;
+    __MagnitudeIndex = 0;
 }

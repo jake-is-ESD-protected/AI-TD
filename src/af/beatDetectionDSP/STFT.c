@@ -108,7 +108,7 @@ void stft_process(STFT* self, dft_sample_t* real_input, int len, stft_onprocess_
             }
         
           dft_real_forward_dft(self->real, self->imag, self->fft_N);
-          onprocess           (onprocess_self, self->real, self->imag, self->fft_N);
+          onprocess(onprocess_self, self->real, self->imag, self->fft_N);
           if(self->should_resynthesize)
             {
               dft_real_inverse_dft(self->real, self->imag, self->fft_N);

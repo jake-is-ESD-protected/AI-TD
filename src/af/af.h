@@ -64,6 +64,8 @@ double afGetPBandMH();
 
 double afGetCrestFactor();
 
+void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux);
+
 
 // --------------------------------------------------------------------------
 // helper functions for dev debugging
@@ -74,5 +76,7 @@ double __getAudioBuffer(void);
 double __getEnvBuffer(void);
 
 uint64_t __getOnsetBuffer(void);
+
+double __getBeatMagnitude(int beatIndex);
 
 #endif // _AF_H_

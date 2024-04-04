@@ -34,6 +34,8 @@
 #include <math.h>   //log
 #include <string.h> //memset
 
+#include "af.h"
+
 #include <stdio.h> //testing only
 
 #define BPM_TO_LAG(bpm) (60 * self->oss_sample_rate / ((float)(bpm)))
@@ -374,6 +376,8 @@ void btt_onset_tracking              (BTT* self, dft_sample_t* real, dft_sample_
       self->prev_spectrum_magnitude[i] = real[i];
     }
   
+  spectrumCalculatedCallback(real, n_over_2, flux); //RETURNING SPECTRUM TO AF FOR FURTHER CALCULATIONS
+
   //10HZ low-pass filter flux to obtaion OSS, delays oss by (filter_order-1) / 2 oss samples
   filter_process_data(self->oss_filter, &flux, 1);
   self->oss[self->oss_index] = flux;
@@ -690,7 +694,6 @@ void btt_spectral_flux_stft_callback(void* SELF, dft_sample_t* real, dft_sample_
         }
       return;
     }
-  
   
   if((self->tracking_mode == BTT_ONSET_AND_TEMPO_TRACKING) ||
      (self->tracking_mode == BTT_ONSET_AND_TEMPO_AND_BEAT_TRACKING))
