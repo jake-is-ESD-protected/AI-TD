@@ -253,12 +253,52 @@ double afGetT2A() {
 
 double afGetSpectralCentroid()
 {
-    return 1;
+    double spectralCentroidMean = 0;
+    for(uint32_t n_onsets = 0; n_onsets < onsetBufferIndex - 1; n_onsets++)
+    {
+        double spectralCentroid = 0.0;
+        double magnitudeSum = 0.0;
+        for (uint32_t i = 0; i < FFT_N2_LENGTH; i++)
+        {
+            spectralCentroid += (magnitudeBeatBuffer[n_onsets][i] * i);
+            magnitudeSum += magnitudeBeatBuffer[n_onsets][i];
+        }
+        spectralCentroid /= magnitudeSum;
+        spectralCentroidMean += (spectralCentroid / FFT_N2_LENGTH) * sampleRate;
+    }
+    return spectralCentroidMean / onsetBufferIndex;
+    // return 1;
 }
 
-double afGetSpectralFlatnessDB() {
-    return 1;
+
+double afGetSpectralFlatness()
+{
+    double spectralflatnessMean = 0;
+    for(uint32_t n_onsets = 0; n_onsets < onsetBufferIndex - 1; n_onsets++)
+    {
+        double geometricMean = 1.0;
+        double arithmeticMean = 0.0;
+        for (uint32_t i = 0; i < FFT_N2_LENGTH; i++) {
+            geometricMean *= magnitudeBeatBuffer[n_onsets][i];
+            arithmeticMean += magnitudeBeatBuffer[n_onsets][i];
+        }
+        if (fabs(arithmeticMean) < 0.00001) {
+            // Handle case where arithmetic mean is close to 0 to avoid division by zero
+            continue; // Skip this onset
+        }
+        geometricMean = pow(geometricMean, 1.0/FFT_N2_LENGTH);
+        arithmeticMean /= FFT_N2_LENGTH;
+        spectralflatnessMean += (geometricMean / arithmeticMean);
+    }
+    if (onsetBufferIndex > 0) {
+        // return spectralflatnessMean / (onsetBufferIndex - 1);
+        return magnitudeBeatBuffer[0][3];
+    } else {
+        return 1.0; // Handle case where onsetBufferIndex is 0 to avoid division by zero
+    }
 }
+
+
 
 double afGetTempo() {
     //TODO:
