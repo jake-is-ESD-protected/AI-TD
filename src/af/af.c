@@ -291,8 +291,7 @@ double afGetSpectralFlatness()
         spectralflatnessMean += (geometricMean / arithmeticMean);
     }
     if (onsetBufferIndex > 0) {
-        // return spectralflatnessMean / (onsetBufferIndex - 1);
-        return magnitudeBeatBuffer[0][3];
+        return spectralflatnessMean / (onsetBufferIndex - 1);
     } else {
         return 1.0; // Handle case where onsetBufferIndex is 0 to avoid division by zero
     }
