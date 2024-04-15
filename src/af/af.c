@@ -279,15 +279,19 @@ double afGetSpectralFlatness()
         double geometricMean = 1.0;
         double arithmeticMean = 0.0;
         for (uint32_t i = 0; i < FFT_N2_LENGTH; i++) {
-            geometricMean *= magnitudeBeatBuffer[n_onsets][i];
+            if(magnitudeBeatBuffer[n_onsets][i] != 0.0)
+                geometricMean = geometricMean * (double) (magnitudeBeatBuffer[n_onsets][i]);
             arithmeticMean += magnitudeBeatBuffer[n_onsets][i];
         }
         if (fabs(arithmeticMean) < 0.00001) {
             // Handle case where arithmetic mean is close to 0 to avoid division by zero
             continue; // Skip this onset
         }
-        geometricMean = pow(geometricMean, 1.0/FFT_N2_LENGTH);
-        arithmeticMean /= FFT_N2_LENGTH;
+
+        geometricMean = pow(geometricMean, 1.0 / (double) FFT_N2_LENGTH);
+        
+        arithmeticMean /= (double) FFT_N2_LENGTH;
+        
         spectralflatnessMean += (geometricMean / arithmeticMean);
     }
     if (onsetBufferIndex > 0) {
