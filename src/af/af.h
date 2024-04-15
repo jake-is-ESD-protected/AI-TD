@@ -11,11 +11,24 @@
 #define _AF_H_
 
 #include <inttypes.h>
+#include "beatDetectionDSP/BTT.h"
 
 #define ENV_SMOOTH_ORDER 4           // in n
 #define ENV_SMOOTH_ATTACK 2          // in ms
 #define ENV_SMOOTH_RELEASE 200       // in ms
 #define ONSET_DETECTION_COMPENSATION_N (uint64_t)(20 * 0.001 * sampleRate) // The onset detection algorithm is about 10ms to late for proper attack detection
+
+#define BEAT_DETECTION_BUFFER_SIZE 64
+#define AUDIO_BUFFER_SIZE_S 8
+#define AUDIO_BUFFER_SIZE sampleRate * AUDIO_BUFFER_SIZE_S
+#define MAX_ONSETS 4 * AUDIO_BUFFER_SIZE_S // 4 BPS IS 240 BPM
+
+#define FFT_N2_LENGTH 512
+
+extern uint64_t audioBufferIndex;
+extern uint64_t audioBufferRuntimeIndex;
+extern uint64_t onsetBufferIndex;
+extern dft_sample_t dftBuffer[BEAT_DETECTION_BUFFER_SIZE];
 
 void resetBuffer();
 
@@ -52,7 +65,7 @@ uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx);
 
 double afGetSpectralCentroid();
 
-double afGetSpectralFlatnessDB();
+double afGetSpectralFlatness();
 
 double afGetTempo();
 

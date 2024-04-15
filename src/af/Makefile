@@ -7,6 +7,7 @@ BUILD_DIR = build
 SRCS ?= af.c #BEWARE INC FOR CPP IS NOT IMPLEMENTED YET DUE TO LINKING ERROR
 SRCS += $(shell ls beatDetectionDSP/*.c)
 SRCS += $(shell ls transientDetectionDSP/*.c)
+SRCS += $(shell ls audioFeatureDSP/*.c)
 SRCS += $(shell ls percentileCalculator/*.c)
 SRCS += $(shell ls transientDetectionDSP/envDeps/*.c)
 

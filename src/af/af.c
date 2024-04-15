@@ -10,6 +10,7 @@
 #include "af.h"
 #include "transientDetectionDSP/Smoother4Exponential.h"
 #include "transientDetectionDSP/EnvelopeFollowerPeakHold.h"
+#include "audioFeatureDSP/audioFeatureDSP.h"
 #include "percentileCalculator/percentileCalculator.h"
 #include "../hal/globalDefinitions.hpp"
 #include "beatDetectionDSP/BTT.h"
@@ -21,12 +22,6 @@
 #include <stdbool.h>
 
 BTT *btt;
-#define BEAT_DETECTION_BUFFER_SIZE 64
-#define AUDIO_BUFFER_SIZE_S 8
-#define AUDIO_BUFFER_SIZE sampleRate * AUDIO_BUFFER_SIZE_S
-#define MAX_ONSETS 4 * AUDIO_BUFFER_SIZE_S // 4 BPS IS 240 BPM
-
-#define FFT_N2_LENGTH 512
 
 __attribute__((section(".sdram_bss"))) double audioBuffer[AUDIO_BUFFER_SIZE];
 __attribute__((section(".sdram_bss"))) double envBuffer[AUDIO_BUFFER_SIZE];
@@ -36,17 +31,32 @@ __attribute__((section(".sdram_bss"))) uint64_t onsetBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double onsetT1ABuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double onsetT2ABuffer[MAX_ONSETS];
 
-__attribute__((section(".sdram_bss"))) float magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
-
 __attribute__((section(".sdram_bss"))) float magnitudeBuffer[FFT_N2_LENGTH];
+
+__attribute__((section(".sdram_bss"))) double spectralCentroidBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) double spectralFlatnessBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) double bandLBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) double bandMLBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) double bandMHBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) double bandHBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) double crestFactorBuffer[MAX_ONSETS];
+
+__attribute__((section(".sdram_bss"))) float magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
 
 uint64_t audioBufferIndex = 0;
 uint64_t audioBufferRuntimeIndex = 0;
 uint64_t onsetBufferIndex = 0;
-dft_sample_t buffer[BEAT_DETECTION_BUFFER_SIZE];
+dft_sample_t dftBuffer[BEAT_DETECTION_BUFFER_SIZE];
 
 bool firstSepctrumFlag = true;
 
+double spectralCentroid = 0;
+double spectralFlatness = 0;
+double BandL = 0;
+double BandML = 0;
+double BandMH = 0;
+double BandH = 0;
+double crestFactor = 0;
 double T1A = 0;
 double T2A = 0;
 
@@ -57,7 +67,7 @@ void resetBuffer()
     memset(onsetBuffer,0, sizeof(uint64_t) * MAX_ONSETS);
     memset(onsetT1ABuffer,0, sizeof(double) * MAX_ONSETS);
     memset(onsetT2ABuffer,0, sizeof(double) * MAX_ONSETS);
-    memset(buffer, 0, sizeof(dft_sample_t) * BEAT_DETECTION_BUFFER_SIZE);
+    memset(dftBuffer, 0, sizeof(dft_sample_t) * BEAT_DETECTION_BUFFER_SIZE);
     audioBufferIndex = 0;
     audioBufferRuntimeIndex = 0;
     onsetBufferIndex = 0;
@@ -146,50 +156,11 @@ void AFInCProcess()
 
     for (uint64_t i = 0; i < audioBufferIndex; i++)
     {
-        buffer[0] = audioBuffer[i];
-        btt_process(btt, buffer, 1);
+        dftBuffer[0] = audioBuffer[i];
+        btt_process(btt, dftBuffer, 1);
         envBuffer[i] = processEnvelope(EnvelopeFollowerPeakHoldProcess(audioBuffer[i]));
         audioBufferRuntimeIndex++;
     }
-
-    //TODO:
-    //Spectral Flattness (per frame) -- FREQUENCY DOMAIN
-    //Spectral Centroid (per frame) -- FREQUENCY DOMAIN
-    //Spectral flux (per frame) -- FREQUENCY DOMAIN //THIS IS PROPABLY A PER BUFFER THING
-    //4 BAND EQ -- (per frame) -- FREQUENCY DOMAIN
-
-    /*
-    OK HERES IS HOW WE GONNA DO IT
-    FFT_SIZE IS 2048 FOR DAISY REASONS
-    MAX FRAME IS HALF AUDIO BUFFER (4) * sample_rate = 384000
-    384000 / 2048 = 187.5 IS THE MAX AMOUNT OF WINDOWS PER MAX FRAME SIZE
-
-    WE TRY TO MAKE A BUFFER IN STFT.h and read it here
-    THEN PROCESS AF FROM IT
-
-    */
-    //#define TARGET_DEVICE_DAISY 0
-
-    #ifdef TARGET_DEVICE_DAISY
-
-    //arm_cfft_f32(&arm_cfft_sR_f32_len2048, input, 0 /*ifftFlag*/, 1 /*doBitReverse*/);
-    //arm_cmplx_mag_f32(input, output, FFT_SIZE /*fftSize*/);
-
-    #else
-    //TODO:
-    /*
-    SOME IMPLEMENTATION THAT WORKS ON ALL PLATFORMS
-    dft_real_forward_dft(self->real, self->imag, self->fft_N); //FROM BEATDETECTION
-    //IN PLACE WE NEED TO GIVE IMAG BUFFER WITH 0s
-
-    //BUILD A FCUNTION FOR MAG VALUES!
-    
-    */
-    #endif
-
-
-
-    //Crest Factor (whole buffer) -- TIME DOMAIN
 
     for (uint64_t i = 0; i < onsetBufferIndex-1; i++) //COMPENSATE ALL ONSETS FIRST
     {
@@ -209,8 +180,24 @@ void AFInCProcess()
 
         onsetT1ABuffer[i] = idxMax - idxMinPre;
         onsetT2ABuffer[i] = idxMinPost - idxMax;
-    }
 
+        //FETCH AF HERE FROM FUNCTION IDENTICAL TO ABOVE
+        spectralCentroidBuffer[i] = calculateSpectralCentroid(i);
+        spectralFlatnessBuffer[i] = calculateSpectralFlatness(i);
+        bandLBuffer[i] = calculateBandL(i);
+        bandMLBuffer[i] = calculateBandML(i);
+        bandMHBuffer[i] = calculateBandMH(i);
+        bandHBuffer[i] = calculateBandH(i);
+        crestFactorBuffer[i] = calculateCrestFactor(audioBuffer, onsetBuffer[i], onsetBuffer[i+1] - onsetBuffer[i]);
+
+    }
+    spectralCentroid = findPercentile(spectralCentroidBuffer, onsetBufferIndex, 75); 
+    spectralFlatness = findPercentile(spectralFlatnessBuffer, onsetBufferIndex, 75);
+    BandL = findPercentile(bandLBuffer, onsetBufferIndex, 75);
+    BandML = findPercentile(bandMLBuffer, onsetBufferIndex, 75);
+    BandMH = findPercentile(bandMHBuffer, onsetBufferIndex, 75);
+    BandH = findPercentile(bandHBuffer, onsetBufferIndex, 75);
+    crestFactor = findPercentile(crestFactorBuffer, onsetBufferIndex, 75);
     T1A = findPercentile(onsetT1ABuffer, onsetBufferIndex, 75);
     T2A = findPercentile(onsetT2ABuffer, onsetBufferIndex, 75);
 }
@@ -253,55 +240,14 @@ double afGetT2A() {
 
 double afGetSpectralCentroid()
 {
-    double spectralCentroidMean = 0;
-    for(uint32_t n_onsets = 0; n_onsets < onsetBufferIndex - 1; n_onsets++)
-    {
-        double spectralCentroid = 0.0;
-        double magnitudeSum = 0.0;
-        for (uint32_t i = 0; i < FFT_N2_LENGTH; i++)
-        {
-            spectralCentroid += (magnitudeBeatBuffer[n_onsets][i] * i);
-            magnitudeSum += magnitudeBeatBuffer[n_onsets][i];
-        }
-        spectralCentroid /= magnitudeSum;
-        spectralCentroidMean += (spectralCentroid / FFT_N2_LENGTH) * sampleRate;
-    }
-    return spectralCentroidMean / onsetBufferIndex;
-    // return 1;
+    return spectralCentroid;
 }
 
 
 double afGetSpectralFlatness()
 {
-    double spectralflatnessMean = 0;
-    for(uint32_t n_onsets = 0; n_onsets < onsetBufferIndex - 1; n_onsets++)
-    {
-        double geometricMean = 1.0;
-        double arithmeticMean = 0.0;
-        for (uint32_t i = 0; i < FFT_N2_LENGTH; i++) {
-            if(magnitudeBeatBuffer[n_onsets][i] != 0.0)
-                geometricMean = geometricMean * (double) (magnitudeBeatBuffer[n_onsets][i]);
-            arithmeticMean += magnitudeBeatBuffer[n_onsets][i];
-        }
-        if (fabs(arithmeticMean) < 0.00001) {
-            // Handle case where arithmetic mean is close to 0 to avoid division by zero
-            continue; // Skip this onset
-        }
-
-        geometricMean = pow(geometricMean, 1.0 / (double) FFT_N2_LENGTH);
-        
-        arithmeticMean /= (double) FFT_N2_LENGTH;
-        
-        spectralflatnessMean += (geometricMean / arithmeticMean);
-    }
-    if (onsetBufferIndex > 0) {
-        return spectralflatnessMean / (onsetBufferIndex - 1);
-    } else {
-        return 1.0; // Handle case where onsetBufferIndex is 0 to avoid division by zero
-    }
+    return spectralFlatness;
 }
-
-
 
 double afGetTempo() {
     //TODO:
@@ -310,38 +256,23 @@ double afGetTempo() {
 }
 
 double afGetPBandL() {
-    return 1;
+    return BandL;
 }
 
 double afGetPBandML() {
-    return 1;
+    return BandML;
 }
 
 double afGetPBandMH() {
-    return 1;
+    return BandMH;
+}
+
+double afGetPBandH() {
+    return BandH;
 }
 
 double afGetCrestFactor() {
-    double max_sample = 0.0;
-    double rms = 0.0;
-    double abs_sample = 0.0;
-
-    for(int i = 0; i < audioBufferRuntimeIndex;i++)
-    {
-        abs_sample = abs(buffer[i]);
-        if(abs_sample > max_sample)
-            max_sample = abs_sample;
-    }
-
-    for(int i = 0; i < audioBufferRuntimeIndex;i++)
-        rms += buffer[i] * buffer[i];
-    rms = rms / audioBufferRuntimeIndex;
-    rms = pow(rms, 0.5);
-
-    if(rms == 0.0)
-        return 0.0;
-
-    return max_sample / rms;
+    return crestFactor;
 }
 
 
