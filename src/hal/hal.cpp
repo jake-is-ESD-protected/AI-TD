@@ -65,6 +65,14 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     PurpleLed.Update();
 }
 
+void resetShiftLayer()
+{
+    KnobAttackTime.updateKnob(0.1, true);
+    KnobSustainTime.updateKnob(0.1, true);
+    KnobAttackTime.updateKnob(0.5, true);
+    KnobSustainTime.updateKnob(0.5, true);
+}
+
 void UICallback(void *data)
 {
 }

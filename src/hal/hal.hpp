@@ -10,6 +10,8 @@ using namespace daisy;
 /// @brief
 void halInit();
 
+void resetShiftLayer();
+
 /// @brief
 /// @param value
 void halVCAwrite(double value);
