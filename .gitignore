@@ -41,6 +41,7 @@
 
 # venv stuff
 .venv
+*.pyc
 
 # unneeded:
 include
