@@ -33,6 +33,7 @@ __attribute__((section(".sdram_bss"))) double onsetT2ABuffer[MAX_ONSETS];
 
 __attribute__((section(".sdram_bss"))) float magnitudeBuffer[FFT_N2_LENGTH];
 
+__attribute__((section(".sdram_bss"))) double spectralFluxBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double spectralCentroidBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double spectralFlatnessBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double bandLBuffer[MAX_ONSETS];
@@ -46,6 +47,7 @@ __attribute__((section(".sdram_bss"))) float magnitudeBeatBuffer[MAX_ONSETS][FFT
 uint64_t audioBufferIndex = 0;
 uint64_t audioBufferRuntimeIndex = 0;
 uint64_t onsetBufferIndex = 0;
+uint64_t spectralFluxIndex = 0;
 dft_sample_t dftBuffer[BEAT_DETECTION_BUFFER_SIZE];
 
 bool firstSepctrumFlag = true;
@@ -57,6 +59,7 @@ double BandML = 0;
 double BandMH = 0;
 double BandH = 0;
 double crestFactor = 0;
+double spectralFlux = 0;
 double T1A = 0;
 double T2A = 0;
 
@@ -72,6 +75,7 @@ void resetBuffer()
     audioBufferRuntimeIndex = 0;
     onsetBufferIndex = 0;
     firstSepctrumFlag = true;
+    spectralFluxIndex = 0;
 }
 
 void onset_detected_callback(void *SELF, unsigned long long sample_time)
@@ -131,6 +135,10 @@ void AFInCAppend(double in)
 
 void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)
 {
+    spectralFluxBuffer[spectralFluxIndex] = spectralFlux;
+    if(spectralFluxIndex < MAX_ONSETS)
+        spectralFluxIndex++;
+
     if(N != FFT_N2_LENGTH)
         return; //TODO: ERROR HANDLING
 
@@ -198,6 +206,7 @@ void AFInCProcess()
     BandMH = findPercentile(bandMHBuffer, onsetBufferIndex, 75);
     BandH = findPercentile(bandHBuffer, onsetBufferIndex, 75);
     crestFactor = findPercentile(crestFactorBuffer, onsetBufferIndex, 75);
+    spectralFlux = findPercentile(spectralFluxBuffer, spectralFluxIndex, 75);
     T1A = findPercentile(onsetT1ABuffer, onsetBufferIndex, 75);
     T2A = findPercentile(onsetT2ABuffer, onsetBufferIndex, 75);
 }
@@ -273,6 +282,10 @@ double afGetPBandH() {
 
 double afGetCrestFactor() {
     return crestFactor;
+}
+
+double afGetSpectralFlux() {
+    return spectralFlux;
 }
 
 
