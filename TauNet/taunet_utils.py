@@ -1,6 +1,8 @@
 import os
 import scipy as sp
 import numpy as np
+from ctypes import *
+
 
 def read_audio_file(path, truncate_at=10):
     if path.endswith(".wav"):  # Check for .wav files
@@ -36,3 +38,48 @@ def read_audio_files(directory, truncate_at=10):
         if audio:
             audio_data_list.append(audio)
     return audio_data_list
+
+
+def af_dsp_init(path_to_dll):
+    lib = CDLL(path_to_dll)
+
+    lib.resetBuffer.argtypes = []
+    lib.resetBuffer.restype = None
+
+    lib.initAf.argtypes = []
+    lib.initAf.restype = None
+
+    lib.AFInCAppend.argtypes = [c_double]
+    lib.AFInCAppend.restype = None
+
+    lib.AFInCProcess.argtypes = []
+    lib.AFInCProcess.restype = None
+
+    lib.afGetT1A.argtypes = []
+    lib.afGetT1A.restype = c_double
+
+    lib.afGetT2A.argtypes = []
+    lib.afGetT2A.restype = c_double
+
+    lib.afGetTempo.argtypes = []
+    lib.afGetTempo.restype = c_double
+
+    lib.afGetSpectralCentroid.argtypes = []
+    lib.afGetSpectralCentroid.restype = c_double
+
+    lib.afGetSpectralFlatness.argtypes = []
+    lib.afGetSpectralFlatness.restype = c_double
+
+    lib.afGetPBandL.argtypes = []
+    lib.afGetPBandL.restype = c_double
+
+    lib.afGetPBandML.argtypes = []
+    lib.afGetPBandML.restype = c_double
+
+    lib.afGetPBandMH.argtypes = []
+    lib.afGetPBandMH.restype = c_double
+
+    lib.afGetPBandH.argtypes = []
+    lib.afGetPBandH.restype = c_double
+
+    return lib
