@@ -50,4 +50,5 @@ include
 transient_shaper.ipynb
 transient_shaper_lib.ipynb
 renders
-TauNet/*.wav
+*.wav
+*.csv
