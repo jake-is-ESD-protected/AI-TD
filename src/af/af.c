@@ -54,10 +54,10 @@ bool firstSepctrumFlag = true;
 
 double spectralCentroid = 0;
 double spectralFlatness = 0;
-double BandL = 0;
-double BandML = 0;
-double BandMH = 0;
-double BandH = 0;
+double BandL = 0; //150Hz
+double BandML = 0; //800Hz
+double BandMH = 0; //2kHz
+double BandH = 0; //20kHz
 double crestFactor = 0;
 double spectralFlux = 0;
 double T1A = 0;
@@ -161,7 +161,19 @@ void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)
 
 void AFInCProcess()
 {
-
+    double audioBufferMax = 0;
+    for (uint64_t i = 0; i < audioBufferIndex; i++)
+    {
+            if (fabs(audioBuffer[i]) > audioBufferMax) {
+                audioBufferMax = fabs(audioBuffer[i]);
+        }
+    }
+    double audioBufferNormalizationFactor = 1.0f / audioBufferMax;
+    for (uint64_t i = 0; i < audioBufferIndex; i++)
+    {
+        audioBuffer[i] *= audioBufferNormalizationFactor;
+    }
+    
     for (uint64_t i = 0; i < audioBufferIndex; i++)
     {
         dftBuffer[0] = audioBuffer[i];
