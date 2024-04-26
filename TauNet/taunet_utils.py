@@ -1,7 +1,9 @@
 import os
 import scipy as sp
 import numpy as np
+import pandas as pd
 from ctypes import *
+import json
 
 
 def read_audio_file(path, truncate_at=10):
@@ -82,4 +84,56 @@ def af_dsp_init(path_to_dll):
     lib.afGetPBandH.argtypes = []
     lib.afGetPBandH.restype = c_double
 
+    lib.afGetCrestFactor.argtypes = []
+    lib.afGetCrestFactor.restype = c_double
+
+    lib.afGetSpectralFlux.argtypes = []
+    lib.afGetSpectralFlux.restype = c_double
+
     return lib
+
+
+def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
+    lib = af_dsp_init(dsp_dll_path)
+    audio_data = read_audio_files(audio_dir)
+    human_data = pd.read_csv(human_input_csv)
+
+    input_data = dict()
+    output_data = dict()
+    
+    for audio, label, fs in audio_data:
+        lib.initAf()
+        lib.resetBuffer()
+        label = label.split()[0]
+        for sample in audio:
+            lib.AFInCAppend(sample)
+        lib.AFInCProcess()
+        
+        human_input = human_data[human_data['MEASUREMENT_ID'] == int(label)].iloc[0].to_dict()
+        human_input.pop("MEASUREMENT_ID")
+        human_input.pop("SONG_ID")
+        human_output = dict()
+        human_output["ATTACK_T1"] = human_input.pop("ATTACK_T1")
+        human_output["SUSTAIN_T1"] = human_input.pop("SUSTAIN_T1")
+        output_data[label] = tuple(human_output.values())
+        
+        input_data[label] = tuple(round(val, 4) for val in (
+            lib.afGetTempo(),
+            lib.afGetT1A() / fs,
+            lib.afGetT2A() / fs,
+            int(lib.afGetSpectralCentroid()),
+            lib.afGetSpectralFlatness(),
+            int(lib.afGetPBandL()),
+            int(lib.afGetPBandML()),
+            int(lib.afGetPBandMH()),
+            int(lib.afGetPBandH()),
+            # lib.afGetCrestFactor(),
+            lib.afGetSpectralFlux()
+        ))
+        input_data[label] += tuple(human_input.values())
+    if save:
+        with open(save[:-5] + "in.json", "w") as json_file:
+            json.dump(input_data, json_file)
+        with open(save[:-5] + "out.json", "w") as json_file:
+            json.dump(output_data, json_file)
+    return input_data, output_data
