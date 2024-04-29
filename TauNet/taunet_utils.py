@@ -96,6 +96,7 @@ def af_dsp_init(path_to_dll):
 def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
     lib = af_dsp_init(dsp_dll_path)
     audio_data = read_audio_files(audio_dir)
+    audio_data = sorted(audio_data, key=lambda x: int(x[1].split()[0]))
     human_data = pd.read_csv(human_input_csv)
 
     input_data = dict()

@@ -8,3 +8,4 @@ scikit-learn
 librosa
 import-ipynb
 pandas
+seaborn
