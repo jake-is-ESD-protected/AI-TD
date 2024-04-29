@@ -11,6 +11,7 @@
       ],
       "includePath": [
         "${workspaceFolder}/**",
+        "${workspaceFolder}/RTNeural/RTNeural",
         "${workspaceFolder}/lib/AI_driver/inc",
         "${workspaceFolder}/lib/AI_model",
         "${workspaceFolder}/seedcli/seedcli_src",
