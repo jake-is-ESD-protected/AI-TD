@@ -2,7 +2,7 @@
 
 #include "../af.h"
 
-extern __attribute__((section(".sdram_bss"))) float magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
+extern __attribute__((section(".sdram_bss"))) double magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
 
 double calculateSpectralCentroid(uint64_t onsetIndex);
 

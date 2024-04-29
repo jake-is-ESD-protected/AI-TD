@@ -16,33 +16,30 @@ double calculateSpectralCentroid(uint64_t onsetIndex)
         _spectralCentroid += (magnitudeBeatBuffer[onsetIndex][i] * i);
         magnitudeSum += magnitudeBeatBuffer[onsetIndex][i];
     }
-    _spectralCentroid /= magnitudeSum;
-    _spectralCentroid += (_spectralCentroid / FFT_N2_LENGTH) * sampleRate;
     
-    return _spectralCentroid;
+    if(magnitudeSum != 0)
+        _spectralCentroid /= magnitudeSum;
+    
+    return (_spectralCentroid / FFT_N2_LENGTH);
 }
 
 double calculateSpectralFlatness(uint64_t onsetIndex)
 {
-    double spectralflatness = 0; //CHANGED
     double geometricMean = 1.0;
     double arithmeticMean = 0.0;
 
     for (uint32_t i = 0; i < FFT_N2_LENGTH; i++) {
-        if(magnitudeBeatBuffer[onsetIndex][i] != 0.0)
-            geometricMean = geometricMean * (double) (magnitudeBeatBuffer[onsetIndex][i]);
-        arithmeticMean += magnitudeBeatBuffer[onsetIndex][i];
-    }
-    if (fabs(arithmeticMean) < 0.00001) {
-        return 0; //TODO: WHAT SHOULD THE NEUTRAL ELEMENT BE?
+        if(magnitudeBeatBuffer[onsetIndex][i] > 0.01)
+        {
+            geometricMean *= (magnitudeBeatBuffer[onsetIndex][i]);
+            arithmeticMean += magnitudeBeatBuffer[onsetIndex][i];
+        }
     }
 
     geometricMean = pow(geometricMean, 1.0 / (double) FFT_N2_LENGTH);
-    
     arithmeticMean /= (double) FFT_N2_LENGTH;
     
-    spectralflatness += (geometricMean / arithmeticMean);
-    return spectralflatness;
+    return (geometricMean / arithmeticMean);
 }
 
 double calculateBandL(uint64_t onsetIndex) {
@@ -53,27 +50,27 @@ double calculateBandML(uint64_t onsetIndex) {
     double ret = 0;
     for(int i = 2; i <= 5; i++)
     {
-        ret += magnitudeBeatBuffer[onsetIndex][i]; //937Hz
+        ret += (magnitudeBeatBuffer[onsetIndex][i]); //937Hz
     }
-    return sqrt(ret / (6-2));
+    return (ret / (6-2));
 }
 
 double calculateBandMH(uint64_t onsetIndex) {
     double ret = 0;
-    for(int i = 5; i <= 11; i++)
+    for(int i = 6; i <= 11; i++)
     {
-        ret += magnitudeBeatBuffer[onsetIndex][i]; //2 062Hz
+        ret += (magnitudeBeatBuffer[onsetIndex][i]); //2 062Hz
     }
-    return sqrt(ret / (11-5));
+    return (ret / (12-6));
 }
 
 double calculateBandH(uint64_t onsetIndex) {
     double ret = 0;
-    for(int i = 11; i <= 107; i++)
+    for(int i = 12; i <= 107; i++)
     {
-        ret += magnitudeBeatBuffer[onsetIndex][i]; //20 062Hz
+        ret += (magnitudeBeatBuffer[onsetIndex][i]); //20 062Hz
     }
-    return sqrt(ret / (107-11));
+    return (ret / (108-12));
 }
 
 double calculateCrestFactor(double* buffer, uint64_t audioIndex, uint64_t length) {
@@ -89,7 +86,7 @@ double calculateCrestFactor(double* buffer, uint64_t audioIndex, uint64_t length
 
     // Calculate RMS (Root Mean Square) value
     for (int i = 0; i < length; i++) {
-        rms += buffer[audioIndex + i] * buffer[i];
+        rms += buffer[audioIndex + i] * buffer[audioIndex + i];
     }
     rms = sqrt(rms / length);
 
