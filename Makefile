@@ -27,12 +27,13 @@ C_INCLUDES += \
 -I./src/ai \
 -I$(LIBK_DIR) \
 -I./seedcli/seedcli_src \
--I./src/af
-
-LDFLAGS += -L./lib/Ai_driver/lib -l:libNetworkRuntime810_CM7_GCC.a
+-I./src/af \
+-I./RTNeural/RTNeural
 
 OPT = -O2
 
 # Core location, and generic makefile.
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
 include $(SYSTEM_FILES_DIR)/Makefile
+
+CPPFLAGS += -std=c++17 -DRTNEURAL_NAMESPACE=RTNeural -DRTNEURAL_DEFAULT_ALIGNMENT=8 -DRTNEURAL_NO_DEBUG=1

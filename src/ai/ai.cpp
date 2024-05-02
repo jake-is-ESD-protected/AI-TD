@@ -1,65 +1,57 @@
-#include "ai.hpp"
-#include "hal.hpp"
-#include "stm32h7xx_hal_rcc.h"
+#include "RTNeural.h"
+#include "model.h"
 
-extern "C"
-{
-#include "ai_datatypes_defines.h"
-#include "ai_platform.h"
-#include "nn.h"
-#include "nn_data.h"
+// mirror the TensorFlow model as static model here:
+RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
+    RTNeural::DenseT<float, IN_SHAPE, SHAPE_L_1>,
+    RTNeural::ReLuActivationT<float, SHAPE_L_1>,
+    RTNeural::DenseT<float, SHAPE_L_1, SHAPE_L_2>,
+    RTNeural::ReLuActivationT<float, SHAPE_L_2>,
+    RTNeural::DenseT<float, SHAPE_L_2, SHAPE_L_3>,
+    RTNeural::ReLuActivationT<float, SHAPE_L_3>,
+    RTNeural::DenseT<float, SHAPE_L_3, SHAPE_L_4>,
+    RTNeural::ReLuActivationT<float, SHAPE_L_4>,
+    RTNeural::DenseT<float, SHAPE_L_4, SHAPE_L_5>,
+    RTNeural::ReLuActivationT<float, SHAPE_L_5>,
+    RTNeural::DenseT<float, SHAPE_L_5, SHAPE_L_6>,
+    RTNeural::ReLuActivationT<float, SHAPE_L_6>,
+    RTNeural::DenseT<float, SHAPE_L_6, SHAPE_L_7>> taunet;
+
+static double ATTACK_T1 = 0;
+static double SUSTAIN_T1 = 0;
+
+void aiInit(void){
+    auto& layer_1 = taunet.get<0>();
+    auto& layer_2 = taunet.get<2>();
+    auto& layer_3 = taunet.get<4>();
+    auto& layer_4 = taunet.get<6>();
+    auto& layer_5 = taunet.get<8>();
+    auto& layer_6 = taunet.get<10>();
+    auto& layer_7 = taunet.get<12>();
+
+    layer_1.setWeights(weights_l1);
+    layer_2.setWeights(weights_l2);
+    layer_3.setWeights(weights_l3);
+    layer_4.setWeights(weights_l4);
+    layer_5.setWeights(weights_l5);
+    layer_6.setWeights(weights_l6);
+    layer_7.setWeights(weights_l7);
+    layer_1.setBias(bias_l1);
+    layer_2.setBias(bias_l2);
+    layer_3.setBias(bias_l3);
+    layer_4.setBias(bias_l4);
+    layer_5.setBias(bias_l5);
+    layer_6.setBias(bias_l6);
+    layer_7.setBias(bias_l7);
 }
 
-ai_float out_data[AI_NN_OUT_1_SIZE];
-ai_float in_data[AI_NN_IN_1_SIZE];
-ai_handle pNN = AI_HANDLE_NULL;
-ai_u8 activations[AI_NN_DATA_ACTIVATIONS_SIZE];
-const ai_handle acts[] = {activations};
-ai_buffer *ai_input = NULL;
-ai_buffer *ai_output = NULL;
-ai_error err;
-
-void aiInit(void)
-{
-    __HAL_RCC_CRC_CLK_ENABLE();
-    err = ai_nn_create_and_init(&pNN, acts, NULL);
-
-    if (err.type != AI_ERROR_NONE)
-    {
-        while (1)
-        {
-            halLEDset(true);
-        }
-    }
+void aiRun(double* input){
+    taunet.reset();
+    taunet.forward((float*)input);
+    ATTACK_T1 = (double)taunet.getOutputs()[0];
+    SUSTAIN_T1 = (double)taunet.getOutputs()[1];
 }
 
-void aiRun(void)
-{
-    ai_input = ai_nn_inputs_get(pNN, NULL);
-    ai_output = ai_nn_outputs_get(pNN, NULL);
+double aiGetATTACK_T1(void) { return ATTACK_T1; }
 
-    ai_input[0].data = AI_HANDLE_PTR(in_data);
-    ai_output[0].data = AI_HANDLE_PTR(out_data);
-
-    ai_float y_val = 0;
-    ai_i32 nbatch = 1;
-
-    // Perform inference
-    nbatch = ai_nn_run(pNN, &ai_input[0], &ai_output[0]);
-    if (nbatch != 1)
-    {
-        while (1)
-        {
-            halLEDset(true);
-        }
-    }
-    y_val = ((float *)out_data)[0];
-}
-
-void aiFillInput(int32_t *data)
-{
-    for (uint32_t i = 0; i < AI_NN_IN_1_SIZE; i++)
-    {
-        ((ai_float *)in_data)[i] = (ai_float)data[i];
-    }
-}
+double aiGetSUSTAIN_T1(void) { return SUSTAIN_T1; }

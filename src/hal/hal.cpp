@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "Utilities/Map.hpp"
-#include "ai.hpp"
+#include "ai.h"
 #include "cli.hpp"
 #include "mem.hpp"
 #include "transientDSP.hpp"

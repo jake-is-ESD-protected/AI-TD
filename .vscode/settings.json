@@ -91,7 +91,8 @@
     "math.h": "c",
     "envelopefollowerpeakhold.h": "c",
     "btt.h": "c",
-    "audiofeaturedsp.h": "c"
+    "audiofeaturedsp.h": "c",
+    "*.inc": "cpp"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [
