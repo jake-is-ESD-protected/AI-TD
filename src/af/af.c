@@ -42,7 +42,7 @@ __attribute__((section(".sdram_bss"))) double bandMHBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double bandHBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double crestFactorBuffer[MAX_ONSETS];
 
-__attribute__((section(".sdram_bss"))) float magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
+__attribute__((section(".sdram_bss"))) double magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
 
 uint64_t audioBufferIndex = 0;
 uint64_t audioBufferRuntimeIndex = 0;
@@ -146,7 +146,7 @@ void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)
     {
         for(int i = 0; i < N; i ++)
         {
-            magnitudeBuffer[i] = mag[i];
+            magnitudeBuffer[i] = fabs(mag[i]);
         }
         firstSepctrumFlag = false;
     }
@@ -187,6 +187,27 @@ void AFInCProcess()
         if(onsetBuffer[i] > ONSET_DETECTION_COMPENSATION_N)
         {
             onsetBuffer[i] -= ONSET_DETECTION_COMPENSATION_N;
+        }
+    }
+
+    double magBufferMax = 0;
+    for(uint64_t i = 0; i < onsetBufferIndex-1; i++) //FIND MAX
+    {
+        for(int j = 0; j < FFT_N2_LENGTH; j++)
+        {
+            if (fabs(magnitudeBeatBuffer[i][j]) > magBufferMax)
+            {
+                magBufferMax = fabs(magnitudeBeatBuffer[i][j]);  
+            }
+        }
+    }
+
+    double magBufferNormalizationFactor = 1.0f / magBufferMax;
+    for (uint64_t i = 0; i < onsetBufferIndex; i++) //NORMALIZE ALL THE BEAT BUFFERS
+    {
+        for(int j = 0; j < FFT_N2_LENGTH; j++)
+        {
+            magnitudeBeatBuffer[i][j] *= magBufferNormalizationFactor;
         }
     }
 

@@ -124,11 +124,11 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
             lib.afGetT2A() / fs,
             int(lib.afGetSpectralCentroid()),
             lib.afGetSpectralFlatness(),
-            int(lib.afGetPBandL()),
+            int(lib.afGetPBandL()), # REMOVE INT CASTING
             int(lib.afGetPBandML()),
             int(lib.afGetPBandMH()),
             int(lib.afGetPBandH()),
-            # lib.afGetCrestFactor(),
+            #lib.afGetCrestFactor(), '#THIS WORKS NOW
             lib.afGetSpectralFlux()
         ))
         input_data[label] += tuple(human_input.values())
