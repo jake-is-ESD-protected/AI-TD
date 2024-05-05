@@ -25,6 +25,12 @@
 
 #define FFT_N2_LENGTH 512
 
+#define MAX_TEMPO           160.0
+#define MAX_TA1             0.999
+#define MAX_SPEC_FLATNESS   1000.0
+#define MAX_CREST           100.0
+#define MAX_FLUX            1000.0
+
 extern uint64_t audioBufferIndex;
 extern uint64_t audioBufferRuntimeIndex;
 extern uint64_t onsetBufferIndex;

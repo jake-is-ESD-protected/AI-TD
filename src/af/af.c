@@ -234,12 +234,18 @@ void AFInCProcess()
     }
     spectralCentroid = findPercentile(spectralCentroidBuffer, onsetBufferIndex, 75); 
     spectralFlatness = findPercentile(spectralFlatnessBuffer, onsetBufferIndex, 75);
+    if(spectralFlatness > MAX_SPEC_FLATNESS) { spectralFlatness = MAX_SPEC_FLATNESS; }
+    spectralFlatness /= MAX_SPEC_FLATNESS;
     BandL = findPercentile(bandLBuffer, onsetBufferIndex, 75);
     BandML = findPercentile(bandMLBuffer, onsetBufferIndex, 75);
     BandMH = findPercentile(bandMHBuffer, onsetBufferIndex, 75);
     BandH = findPercentile(bandHBuffer, onsetBufferIndex, 75);
     crestFactor = findPercentile(crestFactorBuffer, onsetBufferIndex, 75);
+    if(crestFactor > MAX_CREST) { crestFactor = MAX_CREST; }
+    crestFactor /= MAX_CREST;
     spectralFlux = findPercentile(spectralFluxBuffer, spectralFluxIndex, 75);
+    if(spectralFlux > MAX_FLUX) { spectralFlux = MAX_FLUX; }
+    spectralFlux /= MAX_FLUX;
     T1A = findPercentile(onsetT1ABuffer, onsetBufferIndex, 75);
     T2A = findPercentile(onsetT2ABuffer, onsetBufferIndex, 75);
 }
@@ -292,9 +298,11 @@ double afGetSpectralFlatness()
 }
 
 double afGetTempo() {
-    //TODO:
-    //EVERYTHING ABOVE 160 IS //2
-    return btt_get_tempo_bpm(btt);
+    double tempo = btt_get_tempo_bpm(btt);
+    if(tempo > MAX_TEMPO){
+        tempo /= 2.0;
+    } 
+    return tempo / MAX_TEMPO;
 }
 
 double afGetPBandL() {

@@ -113,22 +113,24 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
         human_input = human_data[human_data['MEASUREMENT_ID'] == int(label)].iloc[0].to_dict()
         human_input.pop("MEASUREMENT_ID")
         human_input.pop("SONG_ID")
+        human_input.pop("ATTACK_T2")    # not yet needed
+        human_input.pop("SUSTAIN_T2")   # not yet needed
         human_output = dict()
-        human_output["ATTACK_T1"] = human_input.pop("ATTACK_T1")
-        human_output["SUSTAIN_T1"] = human_input.pop("SUSTAIN_T1")
+        human_output["ATTACK_T1"] = human_input.pop("ATTACK_T1") / 500 # force-normalize, see transientDSP.cpp
+        human_output["SUSTAIN_T1"] = human_input.pop("SUSTAIN_T1") / 3000 # see above ^
         output_data[label] = tuple(human_output.values())
         
         input_data[label] = tuple(round(val, 4) for val in (
             lib.afGetTempo(),
             lib.afGetT1A() / fs,
             lib.afGetT2A() / fs,
-            int(lib.afGetSpectralCentroid()),
+            lib.afGetSpectralCentroid(),
             lib.afGetSpectralFlatness(),
-            int(lib.afGetPBandL()), # REMOVE INT CASTING
-            int(lib.afGetPBandML()),
-            int(lib.afGetPBandMH()),
-            int(lib.afGetPBandH()),
-            #lib.afGetCrestFactor(), '#THIS WORKS NOW
+            lib.afGetPBandL(),
+            lib.afGetPBandML(),
+            lib.afGetPBandMH(),
+            lib.afGetPBandH(),
+            lib.afGetCrestFactor(),
             lib.afGetSpectralFlux()
         ))
         input_data[label] += tuple(human_input.values())
