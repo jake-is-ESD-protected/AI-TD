@@ -48,7 +48,8 @@ def writeHFile(path=str, d=dict):
         f.write(s)
 
 if __name__ == "__main__":
-    d = json2dict(join("TauNet", "logs", "20240429-125746", "taunet.json"))
+    newest = os.listdir(join("TauNet", "logs"))[-1]
+    d = json2dict(join("TauNet", "logs", newest, "taunet.json"))
     print(d["in_shape"])
     ls = getLayerShapes(d)
     writeHFile(join("src", "ai", "model.h"), d)
