@@ -110,8 +110,8 @@ void halInit()
 
     cliInit();
     transientDSPinit();
-    // halTimerInit();
-    aiInit();
+    halTimerInit();
+    // aiInit();
     halStartAudio();
 }
 

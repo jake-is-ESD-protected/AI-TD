@@ -14,13 +14,9 @@ CPP_SOURCES += src/transientDSP/envDeps/BufferCircular.cpp
 CPP_SOURCES += src/ai/ai.cpp
 CPP_SOURCES += seedcli/seedcli_src/cli.cpp
 CPP_SOURCES += seedcli/seedcli_src/mem.cpp
-
-C_SOURCES += $(shell ls lib/AI_model/*.c)
 C_SOURCES += src/af/af.c
 
 C_INCLUDES += \
--I./lib/Ai_driver/inc \
--I./lib/AI_model \
 -I./src/transientDSP \
 -I./src/hal \
 -I./src/ui \
