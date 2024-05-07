@@ -14,20 +14,11 @@ int main(void)
 {
     halInit();
     halLEDset(true);
-    aiRun(testArray);
-    testReturnA = aiGetATTACK_T1();
-    testReturnS = aiGetSUSTAIN_T1();
-
     for (;;)
     {
         System::Delay(50);
         halLEDset(true);
         System::Delay(50);
         halLEDset(false);
-        aiRun(testArray);
-        testReturnA = aiGetATTACK_T1();
-        testReturnS = aiGetSUSTAIN_T1();
-
-        // EVERYTHING IS INTERRUPT DRIVEN
     }
 }

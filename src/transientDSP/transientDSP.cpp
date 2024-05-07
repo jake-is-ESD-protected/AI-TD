@@ -4,7 +4,7 @@
 #include "hal.hpp"
 #include <math.h>
 
-#define ATTACK_FILTER_DEFAULT_RELEASE_TIME 450 // TO LOW VALUES CAN LEAD TO ISSUES IN TALE OF NOTE //THE MORE RELEASE THE SOUND THE LONGER THIS NEEDS TO BE
+#define ATTACK_FILTER_DEFAULT_RELEASE_TIME 850 // THIS LEADS TO THE ATTACK DEFECT
 #define ATTACK_FILTER_FAST_ATTACK_TIME 1
 #define SUSTAIN_FILTER_DEFAULT_ATTACK_TIME 350
 #define SUSTAIN_FILTER_FAST_RELEASE_TIME 100
@@ -70,7 +70,8 @@ void transientDSPuiProcess()
     inputVolume = Map::mapClip(KnobAttack.getShiftValue(), 0, 1, 0.1, 1.5);
     baseGain = Map::mapClip(Map::mapSkew(KnobSustain.getShiftValue(), 2.8), 0, 1, 0.1, 0.87);
     attackSlowF.set_attack(Map::mapClip(Map::mapSkew(KnobAttackTime.getValue(), 0.6), 0, 1, 14, 500));
-    attackSlowF.set_release(Map::mapClip(KnobAttackTime.getShiftValue(), 1, 0, 200, 900));
+    attackSlowF.set_release(Map::mapClip(KnobAttackTime.getShiftValue(), 1, 0, 200, 2000));
+    attackFastF.set_release(Map::mapClip(KnobAttackTime.getShiftValue(), 1, 0, 200, 2000));
     sustainSlowF.set_release(Map::mapClip(Map::mapSkew(KnobSustainTime.getValue(), 0.5), 0, 1, 150, 3000));
     sustainFastF.set_release(Map::mapClip(KnobSustainTime.getShiftValue(), 0, 1, SUSTAIN_FILTER_FAST_RELEASE_TIME, 600));
 }
