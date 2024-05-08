@@ -1,6 +1,7 @@
 import json
 import os
 from os.path import join
+import numpy as np
 
 def json2dict(path=str):
     with open(path, "r") as f:
@@ -35,6 +36,7 @@ def writeHFile(path=str, d=dict):
         defines += f"{name} {value}\n"
         vs += f"\nconst std::vector<std::vector<float>> weights_l{name.replace('#define SHAPE_L_', '')}"+ "{\n"
         
+        weights = [list(x) for x in zip(*weights)] # thx to Kristof, we know that RTNeural expects transposed weights
         for weight in weights:
             vs += f"\t{str(weight).replace('[', '{').replace(']', '}')},\n"
         vs += "};"

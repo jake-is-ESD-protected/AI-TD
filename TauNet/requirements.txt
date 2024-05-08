@@ -9,3 +9,4 @@ librosa
 import-ipynb
 pandas
 seaborn
+augmolino
