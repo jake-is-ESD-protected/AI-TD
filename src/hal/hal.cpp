@@ -35,12 +35,12 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Read());
         KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Read());
 
-        // transientDSPuiProcess();
+        transientDSPuiProcess();
         uiProcessCounter = 0;
     }
     uiProcessCounter++;
 
-    // transientDSPprocess(in[0][0]);
+    transientDSPprocess(in[0][0]);
 
     if (visualProcessCounter == 1600)
     {
@@ -109,10 +109,10 @@ void halInit()
     hw.adc.Start();
 
     cliInit();
-    // transientDSPinit();
+    transientDSPinit();
     halTimerInit();
     aiInit();
-    //halStartAudio();
+    halStartAudio();
 }
 
 void halVCAwrite(double value)
