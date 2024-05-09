@@ -3,6 +3,7 @@
 
 // clang-format off
 // mirror the TensorFlow model as static model here:
+
 RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
     RTNeural::DenseT<float, IN_SHAPE, SHAPE_L_1>,
     RTNeural::ReLuActivationT<float, SHAPE_L_1>,
@@ -31,7 +32,7 @@ void aiInit(void){
     auto& layer_7 = taunet.get<12>();
 
     layer_1.setWeights(weights_l1);
-    /*layer_2.setWeights(weights_l2);
+    layer_2.setWeights(weights_l2);
     layer_3.setWeights(weights_l3);
     layer_4.setWeights(weights_l4);
     layer_5.setWeights(weights_l5);
@@ -44,7 +45,7 @@ void aiInit(void){
     layer_4.setBias(bias_l4);
     layer_5.setBias(bias_l5);
     layer_6.setBias(bias_l6);
-    layer_7.setBias(bias_l7);*/
+    layer_7.setBias(bias_l7);
 }
 
 void aiRun(double* input){

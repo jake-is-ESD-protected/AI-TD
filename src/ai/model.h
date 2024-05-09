@@ -1,6 +1,6 @@
 #ifndef _MODEL_H_
 #define _MODEL_H_
-
+// clang-format off
 #define IN_SHAPE 13
 
 #define SHAPE_L_1 64
