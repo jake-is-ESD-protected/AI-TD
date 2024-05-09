@@ -5,7 +5,7 @@
 #include <math.h>
 
 #define ATTACK_FILTER_DEFAULT_RELEASE_TIME 450 // TO LOW VALUES CAN LEAD TO ISSUES IN TALE OF NOTE //THE MORE RELEASE THE SOUND THE LONGER THIS NEEDS TO BE
-#define ATTACK_FILTER_FAST_ATTACK_TIME 25
+#define ATTACK_FILTER_FAST_ATTACK_TIME 1
 #define SUSTAIN_FILTER_DEFAULT_ATTACK_TIME 350
 #define SUSTAIN_FILTER_FAST_RELEASE_TIME 100
 #define SUSTAIN_FILTER_SLOW_RELEASE_TIME 600
@@ -70,8 +70,8 @@ void transientDSPuiProcess()
     inputVolume = Map::mapClip(KnobAttack.getShiftValue(), 0, 1, 0.1, 1.5);
     baseGain = Map::mapClip(Map::mapSkew(KnobSustain.getShiftValue(), 2.8), 0, 1, 0.1, 0.87);
     attackSlowF.set_attack(Map::mapClip(Map::mapSkew(KnobAttackTime.getValue(), 0.6), 0, 1, 14, 500));
-    attackSlowF.set_release(Map::mapClip(KnobAttackTime.getShiftValue(), 0, 1, 200, 900));                  // THIS IS THE SECOND TIME CONSTANT FOR THE ATTACK SHIFT LAYER
-    attackFastF.set_attack(Map::mapClip(KnobAttackTime.getShiftValue(), 0, 1, 1, 50));                      // THESE ARE CALCULATED VIA THE REF ABOVE
-    sustainSlowF.set_release(Map::mapClip(Map::mapSkew(KnobSustainTime.getValue(), 0.5), 0, 1, 150, 3000)); // THESE ARE CALCULATED VIA THE REF ABOVE
+    attackSlowF.set_release(Map::mapClip(KnobAttackTime.getShiftValue(), 0, 1, 200, 900));                 // THIS IS THE SECOND TIME CONSTANT FOR THE ATTACK SHIFT LAYER
+    attackFastF.set_attack(Map::mapClip(Map::mapSkew(KnobAttackTime.getShiftValue(), 0.35), 0, 1, 1, 50)); // THESE ARE CALCULATED VIA THE REF ABOVE
+    sustainSlowF.set_release(Map::mapClip(Map::mapSkew(KnobSustainTime.getValue(), 0.5), 0, 1, 150, 3000));
     sustainFastF.set_release(Map::mapClip(KnobSustainTime.getShiftValue(), 0, 1, SUSTAIN_FILTER_FAST_RELEASE_TIME, 600));
 }
