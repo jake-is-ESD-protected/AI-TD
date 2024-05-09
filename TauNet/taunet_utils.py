@@ -105,12 +105,17 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
     for audio, label, fs in audio_data:
         lib.initAf()
         lib.resetBuffer()
-        label = label.split()[0]
+        label = label.split()[0] + " " + label[-16:]
         for sample in audio:
             lib.AFInCAppend(sample)
-        lib.AFInCProcess()
-        
-        human_input = human_data[human_data['MEASUREMENT_ID'] == int(label)].iloc[0].to_dict()
+        try:
+            lib.AFInCProcess()
+        except OSError as e:
+            print(f"AFinC died at {label}: {e}")
+            print("skipping...")
+            continue
+
+        human_input = human_data[human_data['MEASUREMENT_ID'] == int(label.split()[0])].iloc[0].to_dict()
         human_input.pop("MEASUREMENT_ID")
         human_input.pop("SONG_ID")
         human_input.pop("ATTACK_T2")    # not yet needed
@@ -134,6 +139,7 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
             lib.afGetSpectralFlux()
         ))
         input_data[label] += tuple(human_input.values())
+        print(f"processed {label}...")
     if save:
         with open(save[:-5] + "in.json", "w") as json_file:
             json.dump(input_data, json_file)
