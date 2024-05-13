@@ -4,7 +4,7 @@
 // clang-format off
 // mirror the TensorFlow model as static model here:
 
-RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
+/*RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
     RTNeural::DenseT<float, IN_SHAPE, SHAPE_L_1>,
     RTNeural::ReLuActivationT<float, SHAPE_L_1>,
     RTNeural::DenseT<float, SHAPE_L_1, SHAPE_L_2>,
@@ -15,13 +15,13 @@ RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
     RTNeural::ReLuActivationT<float, SHAPE_L_4>,
     RTNeural::DenseT<float, SHAPE_L_4, SHAPE_L_5>,
     RTNeural::ReLuActivationT<float, SHAPE_L_5>,
-    RTNeural::DenseT<float, SHAPE_L_5, SHAPE_L_6>> taunet;
+    RTNeural::DenseT<float, SHAPE_L_5, SHAPE_L_6>> taunet;*/
 
 float ATTACK_T1 = 2;
 float SUSTAIN_T1 = 2;
 
 void aiInit(void){
-    auto& layer_1 = taunet.get<0>();
+    /*auto& layer_1 = taunet.get<0>();
     auto& layer_2 = taunet.get<2>();
     auto& layer_3 = taunet.get<4>();
     auto& layer_4 = taunet.get<6>();
@@ -41,13 +41,13 @@ void aiInit(void){
     layer_4.setBias(bias_l4);
     layer_5.setBias(bias_l5);
     layer_6.setBias(bias_l6);
-    taunet.reset();
+    taunet.reset();*/
 }
 
 void aiRun(float* input){
-    taunet.forward((float*)input);
+    /*taunet.forward((float*)input);
     ATTACK_T1 = taunet.getOutputs()[0];
-    SUSTAIN_T1 = taunet.getOutputs()[1];
+    SUSTAIN_T1 = taunet.getOutputs()[1];*/
 }
 
 float aiGetATTACK_T1(void) { return ATTACK_T1; }

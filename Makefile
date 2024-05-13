@@ -14,7 +14,13 @@ CPP_SOURCES += src/transientDSP/envDeps/BufferCircular.cpp
 CPP_SOURCES += src/ai/ai.cpp
 CPP_SOURCES += seedcli/seedcli_src/cli.cpp
 CPP_SOURCES += seedcli/seedcli_src/mem.cpp
+
 C_SOURCES += src/af/af.c
+C_SOURCES += $(shell ls src/af/beatDetectionDSP/*.c)
+C_SOURCES += $(shell ls src/af/transientDetectionDSP/*.c)
+C_SOURCES += $(shell ls src/af/audioFeatureDSP/*.c)
+C_SOURCES += $(shell ls src/af/percentileCalculator/*.c)
+C_SOURCES += $(shell ls src/af/transientDetectionDSP/envDeps/*.c)
 
 C_INCLUDES += \
 -I./src/transientDSP \

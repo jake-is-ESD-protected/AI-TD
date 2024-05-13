@@ -87,7 +87,7 @@ double afGetSpectralFlux();
 
 void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux);
 
-
+void EnvFollowerInitAf();
 // --------------------------------------------------------------------------
 // helper functions for dev debugging
 // --------------------------------------------------------------------------

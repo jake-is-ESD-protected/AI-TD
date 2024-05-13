@@ -9,6 +9,11 @@
 #include "transientDSP.hpp"
 #include "ui.hpp"
 
+extern "C"
+{
+#include "../af/af.h"
+}
+
 using namespace daisy;
 using namespace k;
 
@@ -26,8 +31,24 @@ static TimerHandle timerVisual;
 uint64_t uiProcessCounter = 0;
 uint64_t visualProcessCounter = 0;
 
+bool lastPurpleButtonState = false;
+
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
+    if (lastPurpleButtonState && !LeftButton.Read()) // ON RELEASE
+    {
+        AFInCProcess();
+    }
+    if (!lastPurpleButtonState && LeftButton.Read()) // ON PRESSED
+    {
+        resetBuffer();
+    }
+    if (LeftButton.Read())
+    {
+        AFInCAppend(in[0][0]);
+    }
+    lastPurpleButtonState = LeftButton.Read();
+
     if (uiProcessCounter == 3200)
     {
         KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Read());
@@ -35,12 +56,12 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Read());
         KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Read());
 
-        transientDSPuiProcess();
+        // transientDSPuiProcess();
         uiProcessCounter = 0;
     }
     uiProcessCounter++;
 
-    transientDSPprocess(in[0][0]);
+    // transientDSPprocess(in[0][0]);
 
     if (visualProcessCounter == 1600)
     {
@@ -109,9 +130,9 @@ void halInit()
     hw.adc.Start();
 
     cliInit();
-    transientDSPinit();
+    // transientDSPinit();
     halTimerInit();
-    aiInit();
+    // aiInit();
     halStartAudio();
 }
 
