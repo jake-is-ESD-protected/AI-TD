@@ -17,8 +17,8 @@ RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
     RTNeural::ReLuActivationT<float, SHAPE_L_5>,
     RTNeural::DenseT<float, SHAPE_L_5, SHAPE_L_6>> taunet;
 
-static double ATTACK_T1 = 2;
-static double SUSTAIN_T1 = 2;
+float ATTACK_T1 = 2;
+float SUSTAIN_T1 = 2;
 
 void aiInit(void){
     auto& layer_1 = taunet.get<0>();
@@ -41,18 +41,18 @@ void aiInit(void){
     layer_4.setBias(bias_l4);
     layer_5.setBias(bias_l5);
     layer_6.setBias(bias_l6);
-}
-
-void aiRun(double* input){
     taunet.reset();
-    taunet.forward((float*)input);
-    ATTACK_T1 = (double)taunet.getOutputs()[0];
-    SUSTAIN_T1 = (double)taunet.getOutputs()[1];
 }
 
-double aiGetATTACK_T1(void) { return ATTACK_T1; }
+void aiRun(float* input){
+    taunet.forward((float*)input);
+    ATTACK_T1 = taunet.getOutputs()[0];
+    SUSTAIN_T1 = taunet.getOutputs()[1];
+}
 
-double aiGetSUSTAIN_T1(void) { return SUSTAIN_T1; }
+float aiGetATTACK_T1(void) { return ATTACK_T1; }
+
+float aiGetSUSTAIN_T1(void) { return SUSTAIN_T1; }
 
 //ALLOCATE FAKE ARRAY OF AF
 //CALL aiRun with the array as arg ()

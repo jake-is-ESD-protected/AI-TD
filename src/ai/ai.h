@@ -6,8 +6,8 @@ void aiInit(void);
 
 /// @brief
 /// @param
-void aiRun(double* input);
+void aiRun(float *input);
 
-double aiGetATTACK_T1(void);
+float aiGetATTACK_T1(void);
 
-double aiGetSUSTAIN_T1(void);
+float aiGetSUSTAIN_T1(void);
