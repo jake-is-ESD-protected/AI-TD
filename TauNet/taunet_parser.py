@@ -3,12 +3,12 @@ import os
 from os.path import join
 import numpy as np
 
-def json2dict(path=str):
+def json2dict(path:str):
     with open(path, "r") as f:
         d = json.load(f)
     return d
 
-def getLayerShapes(d=dict):
+def getLayerShapes(d:dict):
     ls = dict()
     for i, layer in enumerate(d["layers"]):
         ls[f"#define SHAPE_L_{i+1}"] = layer["shape"][1]
@@ -21,7 +21,7 @@ void ai_init(){
 }
 """
 
-def writeHFile(path=str, d=dict):
+def writeHFile(path:str, d:dict):
     header = os.path.basename(path).upper().replace('.', '_')
     shapes = getLayerShapes(d)
     s = f"#ifndef _{header}_\n#define _{header}_\n\n"

@@ -15,9 +15,7 @@ RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
     RTNeural::ReLuActivationT<float, SHAPE_L_4>,
     RTNeural::DenseT<float, SHAPE_L_4, SHAPE_L_5>,
     RTNeural::ReLuActivationT<float, SHAPE_L_5>,
-    RTNeural::DenseT<float, SHAPE_L_5, SHAPE_L_6>,
-    RTNeural::ReLuActivationT<float, SHAPE_L_6>,
-    RTNeural::DenseT<float, SHAPE_L_6, SHAPE_L_7>> taunet;
+    RTNeural::DenseT<float, SHAPE_L_5, SHAPE_L_6>> taunet;
 
 static double ATTACK_T1 = 2;
 static double SUSTAIN_T1 = 2;
@@ -29,7 +27,6 @@ void aiInit(void){
     auto& layer_4 = taunet.get<6>();
     auto& layer_5 = taunet.get<8>();
     auto& layer_6 = taunet.get<10>();
-    auto& layer_7 = taunet.get<12>();
 
     layer_1.setWeights(weights_l1);
     layer_2.setWeights(weights_l2);
@@ -37,7 +34,6 @@ void aiInit(void){
     layer_4.setWeights(weights_l4);
     layer_5.setWeights(weights_l5);
     layer_6.setWeights(weights_l6);
-    layer_7.setWeights(weights_l7);
 
     layer_1.setBias(bias_l1);
     layer_2.setBias(bias_l2);
@@ -45,7 +41,6 @@ void aiInit(void){
     layer_4.setBias(bias_l4);
     layer_5.setBias(bias_l5);
     layer_6.setBias(bias_l6);
-    layer_7.setBias(bias_l7);
 }
 
 void aiRun(double* input){
