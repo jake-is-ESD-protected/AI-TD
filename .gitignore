@@ -46,6 +46,8 @@
 # unneeded:
 include
 
+*.wav
+
 # IP
 transient_shaper.ipynb
 transient_shaper_lib.ipynb
