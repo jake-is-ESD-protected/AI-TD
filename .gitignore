@@ -33,11 +33,13 @@
 
 #Build directory
 /build
+/src/qspiFlashLoader/build
 
 # vscode stuff
 .vscode/extensions.json
 .vscode/.cortex*
 .vscode/STM32H750x.svd
+/src/qspiFlashLoader/.vscode
 
 # venv stuff
 .venv
