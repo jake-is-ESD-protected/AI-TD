@@ -4,6 +4,9 @@ TARGET = QSPI
 # Sources
 CPP_SOURCES = QSPI.cpp
 
+C_INCLUDES += \
+-I./
+
 DAISYSP_DIR = ../../../../DaisySP
 LIBDAISY_DIR = ../../../../libDaisy
 

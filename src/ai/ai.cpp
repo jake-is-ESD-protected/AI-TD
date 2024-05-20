@@ -22,9 +22,30 @@ RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
 float ATTACK_T1 = 2;
 float SUSTAIN_T1 = 2;
 
-float DSY_QSPI_BSS weights_l1QSPIFlash[SHAPE_L_1][IN_SHAPE];
+float DSY_QSPI_BSS weights_l1_buffer[SHAPE_L_1][IN_SHAPE];
+float DSY_QSPI_BSS bias_l1_buffer[SHAPE_L_1];
+
+float DSY_QSPI_BSS weights_l2_buffer[SHAPE_L_2][SHAPE_L_1];
+float DSY_QSPI_BSS bias_l2_buffer[SHAPE_L_2];
+
+float DSY_QSPI_BSS weights_l3_buffer[SHAPE_L_3][SHAPE_L_2];
+float DSY_QSPI_BSS bias_l3_buffer[SHAPE_L_3];
+
+float DSY_QSPI_BSS weights_l4_buffer[SHAPE_L_4][SHAPE_L_3];
+float DSY_QSPI_BSS bias_l4_buffer[SHAPE_L_4];
+
+float DSY_QSPI_BSS weights_l5_buffer[SHAPE_L_5][SHAPE_L_4];
+float DSY_QSPI_BSS bias_l5_buffer[SHAPE_L_5];
+
+float DSY_QSPI_BSS weights_l6_buffer[SHAPE_L_6][SHAPE_L_5];
+float DSY_QSPI_BSS bias_l6_buffer[SHAPE_L_6];
 
 std::vector<std::vector<float>> weights_l1;
+std::vector<std::vector<float>> weights_l2;
+std::vector<std::vector<float>> weights_l3;
+std::vector<std::vector<float>> weights_l4;
+std::vector<std::vector<float>> weights_l5;
+std::vector<std::vector<float>> weights_l6;
 
 float probeA = 0;
 float probeB = 0;
@@ -43,15 +64,35 @@ void aiInit(void){
         std::vector<float> row;
         for(int j = 0; j < IN_SHAPE;j++)
         {
-            row.push_back(weights_l1QSPIFlash[i][j]);
+            row.push_back(weights_l1_buffer[i][j]);
         }
         weights_l1.push_back(row); 
     }
 
     layer_1.setWeights(weights_l1);
-    probeA = weights_l1[0][0];
-    probeB = weights_l1[0][1];
-    probeC = weights_l1[SHAPE_L_1-1][IN_SHAPE-1];
+    layer_1.setBias(bias_l1_buffer); //TODO: MAYBE WE NEED A IN BETWEEN VARIABLE???
+    //TODO: LOAD BIAS STUFF
+
+    //END OF LAYER 1 LOADING
+
+    for(int i = 0; i < SHAPE_L_2;i++) //load weights_l2 from flash
+    {
+        std::vector<float> row;
+        for(int j = 0; j < SHAPE_L_1;j++)
+        {
+            row.push_back(weights_l2_buffer[i][j]);
+        }
+        weights_l2.push_back(row); 
+    }
+
+    layer_2.setWeights(weights_l2);
+
+    //END OF LAYER 1 LOADING
+
+
+    probeA = weights_l2[0][0];
+    probeB = weights_l2[0][1];
+    probeC = weights_l2[SHAPE_L_2-1][SHAPE_L_1-1];
     
     /*
     layer_2.setWeights(weights_l2);
