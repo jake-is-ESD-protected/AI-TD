@@ -120,6 +120,13 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
         human_input.pop("SONG_ID")
         human_input.pop("ATTACK_T2")    # not yet needed
         human_input.pop("SUSTAIN_T2")   # not yet needed
+        attack = human_input.pop("ATTACK_GAIN")
+        if attack < 0.5:
+            human_input["ATTACK_CUT"] = 1 - (attack * 2)
+            human_input["ATTACK_BOOST"] = 0
+        else:
+            human_input["ATTACK_CUT"] = 0
+            human_input["ATTACK_BOOST"] = (attack * 2) - 1
         human_output = dict()
         human_output["ATTACK_T1"] = human_input.pop("ATTACK_T1") / 500 # force-normalize, see transientDSP.cpp
         human_output["SUSTAIN_T1"] = human_input.pop("SUSTAIN_T1") / 3000 # see above ^
@@ -130,7 +137,6 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
             lib.afGetT1A() / fs,
             lib.afGetT2A() / fs,
             lib.afGetSpectralCentroid(),
-            lib.afGetSpectralFlatness(),
             lib.afGetPBandL(),
             lib.afGetPBandML(),
             lib.afGetPBandMH(),
