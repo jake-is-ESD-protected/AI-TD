@@ -35,6 +35,7 @@ bool lastPurpleButtonState = false;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
+    double adcAudioIn = hw.adc.GetFloat(4) - 0.5 * 2;
     if (lastPurpleButtonState && !LeftButton.Read()) // ON RELEASE
     {
         AFInCProcess();
@@ -125,7 +126,8 @@ void halInit()
     adcConfig[1].InitSingle(hw.GetPin(16));
     adcConfig[2].InitSingle(hw.GetPin(17));
     adcConfig[3].InitSingle(hw.GetPin(18));
-    hw.adc.Init(adcConfig, 4);
+    adcConfig[4].InitSingle(hw.GetPin(19));
+    hw.adc.Init(adcConfig, 5);
 
     hw.adc.Start();
 
