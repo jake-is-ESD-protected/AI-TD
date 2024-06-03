@@ -179,7 +179,6 @@ void AFInCProcess()
         envBuffer[i] = processEnvelopeAf(EnvelopeFollowerPeakHoldProcessAf(audioBuffer[i]));
         audioBufferRuntimeIndex++;
     }
-    return;
 
     for (uint64_t i = 0; i < onsetBufferIndex-1; i++) //COMPENSATE ALL ONSETS FIRST
     {
