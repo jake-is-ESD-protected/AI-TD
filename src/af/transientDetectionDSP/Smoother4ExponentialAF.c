@@ -1,23 +1,23 @@
 #include "../../hal/globalDefinitions.hpp"
 #include <math.h>
 #include "inttypes.h"
-#include "Smoother4Exponential.h"
+#include "Smoother4ExponentialAF.h"
 
-smootherType smoothers[4];
+smootherTypeAf smoothersAf[4];
 
-void reset(smootherType *smoother)
+void resetAf(smootherTypeAf *smoother)
 {
     smoother->state = 0.0;
 }
 
-void setAttack(smootherType *smoother, double time_ms)
+void setAttackAf(smootherTypeAf *smoother, double time_ms)
 {
     // Convert time to seconds
     const double time_s = time_ms / 1000.0;
     smoother->alpha_attack = exp(-TWO_PI * CM / (sampleRate * time_s));
 }
 
-void setRelease(smootherType *smoother, double time_ms)
+void setReleaseAf(smootherTypeAf *smoother, double time_ms)
 {
     // Convert time to seconds
     const double time_s = time_ms / 1000.0;
@@ -25,7 +25,7 @@ void setRelease(smootherType *smoother, double time_ms)
     smoother->alpha_release = exp(-TWO_PI * CM / (  sampleRate * time_s));
 }
 
-double process(smootherType *smoother, double x)
+double processAf(smootherTypeAf *smoother, double x)
 {
     // Find output
 
@@ -48,42 +48,42 @@ double process(smootherType *smoother, double x)
     return y;
 }
 
-void initAll4()
+void initAll4Af()
 {
-    resetAll4();
+    resetAll4Af();
 }
 
-void resetAll4()
-{
-    for (int n = 0; n < 4; ++n)
-    {
-        reset(&smoothers[n]);
-    }
-}
-
-void setAttackAll4(double time_ms)
+void resetAll4Af()
 {
     for (int n = 0; n < 4; ++n)
     {
-        setAttack(&smoothers[n], time_ms);
+        resetAf(&smoothersAf[n]);
     }
 }
 
-void setReleaseAll4(double time_ms)
+void setAttackAll4Af(double time_ms)
 {
     for (int n = 0; n < 4; ++n)
     {
-        setRelease(&smoothers[n], time_ms);
+        setAttackAf(&smoothersAf[n], time_ms);
     }
 }
 
-double processEnvelope(double x)
+void setReleaseAll4Af(double time_ms)
+{
+    for (int n = 0; n < 4; ++n)
+    {
+        setReleaseAf(&smoothersAf[n], time_ms);
+    }
+}
+
+double processEnvelopeAf(double x)
 {
     //ADD PEAK HOLD SCHEME HERE
     
     for (int n = 0; n < 4; ++n)
     {
-        x = process(&smoothers[n], x);
+        x = processAf(&smoothersAf[n], x);
     }
 
     return x;

@@ -92,7 +92,24 @@
     "envelopefollowerpeakhold.h": "c",
     "btt.h": "c",
     "audiofeaturedsp.h": "c",
-    "*.inc": "cpp"
+    "*.inc": "cpp",
+    "envelopefollowerpeakholdaf.h": "c",
+    "cfenv": "cpp",
+    "codecvt": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "forward_list": "cpp",
+    "unordered_set": "cpp",
+    "regex": "cpp",
+    "numbers": "cpp",
+    "semaphore": "cpp",
+    "span": "cpp",
+    "stop_token": "cpp",
+    "typeindex": "cpp",
+    "valarray": "cpp",
+    "variant": "cpp",
+    "string.h": "c",
+    "stdint.h": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [

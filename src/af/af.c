@@ -8,8 +8,8 @@
  */
 
 #include "af.h"
-#include "transientDetectionDSP/Smoother4Exponential.h"
-#include "transientDetectionDSP/EnvelopeFollowerPeakHold.h"
+#include "transientDetectionDSP/Smoother4ExponentialAF.h"
+#include "transientDetectionDSP/EnvelopeFollowerPeakHoldAF.h"
 #include "audioFeatureDSP/audioFeatureDSP.h"
 #include "percentileCalculator/percentileCalculator.h"
 #include "../hal/globalDefinitions.hpp"
@@ -95,15 +95,15 @@ void onset_detected_callback(void *SELF, unsigned long long sample_time)
 void initAf()
 {
     BeatDetectionInit();
-    EnvFollowerInit();
+    EnvFollowerInitAf();
 }
 
-void EnvFollowerInit()
+void EnvFollowerInitAf()
 {
-    EnvelopeFollowerPeakHoldInit(1);
-    initAll4();
-    setAttackAll4(ENV_SMOOTH_ATTACK);
-    setReleaseAll4(ENV_SMOOTH_RELEASE);
+    EnvelopeFollowerPeakHoldInitAf(1);
+    initAll4Af();
+    setAttackAll4Af(ENV_SMOOTH_ATTACK);
+    setReleaseAll4Af(ENV_SMOOTH_RELEASE);
 }
 
 void BeatDetectionInit()
@@ -178,7 +178,7 @@ void AFInCProcess()
     {
         dftBuffer[0] = audioBuffer[i];
         btt_process(btt, dftBuffer, 1);
-        envBuffer[i] = processEnvelope(EnvelopeFollowerPeakHoldProcess(audioBuffer[i]));
+        envBuffer[i] = processEnvelopeAf(EnvelopeFollowerPeakHoldProcessAf(audioBuffer[i]));
         audioBufferRuntimeIndex++;
     }
 
@@ -279,11 +279,11 @@ uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx)
 
 // clang-format off
 double afGetT1A() {
-    return T1A;
+    return T1A / MAX_TA1_SAMPLES;
 }
 
 double afGetT2A() {
-    return T2A;
+    return T2A / MAX_TA2_SAMPLES;
 }
 
 double afGetSpectralCentroid()
