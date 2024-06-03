@@ -279,11 +279,11 @@ uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx)
 
 // clang-format off
 double afGetT1A() {
-    return T1A;
+    return T1A / MAX_TA1_SAMPLES;
 }
 
 double afGetT2A() {
-    return T2A;
+    return T2A / MAX_TA2_SAMPLES;
 }
 
 double afGetSpectralCentroid()

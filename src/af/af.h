@@ -26,7 +26,8 @@
 #define FFT_N2_LENGTH 512
 
 #define MAX_TEMPO           160.0
-#define MAX_TA1             0.999
+#define MAX_TA1_SAMPLES     800
+#define MAX_TA2_SAMPLES     3500
 #define MAX_SPEC_FLATNESS   1000.0
 #define MAX_CREST           100.0
 #define MAX_FLUX            1000.0
