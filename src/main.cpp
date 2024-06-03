@@ -3,6 +3,10 @@
 #include "hal.hpp"
 #include "transientDSP.hpp"
 #include "ui.hpp"
+extern "C"
+{
+#include "af.h"
+}
 
 using namespace daisy;
 
@@ -12,6 +16,8 @@ float testArray2[15] = {0.5811, 0.0243, 0.3052, 0.1541, 0.0352, 0.4844, 0.5923, 
 float testReturnA = 0;
 float testReturnS = 0;
 
+float afProbe = 0;
+
 int main(void)
 {
     halInit();
@@ -19,14 +25,20 @@ int main(void)
 
     for (;;)
     {
-        System::Delay(50);
-        halLEDset(true);
-        System::Delay(50);
-        halLEDset(false);
+        // System::Delay(50);
+        // halLEDset(true);
+        // System::Delay(50);
+        // halLEDset(false);
         aiRun(testArray2);
         testReturnA = aiGetATTACK_T1();
         testReturnS = aiGetSUSTAIN_T1();
-
-        // EVERYTHING IS INTERRUPT DRIVEN
+        if (processAFFlag)
+        {
+            AFInCProcess();
+            afProbe = afGetTempo();
+            processAFFlag = false;
+            halLEDset(false);
+            halStartAudio();
+        }
     }
 }

@@ -6,8 +6,6 @@ extern __attribute__((section(".sdram_bss"))) double magnitudeBeatBuffer[MAX_ONS
 
 double calculateSpectralCentroid(uint64_t onsetIndex);
 
-double calculateSpectralFlatness(uint64_t onsetIndex);
-
 double calculateBandL(uint64_t onsetIndex);
 
 double calculateBandML(uint64_t onsetIndex);
