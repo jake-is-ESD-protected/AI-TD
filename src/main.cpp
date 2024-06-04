@@ -25,20 +25,22 @@ int main(void)
 
     for (;;)
     {
-        // System::Delay(50);
-        // halLEDset(true);
-        // System::Delay(50);
-        // halLEDset(false);
-        aiRun(testArray2);
-        testReturnA = aiGetATTACK_T1();
-        testReturnS = aiGetSUSTAIN_T1();
         if (processAFFlag)
         {
-            AFInCProcess();
-            afProbe = afGetTempo();
-            processAFFlag = false;
-            halLEDset(false);
-            halStartAudio();
+            processBTT();             // PROCESS BTT SAMPLES WHILE RECORDING
+            if (calculationsDoneFlag) // IF CALCULATION HAS HAPPEND IN ABOVE FUNCTION
+            {
+                calculationsDoneFlag = false;
+                processAFFlag = false;
+                afProbe = afGetTempo();
+
+                /*aiRun(testArray2);
+                testReturnA = aiGetATTACK_T1();
+                testReturnS = aiGetSUSTAIN_T1();*/
+
+                halLEDset(false);
+                halStartAudio();
+            }
         }
     }
 }

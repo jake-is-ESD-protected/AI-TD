@@ -21,6 +21,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+bool calculateAFFlag = false; //THIS FLAG IS UP WHEN THE BUFFER IS FULLY RECORDED AND CALCULATIONS COULD START TO HAPPEN
+bool calculationsDoneFlag = false; //THIS FLAG IS UP WHEN THE PREPROCESSING IS DONE
+
 BTT *btt;
 
 __attribute__((section(".sdram_bss"))) double audioBuffer[AUDIO_BUFFER_SIZE];
@@ -61,6 +64,20 @@ double spectralFlux = 0;
 double T1A = 0;
 double T2A = 0;
 
+//FILTER START
+double filterBuffer;
+double a0, b1;
+double processFilter(double in)
+{
+    return filterBuffer = in * a0 + filterBuffer * b1;
+}
+void setTime(double freq)
+{
+    b1 = exp(-2.0 * PI * freq/sampleRate);
+    a0 = 1.0 - b1;
+}
+//FILTER END
+
 void resetBuffer()
 {
     memset(audioBuffer,0, sizeof(double) * AUDIO_BUFFER_SIZE);
@@ -94,6 +111,7 @@ void initAf()
 {
     BeatDetectionInit();
     EnvFollowerInitAf();
+    setTime(sampleRate/2);
 }
 
 void EnvFollowerInitAf()
@@ -122,19 +140,44 @@ void BeatDetectionInit()
     btt_set_onset_tracking_callback(btt, onset_detected_callback, NULL);
 }
 
-double audioBufferMax = 0;
+bool downSamplingFlipFlop = true;
 
 void AFInCAppend(double in)
 {
     if (audioBufferIndex < AUDIO_BUFFER_SIZE)
     {
         audioBuffer[audioBufferIndex] = in;
-        if (fabs(in) > audioBufferMax)
-        {
-            audioBufferMax = fabs(in);
-        }
         audioBufferIndex++;
     }
+}
+
+void processBTT()
+{
+    if(audioBufferRuntimeIndex < audioBufferIndex) //IF THERE ARE NEW SAMPLES TO PROCESS
+    {
+        dftBuffer[0] = audioBuffer[audioBufferRuntimeIndex];
+        btt_process(btt, dftBuffer, 1);
+        audioBufferRuntimeIndex++;
+    }
+    if(calculateAFFlag && audioBufferRuntimeIndex >= audioBufferIndex) //IF WHOLE BUFFER IS PROCESSED AND BTN RELEASED
+    {
+        AFInCProcess();
+        calculateAFFlag = false;
+        calculationsDoneFlag = true; //TELL THE MAIN LOOP THAT THE PREPROCESSING IS DONE
+    }
+    /*
+    double tempVar = processFilter(audioBuffer[audioBufferRuntimeIndex]);
+    if(downSamplingFlipFlop)
+    {
+        dftBuffer[0] = tempVar;
+        btt_process(btt, dftBuffer, 1);
+        downSamplingFlipFlop = false;
+    }
+    else
+    {
+        downSamplingFlipFlop = true;
+    }
+    audioBufferRuntimeIndex++;*/
 }
 
 void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)
@@ -165,20 +208,11 @@ void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)
 
 void AFInCProcess()
 {
-    double audioBufferNormalizationFactor = 1.0f / audioBufferMax;
-
     for (uint64_t i = 0; i < audioBufferIndex; i++)
     {
-        audioBuffer[i] *= audioBufferNormalizationFactor;
-    }
-    
-    for (uint64_t i = 0; i < audioBufferIndex; i++)
-    {
-        dftBuffer[0] = audioBuffer[i];
-        btt_process(btt, dftBuffer, 1); //TODO: THIS COULD HAPPEN ON THE WHOLE BUFFER
         envBuffer[i] = processEnvelopeAf(EnvelopeFollowerPeakHoldProcessAf(audioBuffer[i]));
-        audioBufferRuntimeIndex++;
     }
+
 
     for (uint64_t i = 0; i < onsetBufferIndex-1; i++) //COMPENSATE ALL ONSETS FIRST
     {

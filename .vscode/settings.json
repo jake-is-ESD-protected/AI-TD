@@ -110,7 +110,8 @@
     "variant": "cpp",
     "string.h": "c",
     "stdint.h": "c",
-    "smoother4exponentialaf.h": "c"
+    "smoother4exponentialaf.h": "c",
+    "onepolefilter.hpp": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [
@@ -169,5 +170,5 @@
     "**/.vscode/**"
   ],
   "C_Cpp_Runner.useAddressSanitizer": false,
-  "cortex-debug.variableUseNaturalFormat": false
+  "cortex-debug.variableUseNaturalFormat": true
 }

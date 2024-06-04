@@ -11,6 +11,7 @@
 #define _AF_H_
 
 #include <inttypes.h>
+#include <stdbool.h>
 #include "beatDetectionDSP/BTT.h"
 
 #define ENV_SMOOTH_ORDER 4           // in n
@@ -36,6 +37,9 @@ extern uint64_t audioBufferRuntimeIndex;
 extern uint64_t onsetBufferIndex;
 extern dft_sample_t dftBuffer[BEAT_DETECTION_BUFFER_SIZE];
 
+extern bool calculateAFFlag;
+extern bool calculationsDoneFlag;
+
 void resetBuffer();
 
 void initAf();
@@ -47,6 +51,8 @@ void BeatDetectionInit();
 void AFInCAppend(double in);
 
 void AFInCProcess();
+
+void processBTT();
 
 /// @brief Get the envelope of a given signal.
 /// @param sig Given signal.

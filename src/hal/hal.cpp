@@ -33,29 +33,31 @@ uint64_t visualProcessCounter = 0;
 
 bool lastPurpleButtonState = false;
 
-bool processAFFlag = false;
+bool processAFFlag = false; // THIS FLAG GOES UP WHILE RECORDING AND PROCESSING AND DOWN ON FINISHED PREPROCESSING AND AI INFRENCING
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     double adcAudioIn = hw.adc.GetFloat(4) - 0.5 * 2;
     LeftButton.Debounce();
     RightButton.Debounce();
-    if (lastPurpleButtonState && !LeftButton.Pressed() && !processAFFlag) // ON RELEASE
+    if (lastPurpleButtonState && !LeftButton.Pressed()) // ON RELEASE
     {
-        processAFFlag = true; // SET PROCESS FLAG FOR MAIN LOOP
+        calculateAFFlag = true;
         halStopAudio();
     }
     if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PRESSED
     {
+        processAFFlag = true; // SET PROCESS FLAG FOR MAIN LOOP
         // resetBuffer();
     }
-    if (LeftButton.Pressed())
+    if (LeftButton.Pressed()) // PUT INTO BUFFER ON PRESSED
     {
         AFInCAppend(in[0][0]);
     }
     else
     {
-        transientDSPprocess(in[0][0]);
+        if (!processAFFlag)
+            transientDSPprocess(in[0][0]);
     }
     lastPurpleButtonState = LeftButton.Pressed();
 
