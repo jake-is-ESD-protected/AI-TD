@@ -35,7 +35,6 @@ __attribute__((section(".sdram_bss"))) float magnitudeBuffer[FFT_N2_LENGTH];
 
 __attribute__((section(".sdram_bss"))) double spectralFluxBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double spectralCentroidBuffer[MAX_ONSETS];
-__attribute__((section(".sdram_bss"))) double spectralFlatnessBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double bandLBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double bandMLBuffer[MAX_ONSETS];
 __attribute__((section(".sdram_bss"))) double bandMHBuffer[MAX_ONSETS];
@@ -53,7 +52,6 @@ dft_sample_t dftBuffer[BEAT_DETECTION_BUFFER_SIZE];
 bool firstSepctrumFlag = true;
 
 double spectralCentroid = 0;
-double spectralFlatness = 0;
 double BandL = 0; //150Hz
 double BandML = 0; //800Hz
 double BandMH = 0; //2kHz
@@ -124,11 +122,17 @@ void BeatDetectionInit()
     btt_set_onset_tracking_callback(btt, onset_detected_callback, NULL);
 }
 
+double audioBufferMax = 0;
+
 void AFInCAppend(double in)
 {
     if (audioBufferIndex < AUDIO_BUFFER_SIZE)
     {
         audioBuffer[audioBufferIndex] = in;
+        if (fabs(in) > audioBufferMax)
+        {
+            audioBufferMax = fabs(in);
+        }
         audioBufferIndex++;
     }
 }
@@ -161,14 +165,8 @@ void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)
 
 void AFInCProcess()
 {
-    double audioBufferMax = 0;
-    for (uint64_t i = 0; i < audioBufferIndex; i++)
-    {
-            if (fabs(audioBuffer[i]) > audioBufferMax) {
-                audioBufferMax = fabs(audioBuffer[i]);
-        }
-    }
     double audioBufferNormalizationFactor = 1.0f / audioBufferMax;
+
     for (uint64_t i = 0; i < audioBufferIndex; i++)
     {
         audioBuffer[i] *= audioBufferNormalizationFactor;
@@ -177,7 +175,7 @@ void AFInCProcess()
     for (uint64_t i = 0; i < audioBufferIndex; i++)
     {
         dftBuffer[0] = audioBuffer[i];
-        btt_process(btt, dftBuffer, 1);
+        btt_process(btt, dftBuffer, 1); //TODO: THIS COULD HAPPEN ON THE WHOLE BUFFER
         envBuffer[i] = processEnvelopeAf(EnvelopeFollowerPeakHoldProcessAf(audioBuffer[i]));
         audioBufferRuntimeIndex++;
     }
@@ -211,6 +209,7 @@ void AFInCProcess()
         }
     }
 
+
     for (uint64_t i = 0; i < onsetBufferIndex-1; i++)
     {
         uint64_t idxMax = __afGetIdxOfMax(envBuffer, onsetBuffer[i], onsetBuffer[i+1]);
@@ -224,7 +223,6 @@ void AFInCProcess()
 
         //FETCH AF HERE FROM FUNCTION IDENTICAL TO ABOVE
         spectralCentroidBuffer[i] = calculateSpectralCentroid(i);
-        spectralFlatnessBuffer[i] = calculateSpectralFlatness(i);
         bandLBuffer[i] = calculateBandL(i);
         bandMLBuffer[i] = calculateBandML(i);
         bandMHBuffer[i] = calculateBandMH(i);
@@ -233,9 +231,6 @@ void AFInCProcess()
 
     }
     spectralCentroid = findPercentile(spectralCentroidBuffer, onsetBufferIndex, 75); 
-    spectralFlatness = findPercentile(spectralFlatnessBuffer, onsetBufferIndex, 75);
-    if(spectralFlatness > MAX_SPEC_FLATNESS) { spectralFlatness = MAX_SPEC_FLATNESS; }
-    spectralFlatness /= MAX_SPEC_FLATNESS;
     BandL = findPercentile(bandLBuffer, onsetBufferIndex, 75);
     BandML = findPercentile(bandMLBuffer, onsetBufferIndex, 75);
     BandMH = findPercentile(bandMHBuffer, onsetBufferIndex, 75);
@@ -289,12 +284,6 @@ double afGetT2A() {
 double afGetSpectralCentroid()
 {
     return spectralCentroid;
-}
-
-
-double afGetSpectralFlatness()
-{
-    return spectralFlatness;
 }
 
 double afGetTempo() {

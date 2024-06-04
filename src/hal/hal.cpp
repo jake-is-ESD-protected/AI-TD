@@ -22,8 +22,8 @@ DaisySeed hw;
 static Led BlueLed;
 static Led RedLed;
 static Led PurpleLed;
-static GPIO LeftButton;
-static GPIO RightButton;
+static Switch LeftButton;
+static Switch RightButton;
 
 static TimerHandle timerUI;
 static TimerHandle timerVisual;
@@ -33,40 +33,47 @@ uint64_t visualProcessCounter = 0;
 
 bool lastPurpleButtonState = false;
 
+bool processAFFlag = false;
+
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     double adcAudioIn = hw.adc.GetFloat(4) - 0.5 * 2;
-    if (lastPurpleButtonState && !LeftButton.Read()) // ON RELEASE
+    LeftButton.Debounce();
+    RightButton.Debounce();
+    if (lastPurpleButtonState && !LeftButton.Pressed() && !processAFFlag) // ON RELEASE
     {
-        AFInCProcess();
+        processAFFlag = true; // SET PROCESS FLAG FOR MAIN LOOP
+        halStopAudio();
     }
-    if (!lastPurpleButtonState && LeftButton.Read()) // ON PRESSED
+    if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PRESSED
     {
-        resetBuffer();
+        // resetBuffer();
     }
-    if (LeftButton.Read())
+    if (LeftButton.Pressed())
     {
         AFInCAppend(in[0][0]);
     }
-    lastPurpleButtonState = LeftButton.Read();
+    else
+    {
+        transientDSPprocess(in[0][0]);
+    }
+    lastPurpleButtonState = LeftButton.Pressed();
 
     if (uiProcessCounter == 3200)
     {
-        KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Read());
-        KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Read());
-        KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Read());
-        KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Read());
+        KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Pressed());
+        KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Pressed());
+        KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
+        KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed());
 
         transientDSPuiProcess();
         uiProcessCounter = 0;
     }
     uiProcessCounter++;
 
-    transientDSPprocess(in[0][0]);
-
     if (visualProcessCounter == 1600)
     {
-        if (RightButton.Read())
+        if (RightButton.Pressed())
         {
             BlueLed.Set(0);
             RedLed.Set(0.8);
@@ -76,7 +83,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
             BlueLed.Set(0.8);
             RedLed.Set(0);
         }
-        PurpleLed.Set(LeftButton.Read() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY
+        PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY
 
         visualProcessCounter = 0;
     }
@@ -118,8 +125,8 @@ void halInit()
     BlueLed.Init(seed::D1, true, sampleRate);
     PurpleLed.Init(seed::D6, false, sampleRate);
     RedLed.Init(seed::D2, true, sampleRate);
-    LeftButton.Init(daisy::seed::D3, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
-    RightButton.Init(daisy::seed::D4, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
+    LeftButton.Init(seed::D3, sampleRate, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
+    RightButton.Init(seed::D4, sampleRate, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
 
     AdcChannelConfig adcConfig[4];
     adcConfig[0].InitSingle(hw.GetPin(15));
@@ -131,10 +138,12 @@ void halInit()
 
     hw.adc.Start();
 
-    cliInit();
+    // cliInit();
     transientDSPinit();
     halTimerInit();
     aiInit();
+    initAf();
+    resetBuffer();
     halStartAudio();
 }
 
@@ -174,7 +183,7 @@ void halLEDset(bool b)
 
 bool halButtonRead()
 {
-    return RightButton.Read();
+    return RightButton.Pressed();
 }
 
 void halStartAudio()

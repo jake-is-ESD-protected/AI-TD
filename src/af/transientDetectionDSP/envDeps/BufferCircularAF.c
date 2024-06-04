@@ -1,7 +1,7 @@
 #include "BufferCircularAF.h"
 #include <memory.h>
 
-double EnvCircularBufferAf[ENVELOPE_FOLLOWER_BUFFER_SIZE];
+double __attribute__((section(".sdram_bss"))) EnvCircularBufferAf[ENVELOPE_FOLLOWER_BUFFER_SIZE];
 unsigned int index_writeAf;
 unsigned int len_bufferAf; // Must be nearest power of 2
 unsigned int wrap_maskAf;  // Must be (len_buffer - 1)

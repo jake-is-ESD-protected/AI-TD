@@ -109,7 +109,8 @@
     "valarray": "cpp",
     "variant": "cpp",
     "string.h": "c",
-    "stdint.h": "c"
+    "stdint.h": "c",
+    "smoother4exponentialaf.h": "c"
   },
   "editor.tokenColorCustomizations": {
     "textMateRules": [

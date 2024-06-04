@@ -28,7 +28,6 @@
 #define MAX_TEMPO           160.0
 #define MAX_TA1_SAMPLES     800
 #define MAX_TA2_SAMPLES     3500
-#define MAX_SPEC_FLATNESS   1000.0
 #define MAX_CREST           100.0
 #define MAX_FLUX            1000.0
 
@@ -71,8 +70,6 @@ uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx);
 uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx);
 
 double afGetSpectralCentroid();
-
-double afGetSpectralFlatness();
 
 double afGetTempo();
 

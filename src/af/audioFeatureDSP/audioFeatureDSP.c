@@ -23,25 +23,6 @@ double calculateSpectralCentroid(uint64_t onsetIndex)
     return (_spectralCentroid / FFT_N2_LENGTH);
 }
 
-double calculateSpectralFlatness(uint64_t onsetIndex)
-{
-    double geometricMean = 1.0;
-    double arithmeticMean = 0.0;
-
-    for (uint32_t i = 0; i < FFT_N2_LENGTH; i++) {
-        if(magnitudeBeatBuffer[onsetIndex][i] > 0.01)
-        {
-            geometricMean *= (magnitudeBeatBuffer[onsetIndex][i]);
-            arithmeticMean += magnitudeBeatBuffer[onsetIndex][i];
-        }
-    }
-
-    geometricMean = pow(geometricMean, 1.0 / (double) FFT_N2_LENGTH);
-    arithmeticMean /= (double) FFT_N2_LENGTH;
-    
-    return (geometricMean / arithmeticMean);
-}
-
 double calculateBandL(uint64_t onsetIndex) {
     return magnitudeBeatBuffer[onsetIndex][1]; //187Hz
 }
