@@ -6,7 +6,7 @@
 void EnvelopeFollowerPeakHoldInitAf(double window_size_ms)
 {
     // prev_max = 0.0;
-    BufferCircularInitAf((unsigned int)(window_size_ms / 1000.0 * sampleRate));
+    BufferCircularInitAf((unsigned int)(window_size_ms / 1000.0 * slowsampleRate));
 }
 
 uint16_t blockCounterAf = 0;

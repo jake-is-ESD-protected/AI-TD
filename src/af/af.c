@@ -73,7 +73,7 @@ double processFilter(double in)
 }
 void setTime(double freq)
 {
-    b1 = exp(-2.0 * PI * freq/sampleRate);
+    b1 = exp(-2.0 * PI * freq/slowsampleRate);
     a0 = 1.0 - b1;
 }
 //FILTER END
@@ -111,7 +111,7 @@ void initAf()
 {
     BeatDetectionInit();
     EnvFollowerInitAf();
-    setTime(sampleRate/2);
+    setTime(slowsampleRate/2);
 }
 
 void EnvFollowerInitAf()
@@ -131,12 +131,12 @@ void BeatDetectionInit()
                     BTT_SUGGESTED_OSS_LENGTH,
                     BTT_SUGGESTED_ONSET_THRESHOLD_N,
                     BTT_SUGGESTED_CBSS_LENGTH,
-                    sampleRate,
+                    slowsampleRate,
                     BTT_DEFAULT_ANALYSIS_LATENCY_ONSET_ADJUSTMENT,
                     BTT_DEFAULT_ANALYSIS_LATENCY_BEAT_ADJUSTMENT
                     );
     // clang-format on
-    btt_set_tracking_mode(btt, BTT_ONSET_AND_TEMPO_AND_BEAT_TRACKING);
+    btt_set_tracking_mode(btt, BTT_ONSET_AND_TEMPO_TRACKING);
     btt_set_onset_tracking_callback(btt, onset_detected_callback, NULL);
 }
 

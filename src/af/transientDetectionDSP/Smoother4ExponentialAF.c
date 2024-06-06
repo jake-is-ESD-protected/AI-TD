@@ -14,7 +14,7 @@ void setAttackAf(smootherTypeAf *smoother, double time_ms)
 {
     // Convert time to seconds
     const double time_s = time_ms / 1000.0;
-    smoother->alpha_attack = exp(-TWO_PI * CM / (sampleRate * time_s));
+    smoother->alpha_attack = exp(-TWO_PI * CM / (slowsampleRate * time_s));
 }
 
 void setReleaseAf(smootherTypeAf *smoother, double time_ms)
@@ -22,7 +22,7 @@ void setReleaseAf(smootherTypeAf *smoother, double time_ms)
     // Convert time to seconds
     const double time_s = time_ms / 1000.0;
 
-    smoother->alpha_release = exp(-TWO_PI * CM / (  sampleRate * time_s));
+    smoother->alpha_release = exp(-TWO_PI * CM / (  slowsampleRate * time_s));
 }
 
 double processAf(smootherTypeAf *smoother, double x)

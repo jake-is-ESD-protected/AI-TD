@@ -44,10 +44,14 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     {
         calculateAFFlag = true;
         halStopAudio();
+        hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
     }
     if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PRESSED
     {
         processAFFlag = true; // SET PROCESS FLAG FOR MAIN LOOP
+        halStopAudio();
+        hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
+        halStartAudio();
         // resetBuffer();
     }
     if (LeftButton.Pressed()) // PUT INTO BUFFER ON PRESSED

@@ -17,11 +17,11 @@
 #define ENV_SMOOTH_ORDER 4           // in n
 #define ENV_SMOOTH_ATTACK 2          // in ms
 #define ENV_SMOOTH_RELEASE 200       // in ms
-#define ONSET_DETECTION_COMPENSATION_N (uint64_t)(20 * 0.001 * sampleRate) // The onset detection algorithm is about 10ms to late for proper attack detection
+#define ONSET_DETECTION_COMPENSATION_N (uint64_t)(20 * 0.001 * slowsampleRate) // The onset detection algorithm is about 10ms to late for proper attack detection
 
 #define BEAT_DETECTION_BUFFER_SIZE 64
 #define AUDIO_BUFFER_SIZE_S 8
-#define AUDIO_BUFFER_SIZE sampleRate * AUDIO_BUFFER_SIZE_S
+#define AUDIO_BUFFER_SIZE slowsampleRate * AUDIO_BUFFER_SIZE_S
 #define MAX_ONSETS 4 * AUDIO_BUFFER_SIZE_S // 4 BPS IS 240 BPM
 
 #define FFT_N2_LENGTH 512
