@@ -69,9 +69,6 @@ def af_dsp_init(path_to_dll):
     lib.afGetSpectralCentroid.argtypes = []
     lib.afGetSpectralCentroid.restype = c_double
 
-    lib.afGetSpectralFlatness.argtypes = []
-    lib.afGetSpectralFlatness.restype = c_double
-
     lib.afGetPBandL.argtypes = []
     lib.afGetPBandL.restype = c_double
 
@@ -134,8 +131,8 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
         
         input_data[label] = tuple(round(val, 4) for val in (
             lib.afGetTempo(),
-            lib.afGetT1A() / fs,
-            lib.afGetT2A() / fs,
+            lib.afGetT1A(),# / fs,
+            lib.afGetT2A(),# / fs,
             lib.afGetSpectralCentroid(),
             lib.afGetPBandL(),
             lib.afGetPBandML(),

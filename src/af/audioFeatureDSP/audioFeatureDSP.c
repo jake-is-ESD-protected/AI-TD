@@ -20,7 +20,7 @@ double calculateSpectralCentroid(uint64_t onsetIndex)
     if(magnitudeSum != 0)
         _spectralCentroid /= magnitudeSum;
     
-    return (_spectralCentroid / FFT_N2_LENGTH);
+    return (_spectralCentroid / FFT_N2_LENGTH) * sampleRate;
 }
 
 double calculateBandL(uint64_t onsetIndex) {

@@ -236,11 +236,7 @@ void AFInCProcess()
     BandMH = findPercentile(bandMHBuffer, onsetBufferIndex, 75);
     BandH = findPercentile(bandHBuffer, onsetBufferIndex, 75);
     crestFactor = findPercentile(crestFactorBuffer, onsetBufferIndex, 75);
-    if(crestFactor > MAX_CREST) { crestFactor = MAX_CREST; }
-    crestFactor /= MAX_CREST;
     spectralFlux = findPercentile(spectralFluxBuffer, spectralFluxIndex, 75);
-    if(spectralFlux > MAX_FLUX) { spectralFlux = MAX_FLUX; }
-    spectralFlux /= MAX_FLUX;
     T1A = findPercentile(onsetT1ABuffer, onsetBufferIndex, 75);
     T2A = findPercentile(onsetT2ABuffer, onsetBufferIndex, 75);
 }
@@ -274,23 +270,24 @@ uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx)
 
 // clang-format off
 double afGetT1A() {
+    if(T1A > MAX_TA1_SAMPLES) { T1A = MAX_TA1_SAMPLES; }
     return T1A / MAX_TA1_SAMPLES;
 }
 
 double afGetT2A() {
+    if(T2A > MAX_TA2_SAMPLES) { T2A = MAX_TA2_SAMPLES; }
     return T2A / MAX_TA2_SAMPLES;
 }
 
 double afGetSpectralCentroid()
 {
-    return spectralCentroid;
+    if(spectralCentroid > MAX_CENTROID) { spectralCentroid = MAX_CENTROID; }
+    return spectralCentroid / MAX_CENTROID;
 }
 
 double afGetTempo() {
     double tempo = btt_get_tempo_bpm(btt);
-    if(tempo > MAX_TEMPO){
-        tempo /= 2.0;
-    } 
+    if(tempo > MAX_TEMPO){ tempo /= 2.0; } 
     return tempo / MAX_TEMPO;
 }
 
@@ -311,11 +308,13 @@ double afGetPBandH() {
 }
 
 double afGetCrestFactor() {
-    return crestFactor;
+    if(crestFactor > MAX_CREST) { crestFactor = MAX_CREST; }
+    return crestFactor / MAX_CREST;
 }
 
 double afGetSpectralFlux() {
-    return spectralFlux;
+    if(spectralFlux > MAX_FLUX) { spectralFlux = MAX_FLUX; }
+    return spectralFlux / MAX_FLUX;
 }
 
 
