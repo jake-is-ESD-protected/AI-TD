@@ -1,7 +1,5 @@
 TARGET_EXEC = AFInC.dll
 
-
-
 BUILD_DIR = build
 
 SRCS ?= af.c #BEWARE INC FOR CPP IS NOT IMPLEMENTED YET DUE TO LINKING ERROR
@@ -16,7 +14,7 @@ DEPS := $(OBJS:.o=.d)
 
 $(info $(OBJS))
 
-INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_DIRS := . $(shell find . -type d) 
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -fPIC

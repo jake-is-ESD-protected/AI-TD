@@ -24,34 +24,35 @@ double calculateSpectralCentroid(uint64_t onsetIndex)
 }
 
 double calculateBandL(uint64_t onsetIndex) {
-    return magnitudeBeatBuffer[onsetIndex][1]; //187Hz
+    return (magnitudeBeatBuffer[onsetIndex][1] + magnitudeBeatBuffer[onsetIndex][2] ) / 2.0; //187Hz
 }
 //BIN * 96000 / 512 = freq
+//BIN * 48000 / 512 = freq
 double calculateBandML(uint64_t onsetIndex) {
     double ret = 0;
-    for(int i = 2; i <= 5; i++)
+    for(int i = 3; i <= 10; i++)
     {
         ret += (magnitudeBeatBuffer[onsetIndex][i]); //937Hz
-    }
-    return (ret / (6-2));
+    } 
+    return (ret / (11-3));
 }
 
 double calculateBandMH(uint64_t onsetIndex) {
     double ret = 0;
-    for(int i = 6; i <= 11; i++)
+    for(int i = 11; i <= 22; i++)
     {
         ret += (magnitudeBeatBuffer[onsetIndex][i]); //2 062Hz
     }
-    return (ret / (12-6));
+    return (ret / (23-11));
 }
 
 double calculateBandH(uint64_t onsetIndex) {
     double ret = 0;
-    for(int i = 12; i <= 107; i++)
+    for(int i = 23; i <= 214; i++)
     {
         ret += (magnitudeBeatBuffer[onsetIndex][i]); //20 062Hz
     }
-    return (ret / (108-12));
+    return (ret / (215-23));
 }
 
 double calculateCrestFactor(double* buffer, uint64_t audioIndex, uint64_t length) {

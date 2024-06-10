@@ -146,7 +146,14 @@ void AFInCAppend(double in)
 {
     if (audioBufferIndex < AUDIO_BUFFER_SIZE)
     {
-        audioBuffer[audioBufferIndex] = in;
+        if(audioBufferIndex < AUDIO_BUFF_FADE_TIME_S)
+        {
+            audioBuffer[audioBufferIndex] = in * audioBufferIndex / (double) AUDIO_BUFF_FADE_TIME_S; //FADE IN
+        }
+        else
+        {
+            audioBuffer[audioBufferIndex] = in;
+        }
         audioBufferIndex++;
     }
 }
@@ -178,6 +185,17 @@ void processBTT()
         downSamplingFlipFlop = true;
     }
     audioBufferRuntimeIndex++;*/
+}
+
+void processBTTAndAFInC() //FUNCTION FOR PROPER USAGE WITH PYTHON
+{
+    while(audioBufferRuntimeIndex < audioBufferIndex) //IF THERE ARE NEW SAMPLES TO PROCESS
+    {
+        dftBuffer[0] = audioBuffer[audioBufferRuntimeIndex];
+        btt_process(btt, dftBuffer, 1);
+        audioBufferRuntimeIndex++;
+    }
+    AFInCProcess();
 }
 
 void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)

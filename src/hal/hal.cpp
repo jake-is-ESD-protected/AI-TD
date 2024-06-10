@@ -52,9 +52,9 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         halStopAudio();
         hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
         halStartAudio();
-        // resetBuffer();
+        // resetBuffer(); //TODO: FIX THIS
     }
-    if (LeftButton.Pressed()) // PUT INTO BUFFER ON PRESSED
+    if (LeftButton.Pressed() && processAFFlag) // PUT INTO BUFFER ON PRESSED
     {
         AFInCAppend(in[0][0]);
     }
@@ -69,8 +69,22 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     {
         KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Pressed());
         KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Pressed());
-        KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
-        KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed());
+
+        if (processAFFlag && (KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed()) || KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed())))
+        {
+            // DISSRUPT AI SHIET BY CHANGING STUFF BACK I GUESS BASED ON IF AUDIO IS ON DO THIS N THAT
+            // halStopAudio();
+            /*BlueLed.Set(1.0);
+            RedLed.Set(1.0);
+            halLEDset(false);
+            PurpleLed.Set(1.0);
+            calculateAFFlag = false;
+            processAFFlag = false;
+            calculationsDoneFlag = false;*/
+            // TODO: WE PROPABLY NEED A FLAG BASED SETTING / RESETTING SYSTEM FOR THIS
+            // hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
+            // halStartAudio();
+        }
 
         transientDSPuiProcess();
         uiProcessCounter = 0;

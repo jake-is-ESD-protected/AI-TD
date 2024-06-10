@@ -22,6 +22,8 @@
 #define BEAT_DETECTION_BUFFER_SIZE 64
 #define AUDIO_BUFFER_SIZE_S 8
 #define AUDIO_BUFFER_SIZE slowsampleRate * AUDIO_BUFFER_SIZE_S
+#define AUDIO_BUFF_FADE_TIME_S slowsampleRate * 0.04
+
 #define MAX_ONSETS 4 * AUDIO_BUFFER_SIZE_S // 4 BPS IS 240 BPM
 
 #define FFT_N2_LENGTH 512
@@ -51,6 +53,8 @@ void BeatDetectionInit();
 void AFInCAppend(double in);
 
 void AFInCProcess();
+
+void processBTTAndAFInC();
 
 void processBTT();
 
