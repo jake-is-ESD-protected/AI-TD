@@ -11,8 +11,8 @@ extern "C"
 using namespace daisy;
 
 // float testArray[15] = {0.6826, 0.5251, 0.7008, 0.1174, 0.1029, 0.2575, 0.1431, 0.466, 0.0256, 0.0615, 0.0038, 0.2181, 0.8451};
-float testArrayLuka[15] = {0.9566, 0.0362, 0.0996, 0.6371, 0.8114, 0.4654, 0.0797, 0.0068, 0.1171, 0.5104, 0.2, 0, 0.4838}; // 0.4915142, 0.05078933333333333
-float testArrayZeros[15] = {0};                                                                                             //[0.25394556 0.33098203]
+float testArrayLuka[15] = {0.9566, 0.1498, 0.1552, 0.8348, 0.4552, 0.482, 0.1599, 0.0237, 0.2225, 0.4043, 0.0, 0, 0.7678}; // 0.39971474 0.42938083
+float testArrayZeros[15] = {0};                                                                                            //[0.25394556 0.33098203]
 float testReturnA = 0;
 float testReturnS = 0;
 
@@ -26,7 +26,7 @@ int main(void)
     for (;;)
     {
         System::Delay(10);
-        aiRun(testArrayZeros);
+        aiRun(testArrayLuka);
         testReturnA = aiGetATTACK_T1();
         testReturnS = aiGetSUSTAIN_T1();
         System::Delay(10);
