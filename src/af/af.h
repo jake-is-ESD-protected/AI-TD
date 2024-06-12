@@ -28,11 +28,13 @@
 
 #define FFT_N2_LENGTH 512
 
+// these values were obtained from explorative research of the data set
 #define MAX_TEMPO           160.0
-#define MAX_TA1_SAMPLES     800
-#define MAX_TA2_SAMPLES     3500
-#define MAX_CREST           100.0
-#define MAX_FLUX            1000.0
+#define MAX_TA1_SAMPLES     20000.0
+#define MAX_TA2_SAMPLES     80000.0
+#define MAX_CENTROID        30000.0
+#define MAX_CREST           20.0
+#define MAX_FLUX            150.0
 
 extern uint64_t audioBufferIndex;
 extern uint64_t audioBufferRuntimeIndex;
