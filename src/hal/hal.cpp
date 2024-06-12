@@ -36,6 +36,9 @@ bool lastPurpleButtonState = false;
 bool processAFFlag = false;   // THIS FLAG GOES UP WHILE RECORDING AND PROCESSING AND DOWN ON FINISHED PREPROCESSING AND AI INFRENCING
 bool cancelationFlag = false; // THIS FLAG GOES UP ON RECORDING CANCELATION VIA KNOB POSITION MOVEMENT
 
+float lastT1KnobPos = 0.5;
+float lastT2KnobPos = 0.5;
+
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     double adcAudioIn = hw.adc.GetFloat(4) - 0.5 * 2;
@@ -52,22 +55,28 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     }
     if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PRESSED
     {
-        processAFFlag = true; // SET PROCESS FLAG FOR MAIN LOOP
-        resetBuffer();        // TODO: MAYBE MOVE THIS TO MAIN LOOP ON CANCEL || INFERENCE
+        processAFFlag = true;               // SET PROCESS FLAG FOR MAIN LOOP
+        lastT1KnobPos = hw.adc.GetFloat(2); // REMEMBER KNOB POSITIONS FOR CANCEL INTERACTION
+        lastT2KnobPos = hw.adc.GetFloat(3); // REMEMBER KNOB POSITIONS FOR CANCEL INTERACTION
         halStopAudio();
         hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
         halStartAudio();
-
-        halLEDset(true);
     }
     if (LeftButton.Pressed() && processAFFlag) // PUT INTO BUFFER ON PRESSED
     {
+        halVCAwrite(0.6); // TODO: MAKE THIS A MACRO
         AFInCAppend(in[0][0]);
     }
     else
     {
         if (!processAFFlag)
+        {
             transientDSPprocess(in[0][0]);
+        }
+        else
+        {
+            halVCAwrite(0.6); // TODO: MAKE THIS A MACRO
+        }
     }
     lastPurpleButtonState = LeftButton.Pressed();
 
@@ -75,11 +84,12 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     {
         KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Pressed());
         KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Pressed());
+        KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
+        KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed());
 
-        if (processAFFlag && (KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed()) || KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed())))
+        if (processAFFlag && (fabs(lastT1KnobPos - hw.adc.GetFloat(2)) > 0.1 || fabs(lastT2KnobPos - hw.adc.GetFloat(3)) > 0.1))
         {
-            halLEDset(false);       // THIS IS NOT GETTING TRIGGERD PROPERLY ON SECOND
-            cancelationFlag = true; // TODO: DAT RIECHT ALLET NACH KNOB ATTACK TIME FUNKTION RETURN NICH RICHTICH
+            cancelationFlag = true;
             processAFFlag = false;
         }
 
@@ -173,8 +183,6 @@ void halInit()
     initAf();
     resetBuffer();
     halStartAudio();
-    KnobAttackTime.updateKnob(hw.adc.GetFloat(2), true);
-    KnobSustainTime.updateKnob(hw.adc.GetFloat(3), true);
 }
 
 void halVCAwrite(double value)

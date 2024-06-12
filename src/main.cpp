@@ -14,7 +14,7 @@ using namespace daisy;
 using namespace k;
 
 float testArrayLuka[15] = {0.9566, 0.1498, 0.1552, 0.8348, 0.4552, 0.482, 0.1599, 0.0237, 0.2225, 0.4043, 0.0, 0, 0.7678}; // 0.39971474 0.42938083
-float testArrayZeros[15] = {0};                                                                                            //[0.25394556 0.33098203]
+float testArrayZeros[15] = {0};                                                                                            // 0.25394556 0.33098203
 float evalAFVector[13];
 
 int main(void)
@@ -31,7 +31,7 @@ int main(void)
             {
                 calculationsDoneFlag = false;
                 processAFFlag = false;
-
+                // TODO: MOVE ALL OF THIS TO SEPERATE FILE AI.C?
                 evalAFVector[0] = afGetTempo();            // Tempo
                 evalAFVector[1] = afGetT1A();              // T1A
                 evalAFVector[2] = afGetT2A();              // T2A
@@ -59,6 +59,7 @@ int main(void)
                 aiSustain = aiGetSUSTAIN_T1();
 
                 halStartAudio();
+                resetBuffer();
             }
         }
         if (cancelationFlag)
@@ -67,6 +68,7 @@ int main(void)
             hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
             System::Delay(1);
             halStartAudio();
+            resetBuffer();           // TODO: COMBINE THIS WITH BELOW FOR AI_RESET AND MOVE TO OTHER FILE
             calculateAFFlag = false; // clean up
             processAFFlag = false;
             calculationsDoneFlag = false;
