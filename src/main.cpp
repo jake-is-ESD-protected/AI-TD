@@ -1,18 +1,22 @@
+#include "Utilities/Map.hpp"
 #include "ai.h"
 #include "daisy_seed.h"
 #include "hal.hpp"
 #include "transientDSP.hpp"
 #include "ui.hpp"
+
 extern "C"
 {
 #include "af.h"
 }
 
 using namespace daisy;
+using namespace k;
 
 // float testArray[15] = {0.6826, 0.5251, 0.7008, 0.1174, 0.1029, 0.2575, 0.1431, 0.466, 0.0256, 0.0615, 0.0038, 0.2181, 0.8451};
 float testArrayLuka[15] = {0.9566, 0.1498, 0.1552, 0.8348, 0.4552, 0.482, 0.1599, 0.0237, 0.2225, 0.4043, 0.0, 0, 0.7678}; // 0.39971474 0.42938083
 float testArrayZeros[15] = {0};                                                                                            //[0.25394556 0.33098203]
+float evalAFVector[13];
 float testReturnA = 0;
 float testReturnS = 0;
 
@@ -25,11 +29,6 @@ int main(void)
 
     for (;;)
     {
-        System::Delay(10);
-        aiRun(testArrayLuka);
-        testReturnA = aiGetATTACK_T1();
-        testReturnS = aiGetSUSTAIN_T1();
-        System::Delay(10);
         if (processAFFlag)
         {
             processBTT();             // PROCESS BTT SAMPLES WHILE RECORDING
@@ -37,11 +36,34 @@ int main(void)
             {
                 calculationsDoneFlag = false;
                 processAFFlag = false;
-                afProbe = afGetTempo();
 
-                /*aiRun(testArray2);
+                evalAFVector[0] = afGetTempo();            // Tempo
+                evalAFVector[1] = afGetT1A();              // T1A
+                evalAFVector[2] = afGetT2A();              // T2A
+                evalAFVector[3] = afGetSpectralCentroid(); // Centroid
+                evalAFVector[4] = afGetPBandL();           // EQ_L
+                evalAFVector[5] = afGetPBandML();          // EQ_ML
+                evalAFVector[6] = afGetPBandMH();          // EQ_MH
+                evalAFVector[7] = afGetPBandH();           // EQ_H
+                evalAFVector[8] = afGetCrestFactor();      // Crest
+                evalAFVector[9] = afGetSpectralFlux();     // Flux
+                evalAFVector[10] = KnobSustain.getValue(); // Sustain_gain
+                if (KnobAttack.getValue() > 0.5)           // BOOST
+                {
+                    evalAFVector[11] = 0;                                 // Attack_cut
+                    evalAFVector[12] = (KnobAttack.getValue() - 0.5) * 2; // Attack_boost
+                }
+                else // CUT
+                {
+                    evalAFVector[11] = Map::mapClip(KnobAttack.getValue(), 0, 0.5, 1, 0); // Attack_cut
+                    evalAFVector[12] = 0;                                                 // Attack_boost
+                }
+
+                aiRun(evalAFVector);
                 testReturnA = aiGetATTACK_T1();
-                testReturnS = aiGetSUSTAIN_T1();*/
+                testReturnS = aiGetSUSTAIN_T1();
+
+                // TODO: APPLY THE NEW TIME CONSTANTS
 
                 halStartAudio();
             }

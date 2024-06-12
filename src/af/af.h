@@ -81,6 +81,10 @@ uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx);
 /// @return Index of lowest value in interval.
 uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx);
 
+double afGetT1A();
+
+double afGetT2A();
+
 double afGetSpectralCentroid();
 
 double afGetTempo();
@@ -90,6 +94,8 @@ double afGetPBandL();
 double afGetPBandML();
 
 double afGetPBandMH();
+
+double afGetPBandH();
 
 double afGetCrestFactor();
 
