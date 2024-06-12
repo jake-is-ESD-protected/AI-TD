@@ -5,6 +5,9 @@ extern "C"
 #include "SmootherExponential.h"
 }
 
+extern float aiAttack;
+extern float aiSustain;
+
 extern double lastVarGainValue;
 
 extern SmootherExponential attackFastF;

@@ -53,7 +53,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PRESSED
     {
         processAFFlag = true; // SET PROCESS FLAG FOR MAIN LOOP
-        resetBuffer();        // TODO: DOES THIS MAYBE ALSO NEED TO HAPPEN FLAG BASED ? :(
+        resetBuffer();        // TODO: MAYBE MOVE THIS TO MAIN LOOP ON CANCEL || INFERENCE
         halStopAudio();
         hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
         halStartAudio();
@@ -90,17 +90,28 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
     if (visualProcessCounter == 1600)
     {
-        if (RightButton.Pressed())
+        if (processAFFlag)
         {
-            BlueLed.Set(0);
-            RedLed.Set(0.8);
+            BlueLed.Set(0.5);
+            RedLed.Set(0.5);
         }
         else
         {
-            BlueLed.Set(0.8);
-            RedLed.Set(0);
+            if (RightButton.Pressed())
+            {
+                BlueLed.Set(0);
+                RedLed.Set(0.8);
+            }
+            else
+            {
+                BlueLed.Set(0.8);
+                RedLed.Set(0);
+                aiAttack = 0.5;
+                aiSustain = 0.5;
+            }
         }
-        PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY
+
+        PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY //TODO: ANIMATE THIS!
 
         visualProcessCounter = 0;
     }
@@ -155,7 +166,7 @@ void halInit()
 
     hw.adc.Start();
 
-    // cliInit();
+    cliInit();
     transientDSPinit();
     halTimerInit();
     aiInit();
