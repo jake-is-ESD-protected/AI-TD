@@ -33,7 +33,8 @@ uint64_t visualProcessCounter = 0;
 
 bool lastPurpleButtonState = false;
 
-bool processAFFlag = false; // THIS FLAG GOES UP WHILE RECORDING AND PROCESSING AND DOWN ON FINISHED PREPROCESSING AND AI INFRENCING
+bool processAFFlag = false;   // THIS FLAG GOES UP WHILE RECORDING AND PROCESSING AND DOWN ON FINISHED PREPROCESSING AND AI INFRENCING
+bool cancelationFlag = false; // THIS FLAG GOES UP ON RECORDING CANCELATION VIA KNOB POSITION MOVEMENT
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
@@ -42,17 +43,22 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     RightButton.Debounce();
     if (lastPurpleButtonState && !LeftButton.Pressed()) // ON RELEASE
     {
-        calculateAFFlag = true;
-        halStopAudio();
-        hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
+        if (processAFFlag) // ONLY IF ON RELEASE AND NO CANCEL
+        {
+            calculateAFFlag = true;
+            halStopAudio();
+            hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
+        }
     }
     if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PRESSED
     {
         processAFFlag = true; // SET PROCESS FLAG FOR MAIN LOOP
+        resetBuffer();        // TODO: DOES THIS MAYBE ALSO NEED TO HAPPEN FLAG BASED ? :(
         halStopAudio();
         hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
         halStartAudio();
-        // resetBuffer(); //TODO: FIX THIS
+
+        halLEDset(true);
     }
     if (LeftButton.Pressed() && processAFFlag) // PUT INTO BUFFER ON PRESSED
     {
@@ -72,18 +78,9 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
         if (processAFFlag && (KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed()) || KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed())))
         {
-            // DISSRUPT AI SHIET BY CHANGING STUFF BACK I GUESS BASED ON IF AUDIO IS ON DO THIS N THAT
-            // halStopAudio();
-            /*BlueLed.Set(1.0);
-            RedLed.Set(1.0);
-            halLEDset(false);
-            PurpleLed.Set(1.0);
-            calculateAFFlag = false;
+            halLEDset(false);       // THIS IS NOT GETTING TRIGGERD PROPERLY ON SECOND
+            cancelationFlag = true; // TODO: DAT RIECHT ALLET NACH KNOB ATTACK TIME FUNKTION RETURN NICH RICHTICH
             processAFFlag = false;
-            calculationsDoneFlag = false;*/
-            // TODO: WE PROPABLY NEED A FLAG BASED SETTING / RESETTING SYSTEM FOR THIS
-            // hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
-            // halStartAudio();
         }
 
         transientDSPuiProcess();
@@ -165,6 +162,8 @@ void halInit()
     initAf();
     resetBuffer();
     halStartAudio();
+    KnobAttackTime.updateKnob(hw.adc.GetFloat(2), true);
+    KnobSustainTime.updateKnob(hw.adc.GetFloat(3), true);
 }
 
 void halVCAwrite(double value)

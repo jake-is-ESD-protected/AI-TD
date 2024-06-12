@@ -8,6 +8,7 @@
 using namespace daisy;
 
 extern bool processAFFlag;
+extern bool cancelationFlag;
 
 /// @brief
 void halInit();

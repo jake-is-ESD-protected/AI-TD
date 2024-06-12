@@ -38,9 +38,19 @@ int main(void)
                 testReturnA = aiGetATTACK_T1();
                 testReturnS = aiGetSUSTAIN_T1();*/
 
-                halLEDset(false);
                 halStartAudio();
             }
+        }
+        if (cancelationFlag)
+        {
+            halStopAudio();
+            hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
+            System::Delay(1);
+            halStartAudio();
+            calculateAFFlag = false; // clean up
+            processAFFlag = false;
+            calculationsDoneFlag = false;
+            cancelationFlag = false;
         }
     }
 }
