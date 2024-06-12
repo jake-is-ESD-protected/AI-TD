@@ -7,13 +7,6 @@ DaisySeed hw;
 
 #define IN_SHAPE 13
 
-#define SHAPE_L_1 64
-#define SHAPE_L_2 32
-#define SHAPE_L_3 16
-#define SHAPE_L_4 8
-#define SHAPE_L_5 4
-#define SHAPE_L_6 2
-
 #define QSPI_STORAGE_SPACE (IN_SHAPE * SHAPE_L_1 + SHAPE_L_1) + (SHAPE_L_1 * SHAPE_L_2 + SHAPE_L_2) + (SHAPE_L_2 * SHAPE_L_3 + SHAPE_L_3) + (SHAPE_L_3 * SHAPE_L_4 + SHAPE_L_4) + (SHAPE_L_4 * SHAPE_L_5 + SHAPE_L_5) + (SHAPE_L_5 * SHAPE_L_6 + SHAPE_L_6)
 uint32_t DSY_QSPI_BSS weigthsQSPI[QSPI_STORAGE_SPACE];
 
