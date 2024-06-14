@@ -694,11 +694,13 @@ void btt_spectral_flux_stft_callback(void* SELF, dft_sample_t* real, dft_sample_
         }
       return;
     }
-  
+  if(self->beat_period_oss_samples <=0) //THI CATCH IS ADDED TO REDUCE COMPUTATION AFTER ONE TEMPO VALUE HAS BEEN DETECTED
+  {
   if((self->tracking_mode == BTT_ONSET_AND_TEMPO_TRACKING) ||
      (self->tracking_mode == BTT_ONSET_AND_TEMPO_AND_BEAT_TRACKING))
       if(self->num_oss_frames_processed >= self->oss_length)
         btt_tempo_tracking(self);
+  }
 
   if(self->tracking_mode >= BTT_ONSET_AND_TEMPO_AND_BEAT_TRACKING)
     if(self->beat_period_oss_samples > 0)

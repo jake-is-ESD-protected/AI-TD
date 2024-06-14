@@ -172,19 +172,6 @@ void processBTT()
         calculateAFFlag = false;
         calculationsDoneFlag = true; //TELL THE MAIN LOOP THAT THE PREPROCESSING IS DONE
     }
-    /*
-    float tempVar = processFilter(audioBuffer[audioBufferRuntimeIndex]);
-    if(downSamplingFlipFlop)
-    {
-        dftBuffer[0] = tempVar;
-        btt_process(btt, dftBuffer, 1);
-        downSamplingFlipFlop = false;
-    }
-    else
-    {
-        downSamplingFlipFlop = true;
-    }
-    audioBufferRuntimeIndex++;*/
 }
 
 void processBTTAndAFInC() //FUNCTION FOR PROPER USAGE WITH PYTHON
@@ -339,6 +326,7 @@ float afGetSpectralCentroid()
 
 float afGetTempo() {
     float tempo = btt_get_tempo_bpm(btt);
+    return tempo;
     if(tempo > MAX_TEMPO){ tempo /= 2.0; } 
     return tempo / MAX_TEMPO;
 }

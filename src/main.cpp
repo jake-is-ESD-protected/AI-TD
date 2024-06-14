@@ -33,7 +33,7 @@ int main(void)
                 calculationsDoneFlag = false;
                 processAFFlag = false;
                 // TODO: MOVE ALL OF THIS TO SEPERATE FILE AI.C?
-                evalAFVector[0] = 120 / MAX_TEMPO;         // afGetTempo();            // Tempo
+                evalAFVector[0] = afGetTempo();            // Tempo
                 evalAFVector[1] = afGetT1A();              // T1A
                 evalAFVector[2] = afGetT2A();              // T2A
                 evalAFVector[3] = afGetSpectralCentroid(); // Centroid
