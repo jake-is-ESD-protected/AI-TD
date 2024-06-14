@@ -105,6 +105,7 @@ void onset_detected_callback(void *SELF, unsigned long long sample_time)
         firstSepctrumFlag = true;
         onsetBufferIndex++;
     }
+    //TODO: TRIGER ENVA FROM HERE IN SOME WAY INSTEAD OF USING THE LFO FOR VIS
 }
 
 void initAf()

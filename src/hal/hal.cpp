@@ -5,6 +5,7 @@
 #include "Utilities/Map.hpp"
 #include "ai.h"
 #include "cli.hpp"
+#include "daisysp.h"
 #include "mem.hpp"
 #include "transientDSP.hpp"
 #include "ui.hpp"
@@ -15,11 +16,14 @@ extern "C"
 }
 
 using namespace daisy;
+using namespace daisysp;
 using namespace k;
 
 DaisySeed hw;
 
 static Led BlueLed;
+// static AdEnv envA, envB;
+static Oscillator aiLFO;
 static Led RedLed;
 static Led PurpleLed;
 static Switch LeftButton;
@@ -60,6 +64,11 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         halStopAudio();
         hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
         halStartAudio();
+    }
+    if (processAFFlag && (fabs(lastT1KnobPos - hw.adc.GetFloat(2)) > 0.1 || fabs(lastT2KnobPos - hw.adc.GetFloat(3)) > 0.1)) // SCAN FOR CANCEL //TODO: MAYBE MOVE TO UI CALLBACK
+    {
+        cancelationFlag = true;
+        processAFFlag = false;
     }
     if (LeftButton.Pressed() && processAFFlag) // PUT INTO BUFFER ON PURPLE PRESSED
     {
@@ -102,36 +111,55 @@ void VisualCallback(void *data)
     KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
     KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed());
 
-    if (processAFFlag && (fabs(lastT1KnobPos - hw.adc.GetFloat(2)) > 0.1 || fabs(lastT2KnobPos - hw.adc.GetFloat(3)) > 0.1))
-    {
-        cancelationFlag = true;
-        processAFFlag = false;
-    }
-
     transientDSPuiProcess();
     // UI TILL HERE
     // VISUAL FROM HERE
-    if (processAFFlag)
+
+    if (LeftButton.Pressed())
     {
-        BlueLed.Set(0.5);
-        RedLed.Set(0.5);
+        if (processAFFlag)
+        {
+            // AI ANIM
+            float retVal = aiLFO.Process() + 0.5;
+            BlueLed.Set(retVal);
+            RedLed.Set(retVal);
+        }
+        else // AI CANCELD
+        {
+            BlueLed.Set(0.0);
+            RedLed.Set(1);
+        }
     }
     else
     {
-        if (RightButton.Pressed())
+        // REGULAR MODE OR CALC MODE
+        if (processAFFlag) // CALC MODE
         {
-            BlueLed.Set(0);
-            RedLed.Set(0.8);
+            /*float retVal = envA.Process();
+            BlueLed.Set(retVal);
+            RedLed.Set(retVal);*/
+            BlueLed.Set(1);
+            RedLed.Set(1);
         }
-        else
+        else // REGULAR MODE
         {
-            BlueLed.Set(0.8);
-            RedLed.Set(0);
-            aiAttack = 0.5;
-            aiSustain = 0.5;
+            if (RightButton.Pressed())
+            {
+                /*float retVal = Map::mapClip(envB.Process(), 0, 1, 0.8, 0);
+                BlueLed.Set(0);
+                RedLed.Set(retVal);*/
+                BlueLed.Set(0);
+                RedLed.Set(0.8);
+            }
+            else
+            {
+                BlueLed.Set(0.8);
+                RedLed.Set(0);
+                aiAttack = 0.5; // RESET ON SWITCHBACK
+                aiSustain = 0.5;
+            }
         }
     }
-
     PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY //TODO: ANIMATE THIS!
 
     RedLed.Update();
@@ -151,11 +179,30 @@ void halInit()
     config.bitdepth = DacHandle::BitDepth::BITS_12;
     hw.dac.Init(config);
 
-    BlueLed.Init(seed::D1, true, 600);
-    PurpleLed.Init(seed::D6, false, 600);
-    RedLed.Init(seed::D2, true, 600);
-    LeftButton.Init(seed::D3, 600, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
-    RightButton.Init(seed::D4, 600, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
+    BlueLed.Init(seed::D1, true, sampleRateUIUX);
+    PurpleLed.Init(seed::D6, false, sampleRateUIUX);
+    RedLed.Init(seed::D2, true, sampleRateUIUX);
+    LeftButton.Init(seed::D3, sampleRateUIUX, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
+    RightButton.Init(seed::D4, sampleRateUIUX, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
+
+    /*envA.Init(sampleRateUIUX);
+    envA.SetTime(ADENV_SEG_ATTACK, 0.01);
+    envA.SetTime(ADENV_SEG_DECAY, 1);
+    envA.SetMin(0.0);
+    envA.SetMax(1);
+    envA.SetCurve(0);
+
+    envB.Init(sampleRateUIUX);
+    envB.SetTime(ADENV_SEG_ATTACK, 1);
+    envB.SetTime(ADENV_SEG_DECAY, 0.1);
+    envB.SetMin(0.0);
+    envB.SetMax(1);
+    envB.SetCurve(0);*/
+
+    aiLFO.Init(sampleRateUIUX);
+    aiLFO.SetAmp(0.5);
+    aiLFO.SetWaveform(Oscillator::WAVE_SIN);
+    aiLFO.SetFreq(1);
 
     AdcChannelConfig adcConfig[4];
     adcConfig[0].InitSingle(hw.GetPin(15));

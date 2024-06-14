@@ -2,6 +2,8 @@
 
 #include <math.h>
 
+#define sampleRateUIUX 600
+
 #define sampleRate 96000
 
 #define slowsampleRate 48000
