@@ -26,25 +26,25 @@ bool calculationsDoneFlag = false; //THIS FLAG IS UP WHEN THE PREPROCESSING IS D
 
 BTT *btt;
 
-__attribute__((section(".sdram_bss"))) double audioBuffer[AUDIO_BUFFER_SIZE];
-__attribute__((section(".sdram_bss"))) double envBuffer[AUDIO_BUFFER_SIZE];
+__attribute__((section(".sdram_bss"))) float audioBuffer[AUDIO_BUFFER_SIZE];
+__attribute__((section(".sdram_bss"))) float envBuffer[AUDIO_BUFFER_SIZE];
 
 __attribute__((section(".sdram_bss"))) uint64_t onsetBuffer[MAX_ONSETS];
 
-__attribute__((section(".sdram_bss"))) double onsetT1ABuffer[MAX_ONSETS];
-__attribute__((section(".sdram_bss"))) double onsetT2ABuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float onsetT1ABuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float onsetT2ABuffer[MAX_ONSETS];
 
 __attribute__((section(".sdram_bss"))) float magnitudeBuffer[FFT_N2_LENGTH];
 
-__attribute__((section(".sdram_bss"))) double spectralFluxBuffer[MAX_ONSETS];
-__attribute__((section(".sdram_bss"))) double spectralCentroidBuffer[MAX_ONSETS];
-__attribute__((section(".sdram_bss"))) double bandLBuffer[MAX_ONSETS];
-__attribute__((section(".sdram_bss"))) double bandMLBuffer[MAX_ONSETS];
-__attribute__((section(".sdram_bss"))) double bandMHBuffer[MAX_ONSETS];
-__attribute__((section(".sdram_bss"))) double bandHBuffer[MAX_ONSETS];
-__attribute__((section(".sdram_bss"))) double crestFactorBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float spectralFluxBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float spectralCentroidBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float bandLBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float bandMLBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float bandMHBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float bandHBuffer[MAX_ONSETS];
+__attribute__((section(".sdram_bss"))) float crestFactorBuffer[MAX_ONSETS];
 
-__attribute__((section(".sdram_bss"))) double magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
+__attribute__((section(".sdram_bss"))) float magnitudeBeatBuffer[MAX_ONSETS][FFT_N2_LENGTH];
 
 uint64_t audioBufferIndex = 0;
 uint64_t audioBufferRuntimeIndex = 0;
@@ -54,24 +54,24 @@ dft_sample_t dftBuffer[BEAT_DETECTION_BUFFER_SIZE];
 
 bool firstSepctrumFlag = true;
 
-double spectralCentroid = 0;
-double BandL = 0; //150Hz
-double BandML = 0; //800Hz
-double BandMH = 0; //2kHz
-double BandH = 0; //20kHz
-double crestFactor = 0;
-double spectralFlux = 0;
-double T1A = 0;
-double T2A = 0;
+float spectralCentroid = 0;
+float BandL = 0; //150Hz
+float BandML = 0; //800Hz
+float BandMH = 0; //2kHz
+float BandH = 0; //20kHz
+float crestFactor = 0;
+float spectralFlux = 0;
+float T1A = 0;
+float T2A = 0;
 
 //FILTER START
-double filterBuffer;
-double a0, b1;
-double processFilter(double in)
+float filterBuffer;
+float a0, b1;
+float processFilter(float in)
 {
     return filterBuffer = in * a0 + filterBuffer * b1;
 }
-void setTime(double freq)
+void setTime(float freq)
 {
     b1 = exp(-2.0 * PI * freq/slowsampleRate);
     a0 = 1.0 - b1;
@@ -80,11 +80,11 @@ void setTime(double freq)
 
 void resetBuffer()
 {
-    memset(audioBuffer,0, sizeof(double) * AUDIO_BUFFER_SIZE);
-    memset(envBuffer,0, sizeof(double) * AUDIO_BUFFER_SIZE);
+    memset(audioBuffer,0, sizeof(float) * AUDIO_BUFFER_SIZE);
+    memset(envBuffer,0, sizeof(float) * AUDIO_BUFFER_SIZE);
     memset(onsetBuffer,0, sizeof(uint64_t) * MAX_ONSETS);
-    memset(onsetT1ABuffer,0, sizeof(double) * MAX_ONSETS);
-    memset(onsetT2ABuffer,0, sizeof(double) * MAX_ONSETS);
+    memset(onsetT1ABuffer,0, sizeof(float) * MAX_ONSETS);
+    memset(onsetT2ABuffer,0, sizeof(float) * MAX_ONSETS);
     memset(dftBuffer, 0, sizeof(dft_sample_t) * BEAT_DETECTION_BUFFER_SIZE);
     audioBufferIndex = 0;
     audioBufferRuntimeIndex = 0;
@@ -142,13 +142,13 @@ void BeatDetectionInit()
 
 bool downSamplingFlipFlop = true;
 
-void AFInCAppend(double in)
+void AFInCAppend(float in)
 {
     if (audioBufferIndex < AUDIO_BUFFER_SIZE)
     {
         if(audioBufferIndex < AUDIO_BUFF_FADE_TIME_S)
         {
-            audioBuffer[audioBufferIndex] = in * audioBufferIndex / (double) AUDIO_BUFF_FADE_TIME_S; //FADE IN
+            audioBuffer[audioBufferIndex] = in * audioBufferIndex / (float) AUDIO_BUFF_FADE_TIME_S; //FADE IN
         }
         else
         {
@@ -173,7 +173,7 @@ void processBTT()
         calculationsDoneFlag = true; //TELL THE MAIN LOOP THAT THE PREPROCESSING IS DONE
     }
     /*
-    double tempVar = processFilter(audioBuffer[audioBufferRuntimeIndex]);
+    float tempVar = processFilter(audioBuffer[audioBufferRuntimeIndex]);
     if(downSamplingFlipFlop)
     {
         dftBuffer[0] = tempVar;
@@ -240,7 +240,7 @@ void AFInCProcess()
         }
     }
 
-    double magBufferMax = 0;
+    float magBufferMax = 0;
     for(uint64_t i = 0; i < onsetBufferIndex-1; i++) //FIND MAX
     {
         for(int j = 0; j < FFT_N2_LENGTH; j++)
@@ -252,7 +252,7 @@ void AFInCProcess()
         }
     }
 
-    double magBufferNormalizationFactor = 1.0f / magBufferMax;
+    float magBufferNormalizationFactor = 1.0f / magBufferMax;
     for (uint64_t i = 0; i < onsetBufferIndex; i++) //NORMALIZE ALL THE BEAT BUFFERS
     {
         for(int j = 0; j < FFT_N2_LENGTH; j++)
@@ -294,7 +294,7 @@ void AFInCProcess()
 }
 
 
-uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx)
+uint64_t __afGetIdxOfMax(float *sig, uint64_t fromIdx, uint64_t toIdx)
 {
     uint64_t idxMax = fromIdx;
     for (uint64_t i = fromIdx; i < toIdx; i++)
@@ -307,7 +307,7 @@ uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx)
     return idxMax;
 }
 
-uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx)
+uint64_t __afGetIdxOfMin(float *sig, uint64_t fromIdx, uint64_t toIdx)
 {
     uint64_t idxMin = fromIdx;
     for (uint64_t i = fromIdx; i < toIdx; i++)
@@ -321,50 +321,50 @@ uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx)
 }
 
 // clang-format off
-double afGetT1A() {
+float afGetT1A() {
     if(T1A > MAX_TA1_SAMPLES) { T1A = MAX_TA1_SAMPLES; }
     return T1A / MAX_TA1_SAMPLES;
 }
 
-double afGetT2A() {
+float afGetT2A() {
     if(T2A > MAX_TA2_SAMPLES) { T2A = MAX_TA2_SAMPLES; }
     return T2A / MAX_TA2_SAMPLES;
 }
 
-double afGetSpectralCentroid()
+float afGetSpectralCentroid()
 {
     if(spectralCentroid > MAX_CENTROID) { spectralCentroid = MAX_CENTROID; }
     return spectralCentroid / MAX_CENTROID;
 }
 
-double afGetTempo() {
-    double tempo = btt_get_tempo_bpm(btt);
+float afGetTempo() {
+    float tempo = btt_get_tempo_bpm(btt);
     if(tempo > MAX_TEMPO){ tempo /= 2.0; } 
     return tempo / MAX_TEMPO;
 }
 
-double afGetPBandL() {
+float afGetPBandL() {
     return BandL;
 }
 
-double afGetPBandML() {
+float afGetPBandML() {
     return BandML;
 }
 
-double afGetPBandMH() {
+float afGetPBandMH() {
     return BandMH;
 }
 
-double afGetPBandH() {
+float afGetPBandH() {
     return BandH;
 }
 
-double afGetCrestFactor() {
+float afGetCrestFactor() {
     if(crestFactor > MAX_CREST) { crestFactor = MAX_CREST; }
     return crestFactor / MAX_CREST;
 }
 
-double afGetSpectralFlux() {
+float afGetSpectralFlux() {
     if(spectralFlux > MAX_FLUX) { spectralFlux = MAX_FLUX; }
     return spectralFlux / MAX_FLUX;
 }
@@ -375,16 +375,16 @@ double afGetSpectralFlux() {
 // --------------------------------------------------------------------------
 
 uint64_t __audioIndex = 0;
-double __getAudioBuffer(void){
-    double sample = audioBuffer[__audioIndex];
+float __getAudioBuffer(void){
+    float sample = audioBuffer[__audioIndex];
     __audioIndex++;
     if(__audioIndex == AUDIO_BUFFER_SIZE) { __audioIndex = 0; }
     return sample; 
 }
 
 uint64_t __envIndex = 0;
-double __getEnvBuffer(void){
-    double sample = envBuffer[__envIndex];
+float __getEnvBuffer(void){
+    float sample = envBuffer[__envIndex];
     __envIndex++;
     if(__envIndex == AUDIO_BUFFER_SIZE) { __envIndex = 0; }
     return sample; 
@@ -392,7 +392,7 @@ double __getEnvBuffer(void){
 
 uint64_t __onsetIndex = 0;
 uint64_t __getOnsetBuffer(void){
-    double sample = onsetBuffer[__onsetIndex];
+    float sample = onsetBuffer[__onsetIndex];
     __onsetIndex++;
     if(__onsetIndex == MAX_ONSETS) { __onsetIndex = 0; }
     return sample; 
@@ -400,7 +400,7 @@ uint64_t __getOnsetBuffer(void){
 
 uint64_t __TA1Index = 0;
 uint64_t __getTA1Buffer(void){
-    double sample = onsetT1ABuffer[__TA1Index];
+    float sample = onsetT1ABuffer[__TA1Index];
     __TA1Index++;
     if(__TA1Index == MAX_ONSETS) { __TA1Index = 0; }
     return sample; 
@@ -408,15 +408,15 @@ uint64_t __getTA1Buffer(void){
 
 uint64_t __TA2Index = 0;
 uint64_t __getTA2Buffer(void){
-    double sample = onsetT2ABuffer[__TA2Index];
+    float sample = onsetT2ABuffer[__TA2Index];
     __TA2Index++;
     if(__TA2Index == MAX_ONSETS) { __TA2Index = 0; }
     return sample; 
 }
 
 uint64_t __MagnitudeIndex = 0;
-double __getBeatMagnitude(int beatIndex){
-    double sample = magnitudeBeatBuffer[beatIndex][__MagnitudeIndex];
+float __getBeatMagnitude(int beatIndex){
+    float sample = magnitudeBeatBuffer[beatIndex][__MagnitudeIndex];
     __MagnitudeIndex++;
     if(__MagnitudeIndex == FFT_N2_LENGTH) { __MagnitudeIndex = 0; }
     return sample; 

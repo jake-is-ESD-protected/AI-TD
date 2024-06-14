@@ -4,7 +4,7 @@ EnvelopeFollowerPeakHold::EnvelopeFollowerPeakHold() : sample_rate(0.0)
 {
 }
 
-void EnvelopeFollowerPeakHold::init(double _sample_rate, double window_size_ms)
+void EnvelopeFollowerPeakHold::init(float _sample_rate, float window_size_ms)
 {
     sample_rate = _sample_rate;
     // prev_max = 0.0;
@@ -13,9 +13,9 @@ void EnvelopeFollowerPeakHold::init(double _sample_rate, double window_size_ms)
 
 uint16_t blockCounter = 0;
 uint16_t blockThreshold = 8;
-double heldMax = 0;
+float heldMax = 0;
 
-double EnvelopeFollowerPeakHold::process(double x)
+float EnvelopeFollowerPeakHold::process(float x)
 {
     state.push_sample(x);
     if (blockCounter > blockThreshold)

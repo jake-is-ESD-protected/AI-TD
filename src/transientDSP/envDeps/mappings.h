@@ -123,22 +123,6 @@ inline float skew_norm(float val, float skew)
 }
 
 /**
- * @brief Map a value in [0.0, 1.0] to the same interval with a skew factor
- *
- * skew = 1.0 gives a linear map
- * skew in [0.0, 1.0[ gives more resolution in the lower range
- * skew in [1.0, INF[ gives more resolution in the upper range
- *
- * @param NormVal Normalised value to map
- * @param skew Skew factor
- * @return Mapped value
- */
-inline double skew_norm(double val, double skew)
-{
-    return pow(val, 1.0 / skew);
-}
-
-/**
  * @brief Prewarp a frequency to be preserved in trapezoidal integration
  *
  * To be used with bilinear transformation, topology-preserving transformation,
@@ -152,24 +136,6 @@ inline float prewarp(const float freq, const float sample_rate)
 {
     const float wd = (float)TWO_PI * freq;
     const float wa = 2.0f * sample_rate * tanf(wd / (2.0f * sample_rate));
-
-    return wa;
-}
-
-/**
- * @brief Prewarp a frequency to be preserved in trapezoidal integration
- *
- * To be used with bilinear transformation, topology-preserving transformation,
- * etc.
- *
- * @param freq Frequency to be preserved
- * @param sample_rate Sample rate of the system
- * @return Prewarped frequency
- */
-inline double prewarp(const double freq, const double sample_rate)
-{
-    const double wd = TWO_PI * freq;
-    const double wa = 2.0 * sample_rate * tan(wd / (2.0 * sample_rate));
 
     return wa;
 }

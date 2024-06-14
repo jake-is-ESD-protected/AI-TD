@@ -29,10 +29,11 @@ int main(void)
             processBTT();             // PROCESS BTT SAMPLES WHILE RECORDING
             if (calculationsDoneFlag) // IF CALCULATION HAS HAPPEND IN ABOVE FUNCTION
             {
+                halLEDset(false);
                 calculationsDoneFlag = false;
                 processAFFlag = false;
                 // TODO: MOVE ALL OF THIS TO SEPERATE FILE AI.C?
-                evalAFVector[0] = afGetTempo();            // Tempo
+                evalAFVector[0] = 120 / MAX_TEMPO;         // afGetTempo();            // Tempo
                 evalAFVector[1] = afGetT1A();              // T1A
                 evalAFVector[2] = afGetT2A();              // T2A
                 evalAFVector[3] = afGetSpectralCentroid(); // Centroid
@@ -60,6 +61,7 @@ int main(void)
 
                 halStartAudio();
                 resetBuffer();
+                halLEDset(true);
             }
         }
         if (cancelationFlag)

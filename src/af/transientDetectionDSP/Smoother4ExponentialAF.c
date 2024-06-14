@@ -10,27 +10,27 @@ void resetAf(smootherTypeAf *smoother)
     smoother->state = 0.0;
 }
 
-void setAttackAf(smootherTypeAf *smoother, double time_ms)
+void setAttackAf(smootherTypeAf *smoother, float time_ms)
 {
     // Convert time to seconds
-    const double time_s = time_ms / 1000.0;
+    const float time_s = time_ms / 1000.0;
     smoother->alpha_attack = exp(-TWO_PI * CM / (slowsampleRate * time_s));
 }
 
-void setReleaseAf(smootherTypeAf *smoother, double time_ms)
+void setReleaseAf(smootherTypeAf *smoother, float time_ms)
 {
     // Convert time to seconds
-    const double time_s = time_ms / 1000.0;
+    const float time_s = time_ms / 1000.0;
 
     smoother->alpha_release = exp(-TWO_PI * CM / (  slowsampleRate * time_s));
 }
 
-double processAf(smootherTypeAf *smoother, double x)
+float processAf(smootherTypeAf *smoother, float x)
 {
     // Find output
 
-    double y = 0.0;
-    double alpha = 0.0;
+    float y = 0.0;
+    float alpha = 0.0;
     if (x > smoother->state)
     {
         alpha = smoother->alpha_attack;
@@ -61,7 +61,7 @@ void resetAll4Af()
     }
 }
 
-void setAttackAll4Af(double time_ms)
+void setAttackAll4Af(float time_ms)
 {
     for (int n = 0; n < 4; ++n)
     {
@@ -69,7 +69,7 @@ void setAttackAll4Af(double time_ms)
     }
 }
 
-void setReleaseAll4Af(double time_ms)
+void setReleaseAll4Af(float time_ms)
 {
     for (int n = 0; n < 4; ++n)
     {
@@ -77,7 +77,7 @@ void setReleaseAll4Af(double time_ms)
     }
 }
 
-double processEnvelopeAf(double x)
+float processEnvelopeAf(float x)
 {
     //ADD PEAK HOLD SCHEME HERE
     

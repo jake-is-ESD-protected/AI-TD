@@ -45,19 +45,19 @@ template <typename T> T BufferCircular<T>::read(int samples_delay)
     return buffer[index_read];
 }
 
-template <typename T> T BufferCircular<T>::read(double samples_delay_fractional)
+template <typename T> T BufferCircular<T>::read(float samples_delay_fractional)
 {
     T y1 = read((int)samples_delay_fractional);
     T y2 = read((int)samples_delay_fractional + 1);
 
-    double fraction = samples_delay_fractional - (int)samples_delay_fractional;
+    float fraction = samples_delay_fractional - (int)samples_delay_fractional;
 
     return mappings::map_linear_norm<T>(fraction, y1, y2);
 }
 
 template <typename T> T BufferCircular<T>::max()
 {
-    double max = buffer[0];
+    float max = buffer[0];
     for (unsigned int i = 0; i < len_buffer; i++)
     {
         if (buffer[i] > max)
@@ -69,7 +69,6 @@ template <typename T> T BufferCircular<T>::max()
     return max;
 }
 
-template class BufferCircular<double>;
 template class BufferCircular<float>;
 
 } // namespace bdsp

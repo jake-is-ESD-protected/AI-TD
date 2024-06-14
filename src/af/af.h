@@ -52,7 +52,7 @@ void EnvFollowerInit();
 
 void BeatDetectionInit(); 
 
-void AFInCAppend(double in);
+void AFInCAppend(float in);
 
 void AFInCProcess();
 
@@ -65,41 +65,41 @@ void processBTT();
 /// @param len Length of given signal.
 /// @param env Empty buffer for storage of derived envelope.
 /// @attention Parameters for the envelope are fixed and defined above
-void __afGetEnvelope(double *sig, double *env, uint64_t len);
+void __afGetEnvelope(float *sig, float *env, uint64_t len);
 
 /// @brief argmax() for C.
 /// @param sig Given signal.
 /// @param fromIdx Index to start the search from.
 /// @param toIdx Index to stop the search at.
 /// @return Index of highest value in interval.
-uint64_t __afGetIdxOfMax(double *sig, uint64_t fromIdx, uint64_t toIdx);
+uint64_t __afGetIdxOfMax(float *sig, uint64_t fromIdx, uint64_t toIdx);
 
 /// @brief argmin() for C.
 /// @param sig Given signal.
 /// @param fromIdx Index to start the search from.
 /// @param toIdx Index to stop the search at.
 /// @return Index of lowest value in interval.
-uint64_t __afGetIdxOfMin(double *sig, uint64_t fromIdx, uint64_t toIdx);
+uint64_t __afGetIdxOfMin(float *sig, uint64_t fromIdx, uint64_t toIdx);
 
-double afGetT1A();
+float afGetT1A();
 
-double afGetT2A();
+float afGetT2A();
 
-double afGetSpectralCentroid();
+float afGetSpectralCentroid();
 
-double afGetTempo();
+float afGetTempo();
 
-double afGetPBandL();
+float afGetPBandL();
 
-double afGetPBandML();
+float afGetPBandML();
 
-double afGetPBandMH();
+float afGetPBandMH();
 
-double afGetPBandH();
+float afGetPBandH();
 
-double afGetCrestFactor();
+float afGetCrestFactor();
 
-double afGetSpectralFlux();
+float afGetSpectralFlux();
 
 void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux);
 
@@ -108,12 +108,12 @@ void EnvFollowerInitAf();
 // helper functions for dev debugging
 // --------------------------------------------------------------------------
 
-double __getAudioBuffer(void);
+float __getAudioBuffer(void);
 
-double __getEnvBuffer(void);
+float __getEnvBuffer(void);
 
 uint64_t __getOnsetBuffer(void);
 
-double __getBeatMagnitude(int beatIndex);
+float __getBeatMagnitude(int beatIndex);
 
 #endif // _AF_H_

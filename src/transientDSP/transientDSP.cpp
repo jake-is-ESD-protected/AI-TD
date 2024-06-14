@@ -11,9 +11,9 @@
 #define SUSTAIN_FILTER_SLOW_RELEASE_TIME 600
 
 static EnvelopeFollowerPeakHold envFollower;
-double baseGain = 0.87;
-double inputVolume = 1;
-double lastVarGainValue = 0;
+float baseGain = 0.87;
+float inputVolume = 1;
+float lastVarGainValue = 0;
 
 SmootherExponential attackFastF;
 SmootherExponential attackSlowF;
@@ -46,15 +46,15 @@ void transientDSPinit()
     sustainSlowF.set_release(SUSTAIN_FILTER_SLOW_RELEASE_TIME);
 }
 
-void transientDSPprocess(double in)
+void transientDSPprocess(float in)
 {
     if (halButtonRead())
     {
-        const double env = envFollower.process(fabs(in * inputVolume));
-        const double attackFastFV = attackFastF.process(env);
-        const double attackSlowFV = attackSlowF.process(env);
-        const double sustainFastFV = sustainFastF.process(env);
-        const double sustainSlowFV = sustainSlowF.process(env);
+        const float env = envFollower.process(fabs(in * inputVolume));
+        const float attackFastFV = attackFastF.process(env);
+        const float attackSlowFV = attackSlowF.process(env);
+        const float sustainFastFV = sustainFastF.process(env);
+        const float sustainSlowFV = sustainSlowF.process(env);
         lastVarGainValue = (UIgetBipolarAttackValue() * fabs(attackFastFV - attackSlowFV)) + (UIgetBipolarSustainValue() * fabs(sustainFastFV - sustainSlowFV));
 
         halVCAwrite(baseGain + lastVarGainValue);

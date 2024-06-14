@@ -8,27 +8,27 @@
 
 typedef struct
 {
-    double state;
-    double alpha_attack;
-    double alpha_release;
+    float state;
+    float alpha_attack;
+    float alpha_release;
 } smootherTypeAf;
 
 void resetAf(smootherTypeAf *smoother);
 
-void setAttackAf(smootherTypeAf *smoother, double time_ms);
+void setAttackAf(smootherTypeAf *smoother, float time_ms);
 
-void setReleaseAf(smootherTypeAf *smoother, double time_ms);
+void setReleaseAf(smootherTypeAf *smoother, float time_ms);
 
-double processAf(smootherTypeAf *smoother, double x);
+float processAf(smootherTypeAf *smoother, float x);
 
 void initAll4Af();
 
 void resetAll4Af();
 
-void setAttackAll4Af(double time_ms);
+void setAttackAll4Af(float time_ms);
 
-void setReleaseAll4Af(double time_ms);
+void setReleaseAll4Af(float time_ms);
 
-double processEnvelopeAf(double x);
+float processEnvelopeAf(float x);
 
 #endif

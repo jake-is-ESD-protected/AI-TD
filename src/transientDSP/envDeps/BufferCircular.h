@@ -21,12 +21,12 @@ template <typename T> class BufferCircular
 
     void push_sample(T input);
     T read(int samples_delay);
-    T read(double samples_delay_fractional);
+    T read(float samples_delay_fractional);
 
     T max();
 
   private:
-    double buffer[ENVELOPE_FOLLOWER_BUFFER_SIZE];
+    float buffer[ENVELOPE_FOLLOWER_BUFFER_SIZE];
     unsigned int index_write;
     unsigned int len_buffer; // Must be nearest power of 2
     unsigned int wrap_mask;  // Must be (len_buffer - 1)

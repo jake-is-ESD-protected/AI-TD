@@ -17,7 +17,7 @@ void resetShiftLayer();
 
 /// @brief
 /// @param value
-void halVCAwrite(double value);
+void halVCAwrite(float value);
 
 /// @brief
 void halTimerInit();

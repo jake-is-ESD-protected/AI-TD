@@ -1,5 +1,5 @@
 #pragma once
 
-int compare_doubles(const void *a, const void *b);
+int compare_floats(const void *a, const void *b);
 
-double findPercentile(double *values, int num_values, double percentile);
+float findPercentile(float *values, int num_values, float percentile);

@@ -8,17 +8,17 @@ class EnvelopeFollowerPeakHold
     EnvelopeFollowerPeakHold();
     ~EnvelopeFollowerPeakHold() = default;
 
-    void init(double _sample_rate, double window_size_ms);
+    void init(float _sample_rate, float window_size_ms);
 
-    // void set_decay(double decay_ms);
+    // void set_decay(float decay_ms);
 
-    double process(double x);
+    float process(float x);
 
   private:
-    double sample_rate;
+    float sample_rate;
 
-    bdsp::BufferCircular<double> state;
+    bdsp::BufferCircular<float> state;
 
-    // double prev_max;
-    // double decrement;
+    // float prev_max;
+    // float decrement;
 };

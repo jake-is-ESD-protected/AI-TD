@@ -10,19 +10,19 @@ class SmootherExponentialSingleStage
     SmootherExponentialSingleStage();
     ~SmootherExponentialSingleStage() = default;
 
-    void reset(double _sample_rate);
+    void reset(float _sample_rate);
 
-    void set_attack(double time_ms, double cm);
-    void set_release(double time_ms, double cm);
+    void set_attack(float time_ms, float cm);
+    void set_release(float time_ms, float cm);
 
-    double process(double x);
+    float process(float x);
 
   private:
-    double sample_rate;
-    double state;
+    float sample_rate;
+    float state;
 
-    double alpha_attack;
-    double alpha_release;
+    float alpha_attack;
+    float alpha_release;
 };
 
 // Exponential smoother (n-stage)
@@ -34,21 +34,21 @@ class SmootherExponential
 
     void init(int _num_stages);
 
-    void reset(double sample_rate);
+    void reset(float sample_rate);
 
-    void set_attack(double time_ms, int num_stages = 1);
-    void set_release(double time_ms, int num_stages = 1);
+    void set_attack(float time_ms, int num_stages = 1);
+    void set_release(float time_ms, int num_stages = 1);
 
-    double get_attack();
-    double get_release();
+    float get_attack();
+    float get_release();
 
-    double process(double x);
+    float process(float x);
 
   private:
-    double attack_time;
-    double release_time;
+    float attack_time;
+    float release_time;
 
     int num_stages;
-    double cm;
+    float cm;
     std::unique_ptr<SmootherExponentialSingleStage[]> smoothers;
 };

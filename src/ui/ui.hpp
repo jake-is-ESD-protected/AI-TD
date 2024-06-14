@@ -10,6 +10,6 @@ extern Knob KnobSustainTime;
 
 void UIinit();
 
-double UIgetBipolarAttackValue();
+float UIgetBipolarAttackValue();
 
-double UIgetBipolarSustainValue();
+float UIgetBipolarSustainValue();

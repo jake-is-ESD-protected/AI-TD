@@ -2,6 +2,6 @@
 
 #include "./envDeps/BufferCircularAF.h"
 
-void EnvelopeFollowerPeakHoldInitAf(double window_size_ms);
+void EnvelopeFollowerPeakHoldInitAf(float window_size_ms);
 
-double EnvelopeFollowerPeakHoldProcessAf(double x);
+float EnvelopeFollowerPeakHoldProcessAf(float x);

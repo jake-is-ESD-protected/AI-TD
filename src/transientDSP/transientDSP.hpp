@@ -8,7 +8,7 @@ extern "C"
 extern float aiAttack;
 extern float aiSustain;
 
-extern double lastVarGainValue;
+extern float lastVarGainValue;
 
 extern SmootherExponential attackFastF;
 extern SmootherExponential attackSlowF;
@@ -18,6 +18,6 @@ extern SmootherExponential sustainSlowF;
 
 void transientDSPinit();
 
-void transientDSPprocess(double in);
+void transientDSPprocess(float in);
 
 void transientDSPuiProcess();

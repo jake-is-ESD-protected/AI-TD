@@ -51,41 +51,41 @@ def af_dsp_init(path_to_dll):
     lib.initAf.argtypes = []
     lib.initAf.restype = None
 
-    lib.AFInCAppend.argtypes = [c_double]
+    lib.AFInCAppend.argtypes = [c_float]
     lib.AFInCAppend.restype = None
 
     lib.AFInCProcess.argtypes = []
     lib.AFInCProcess.restype = None
 
     lib.afGetT1A.argtypes = []
-    lib.afGetT1A.restype = c_double
+    lib.afGetT1A.restype = c_float
 
     lib.afGetT2A.argtypes = []
-    lib.afGetT2A.restype = c_double
+    lib.afGetT2A.restype = c_float
 
     lib.afGetTempo.argtypes = []
-    lib.afGetTempo.restype = c_double
+    lib.afGetTempo.restype = c_float
 
     lib.afGetSpectralCentroid.argtypes = []
-    lib.afGetSpectralCentroid.restype = c_double
+    lib.afGetSpectralCentroid.restype = c_float
 
     lib.afGetPBandL.argtypes = []
-    lib.afGetPBandL.restype = c_double
+    lib.afGetPBandL.restype = c_float
 
     lib.afGetPBandML.argtypes = []
-    lib.afGetPBandML.restype = c_double
+    lib.afGetPBandML.restype = c_float
 
     lib.afGetPBandMH.argtypes = []
-    lib.afGetPBandMH.restype = c_double
+    lib.afGetPBandMH.restype = c_float
 
     lib.afGetPBandH.argtypes = []
-    lib.afGetPBandH.restype = c_double
+    lib.afGetPBandH.restype = c_float
 
     lib.afGetCrestFactor.argtypes = []
-    lib.afGetCrestFactor.restype = c_double
+    lib.afGetCrestFactor.restype = c_float
 
     lib.afGetSpectralFlux.argtypes = []
-    lib.afGetSpectralFlux.restype = c_double
+    lib.afGetSpectralFlux.restype = c_float
 
     return lib
 

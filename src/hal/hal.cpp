@@ -41,7 +41,7 @@ float lastT2KnobPos = 0.5;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
-    double adcAudioIn = hw.adc.GetFloat(4) - 0.5 * 2;
+    float adcAudioIn = hw.adc.GetFloat(4) - 0.5 * 2;
     LeftButton.Debounce();
     RightButton.Debounce();
     if (lastPurpleButtonState && !LeftButton.Pressed()) // ON RELEASE
@@ -185,7 +185,7 @@ void halInit()
     halStartAudio();
 }
 
-void halVCAwrite(double value)
+void halVCAwrite(float value)
 {
     hw.dac.WriteValue(DacHandle::Channel::BOTH, Map::mapClip(value, 1, 0, 0, 4095));
 }

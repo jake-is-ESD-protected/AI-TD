@@ -24,9 +24,9 @@ void UIinit()
 #define ATTACK_BOOST_SKEW 1.2
 #define ATTACK_ATT_SKEW 1.6
 
-double UIgetBipolarAttackValue()
+float UIgetBipolarAttackValue()
 {
-    const double window = 0.05;
+    const float window = 0.05;
     if (KnobAttack.getValue() > 0.5 + window)
     {
         return ATTACK_BOOST_GAIN * Map::mapSkew(2.0 * (KnobAttack.getValue() - 0.5), ATTACK_BOOST_SKEW); // PLUS
@@ -39,9 +39,9 @@ double UIgetBipolarAttackValue()
         return 0;
 }
 
-double UIgetBipolarSustainValue()
+float UIgetBipolarSustainValue()
 {
-    const double window = 0.05;
+    const float window = 0.05;
     if (KnobSustain.getValue() > 0.5 + window)
     {
         return RELEASE_BOOST_GAIN * 2.0 * (KnobSustain.getValue() - 0.5); // PLUS
