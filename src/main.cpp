@@ -20,7 +20,7 @@ float evalAFVector[13];
 int main(void)
 {
     halInit();
-    halLEDset(true);
+    // halLEDset(true);
 
     for (;;)
     {
@@ -29,7 +29,7 @@ int main(void)
             processBTT();             // PROCESS BTT SAMPLES WHILE RECORDING
             if (calculationsDoneFlag) // IF CALCULATION HAS HAPPEND IN ABOVE FUNCTION
             {
-                halLEDset(false);
+                // halLEDset(false);
                 calculationsDoneFlag = false;
                 processAFFlag = false;
                 // TODO: MOVE ALL OF THIS TO SEPERATE FILE AI.C?
@@ -61,7 +61,7 @@ int main(void)
 
                 halStartAudio();
                 resetBuffer();
-                halLEDset(true);
+                // halLEDset(true);
             }
         }
         if (cancelationFlag)

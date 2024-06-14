@@ -42,9 +42,8 @@ float lastT2KnobPos = 0.5;
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     float adcAudioIn = hw.adc.GetFloat(4) - 0.5 * 2;
-    LeftButton.Debounce();
-    RightButton.Debounce();
-    if (lastPurpleButtonState && !LeftButton.Pressed()) // ON RELEASE
+
+    if (lastPurpleButtonState && !LeftButton.Pressed()) // ON PURPLE RELEASE
     {
         if (processAFFlag) // ONLY IF ON RELEASE AND NO CANCEL
         {
@@ -53,7 +52,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
             hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
         }
     }
-    if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PRESSED
+    if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PURPLE PRESSED
     {
         processAFFlag = true;               // SET PROCESS FLAG FOR MAIN LOOP
         lastT1KnobPos = hw.adc.GetFloat(2); // REMEMBER KNOB POSITIONS FOR CANCEL INTERACTION
@@ -62,7 +61,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
         halStartAudio();
     }
-    if (LeftButton.Pressed() && processAFFlag) // PUT INTO BUFFER ON PRESSED
+    if (LeftButton.Pressed() && processAFFlag) // PUT INTO BUFFER ON PURPLE PRESSED
     {
         halVCAwrite(0.6); // TODO: MAKE THIS A MACRO
         AFInCAppend(in[0][0]);
@@ -79,57 +78,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         }
     }
     lastPurpleButtonState = LeftButton.Pressed();
-
-    if (uiProcessCounter == 3200)
-    {
-        KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Pressed());
-        KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Pressed());
-        KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
-        KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed());
-
-        if (processAFFlag && (fabs(lastT1KnobPos - hw.adc.GetFloat(2)) > 0.1 || fabs(lastT2KnobPos - hw.adc.GetFloat(3)) > 0.1))
-        {
-            cancelationFlag = true;
-            processAFFlag = false;
-        }
-
-        transientDSPuiProcess();
-        uiProcessCounter = 0;
-    }
-    uiProcessCounter++;
-
-    if (visualProcessCounter == 1600)
-    {
-        if (processAFFlag)
-        {
-            BlueLed.Set(0.5);
-            RedLed.Set(0.5);
-        }
-        else
-        {
-            if (RightButton.Pressed())
-            {
-                BlueLed.Set(0);
-                RedLed.Set(0.8);
-            }
-            else
-            {
-                BlueLed.Set(0.8);
-                RedLed.Set(0);
-                aiAttack = 0.5;
-                aiSustain = 0.5;
-            }
-        }
-
-        PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY //TODO: ANIMATE THIS!
-
-        visualProcessCounter = 0;
-    }
-    visualProcessCounter++;
-
-    RedLed.Update();
-    BlueLed.Update();
-    PurpleLed.Update();
 }
 
 void resetShiftLayer()
@@ -146,6 +94,49 @@ void UICallback(void *data)
 
 void VisualCallback(void *data)
 {
+    LeftButton.Debounce();
+    RightButton.Debounce();
+
+    KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Pressed());
+    KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Pressed());
+    KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
+    KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed());
+
+    if (processAFFlag && (fabs(lastT1KnobPos - hw.adc.GetFloat(2)) > 0.1 || fabs(lastT2KnobPos - hw.adc.GetFloat(3)) > 0.1))
+    {
+        cancelationFlag = true;
+        processAFFlag = false;
+    }
+
+    transientDSPuiProcess();
+    // UI TILL HERE
+    // VISUAL FROM HERE
+    if (processAFFlag)
+    {
+        BlueLed.Set(0.5);
+        RedLed.Set(0.5);
+    }
+    else
+    {
+        if (RightButton.Pressed())
+        {
+            BlueLed.Set(0);
+            RedLed.Set(0.8);
+        }
+        else
+        {
+            BlueLed.Set(0.8);
+            RedLed.Set(0);
+            aiAttack = 0.5;
+            aiSustain = 0.5;
+        }
+    }
+
+    PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY //TODO: ANIMATE THIS!
+
+    RedLed.Update();
+    BlueLed.Update();
+    PurpleLed.Update();
 }
 
 void halInit()
@@ -160,11 +151,11 @@ void halInit()
     config.bitdepth = DacHandle::BitDepth::BITS_12;
     hw.dac.Init(config);
 
-    BlueLed.Init(seed::D1, true, sampleRate);
-    PurpleLed.Init(seed::D6, false, sampleRate);
-    RedLed.Init(seed::D2, true, sampleRate);
-    LeftButton.Init(seed::D3, sampleRate, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
-    RightButton.Init(seed::D4, sampleRate, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
+    BlueLed.Init(seed::D1, true, 600);
+    PurpleLed.Init(seed::D6, false, 600);
+    RedLed.Init(seed::D2, true, 600);
+    LeftButton.Init(seed::D3, 600, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
+    RightButton.Init(seed::D4, 600, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
 
     AdcChannelConfig adcConfig[4];
     adcConfig[0].InitSingle(hw.GetPin(15));
@@ -192,7 +183,7 @@ void halVCAwrite(float value)
 
 void halTimerInit()
 {
-    TimerHandle::Config timcfg;
+    /*TimerHandle::Config timcfg;
     timcfg.periph = daisy::TimerHandle::Config::Peripheral::TIM_5;
     timcfg.dir = daisy::TimerHandle::Config::CounterDir::UP;
     uint32_t tim_base_freq = daisy::System::GetPClk2Freq();
@@ -201,12 +192,13 @@ void halTimerInit()
     timcfg.enable_irq = true;
     timerUI.Init(timcfg);
     timerUI.SetCallback(UICallback, nullptr);
-    timerUI.Start();
+    timerUI.Start();*/
 
     TimerHandle::Config timcfgB;
-    timcfgB.periph = daisy::TimerHandle::Config::Peripheral::TIM_4;
+    timcfgB.periph = daisy::TimerHandle::Config::Peripheral::TIM_5;
     timcfgB.dir = daisy::TimerHandle::Config::CounterDir::UP;
-    unsigned long tim_periodB = tim_base_freq / 30;
+    uint32_t tim_base_freq = daisy::System::GetPClk2Freq();
+    unsigned long tim_periodB = tim_base_freq / 600; // per second
     timcfgB.period = tim_periodB;
     timcfgB.enable_irq = true;
     timerVisual.Init(timcfgB);
