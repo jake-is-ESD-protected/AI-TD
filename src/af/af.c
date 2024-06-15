@@ -327,8 +327,8 @@ float afGetSpectralCentroid()
 
 float afGetTempo() {
     float tempo = btt_get_tempo_bpm(btt);
-    return tempo;
     if(tempo > MAX_TEMPO){ tempo /= 2.0; } 
+    if(tempo < 1){ tempo = 96; } // default value to catch btt failure
     return tempo / MAX_TEMPO;
 }
 
