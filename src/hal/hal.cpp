@@ -40,8 +40,7 @@ bool lastPurpleButtonState = false;
 bool processAFFlag = false;   // THIS FLAG GOES UP WHILE RECORDING AND PROCESSING AND DOWN ON FINISHED PREPROCESSING AND AI INFRENCING
 bool cancelationFlag = false; // THIS FLAG GOES UP ON RECORDING CANCELATION VIA KNOB POSITION MOVEMENT
 
-float lastT1KnobPos = 0.5;
-float lastT2KnobPos = 0.5;
+float lastKnobPos[4] = {0.5, 0.5, 0.5, 0.5}; // A1 A2 T1 T2
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
@@ -58,15 +57,17 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
     }
     if (!lastPurpleButtonState && LeftButton.Pressed()) // ON PURPLE PRESSED
     {
-        processAFFlag = true;               // SET PROCESS FLAG FOR MAIN LOOP
-        lastT1KnobPos = hw.adc.GetFloat(2); // REMEMBER KNOB POSITIONS FOR CANCEL INTERACTION
-        lastT2KnobPos = hw.adc.GetFloat(3); // REMEMBER KNOB POSITIONS FOR CANCEL INTERACTION
+        processAFFlag = true;                // SET PROCESS FLAG FOR MAIN LOOP
+        lastKnobPos[0] = hw.adc.GetFloat(0); // REMEMBER KNOB POSITIONS FOR CANCEL INTERACTION
+        lastKnobPos[1] = hw.adc.GetFloat(1);
+        lastKnobPos[2] = hw.adc.GetFloat(2);
+        lastKnobPos[3] = hw.adc.GetFloat(3);
         halStopAudio();
         hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
         halStartAudio();
     }
-    if (processAFFlag && (fabs(lastT1KnobPos - hw.adc.GetFloat(2)) > 0.1 || fabs(lastT2KnobPos - hw.adc.GetFloat(3)) > 0.1)) // SCAN FOR CANCEL //TODO: MAYBE MOVE TO UI CALLBACK
-    {
+    if (processAFFlag && (fabs(lastKnobPos[0] - hw.adc.GetFloat(0)) > 0.1 || fabs(lastKnobPos[1] - hw.adc.GetFloat(1)) > 0.1 || fabs(lastKnobPos[2] - hw.adc.GetFloat(2)) > 0.1 || fabs(lastKnobPos[3] - hw.adc.GetFloat(3)) > 0.1))
+    { // SCAN FOR CANCEL //TODO: MAYBE MOVE TO UI CALLBACK
         cancelationFlag = true;
         processAFFlag = false;
     }
