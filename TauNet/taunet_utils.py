@@ -54,8 +54,8 @@ def af_dsp_init(path_to_dll):
     lib.AFInCAppend.argtypes = [c_float]
     lib.AFInCAppend.restype = None
 
-    lib.AFInCProcess.argtypes = []
-    lib.AFInCProcess.restype = None
+    lib.processBTTAndAFInC.argtypes = []
+    lib.processBTTAndAFInC.restype = None
 
     lib.afGetT1A.argtypes = []
     lib.afGetT1A.restype = c_float
@@ -106,7 +106,7 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
         for sample in audio:
             lib.AFInCAppend(sample)
         try:
-            lib.AFInCProcess()
+            lib.processBTTAndAFInC()
         except OSError as e:
             print(f"AFinC died at {label}: {e}")
             print("skipping...")

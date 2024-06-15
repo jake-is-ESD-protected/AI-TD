@@ -23,25 +23,28 @@ void ai_init(){
 
 def writeHFile(path:str, d:dict):
     header = os.path.basename(path).upper().replace('.', '_')
-    shapes = getLayerShapes(d)
+    shapes_out = getLayerShapes(d)
+    temp = shapes_out.copy()
+    shapes_in = {"#define IN_SHAPE": d["in_shape"][1]}
+    temp.pop(list(temp.keys())[-1])
+    shapes_in = {**shapes_in, **temp}
     s = f"#ifndef _{header}_\n#define _{header}_\n\n"
     s += f"#define IN_SHAPE {d['in_shape'][1]}\n\n"
     defines = ""
     vs = "\n"
-    
-    for layer, name, value in zip(d["layers"], shapes.keys(), shapes.values()):
+    for layer, array_name, shape_name, value in zip(d["layers"], shapes_out.keys(), shapes_in.keys(), shapes_out.values()):
         weights = layer['weights'][0]
         biases = layer['weights'][1]
 
-        defines += f"{name} {value}\n"
-        vs += f"\nconst std::vector<std::vector<float>> weights_l{name.replace('#define SHAPE_L_', '')}"+ "{\n"
+        defines += f"{array_name} {value}\n"
+        vs += f"\nconst float weights_l{array_name.replace('#define SHAPE_L_', '')}[][{shape_name.replace('#define ', '')}]"+ "{\n"
         
         weights = [list(x) for x in zip(*weights)] # thx to Kristof, we know that RTNeural expects transposed weights
         for weight in weights:
             vs += f"\t{str(weight).replace('[', '{').replace(']', '}')},\n"
         vs += "};"
 
-        vs += f"\nconst float bias_l{name.replace('#define SHAPE_L_', '')}[] =" + "\n"
+        vs += f"\nconst float bias_l{array_name.replace('#define SHAPE_L_', '')}[] =" + "\n"
         vs += "\t" + (f"{str(biases).replace('[', '{').replace(']', '}')}".replace('\t', ',')) + ";\n"
     s += defines + vs
     s += "\n#endif"
@@ -52,6 +55,6 @@ def writeHFile(path:str, d:dict):
 if __name__ == "__main__":
     newest = os.listdir(join("TauNet", "logs"))[-1]
     d = json2dict(join("TauNet", "logs", newest, "taunet.json"))
-    print(d["in_shape"])
     ls = getLayerShapes(d)
     writeHFile(join("src", "ai", "model.h"), d)
+    # writeHFile(join("src", "qspiFlashLoader", "modelData.h"), d)
