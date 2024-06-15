@@ -59,12 +59,12 @@ float __attribute__((section(".sdram_bss"))) bias_l4_buffer[SHAPE_L_4];
 float __attribute__((section(".sdram_bss"))) bias_l5_buffer[SHAPE_L_5];
 float __attribute__((section(".sdram_bss"))) bias_l6_buffer[SHAPE_L_6];
 
-std::vector<std::vector<float>> weights_l1;
-std::vector<std::vector<float>> weights_l2;
-std::vector<std::vector<float>> weights_l3;
-std::vector<std::vector<float>> weights_l4;
-std::vector<std::vector<float>> weights_l5;
-std::vector<std::vector<float>> weights_l6;
+std::vector<std::vector<float>> weights_l1_vec;
+std::vector<std::vector<float>> weights_l2_vec;
+std::vector<std::vector<float>> weights_l3_vec;
+std::vector<std::vector<float>> weights_l4_vec;
+std::vector<std::vector<float>> weights_l5_vec;
+std::vector<std::vector<float>> weights_l6_vec;
 
 void aiInit(void)
 {
@@ -77,38 +77,38 @@ void aiInit(void)
 
     uint32_t counterQSPILoading = 0;
 
-    LOAD_WEIGHTS(IN_SHAPE, SHAPE_L_1, weights_l1, weigthsQSPI, counterQSPILoading);
-    layer_1.setWeights(weights_l1);
+    LOAD_WEIGHTS(IN_SHAPE, SHAPE_L_1, weights_l1_vec, weigthsQSPI, counterQSPILoading);
+    layer_1.setWeights(weights_l1_vec);
 
     LOAD_BIAS(SHAPE_L_1, bias_l1_buffer, weigthsQSPI, counterQSPILoading);
     layer_1.setBias(bias_l1_buffer);
 
-    LOAD_WEIGHTS(SHAPE_L_1, SHAPE_L_2, weights_l2, weigthsQSPI, counterQSPILoading);
-    layer_2.setWeights(weights_l2);
+    LOAD_WEIGHTS(SHAPE_L_1, SHAPE_L_2, weights_l2_vec, weigthsQSPI, counterQSPILoading);
+    layer_2.setWeights(weights_l2_vec);
 
     LOAD_BIAS(SHAPE_L_2, bias_l2_buffer, weigthsQSPI, counterQSPILoading);
     layer_2.setBias(bias_l2_buffer);
 
-    LOAD_WEIGHTS(SHAPE_L_2, SHAPE_L_3, weights_l3, weigthsQSPI, counterQSPILoading);
-    layer_3.setWeights(weights_l3);
+    LOAD_WEIGHTS(SHAPE_L_2, SHAPE_L_3, weights_l3_vec, weigthsQSPI, counterQSPILoading);
+    layer_3.setWeights(weights_l3_vec);
 
     LOAD_BIAS(SHAPE_L_3, bias_l3_buffer, weigthsQSPI, counterQSPILoading);
     layer_3.setBias(bias_l3_buffer);
 
-    LOAD_WEIGHTS(SHAPE_L_3, SHAPE_L_4, weights_l4, weigthsQSPI, counterQSPILoading);
-    layer_4.setWeights(weights_l4);
+    LOAD_WEIGHTS(SHAPE_L_3, SHAPE_L_4, weights_l4_vec, weigthsQSPI, counterQSPILoading);
+    layer_4.setWeights(weights_l4_vec);
 
     LOAD_BIAS(SHAPE_L_4, bias_l4_buffer, weigthsQSPI, counterQSPILoading);
     layer_4.setBias(bias_l4_buffer);
 
-    LOAD_WEIGHTS(SHAPE_L_4, SHAPE_L_5, weights_l5, weigthsQSPI, counterQSPILoading);
-    layer_5.setWeights(weights_l5);
+    LOAD_WEIGHTS(SHAPE_L_4, SHAPE_L_5, weights_l5_vec, weigthsQSPI, counterQSPILoading);
+    layer_5.setWeights(weights_l5_vec);
 
     LOAD_BIAS(SHAPE_L_5, bias_l5_buffer, weigthsQSPI, counterQSPILoading);
     layer_5.setBias(bias_l5_buffer);
 
-    LOAD_WEIGHTS(SHAPE_L_5, SHAPE_L_6, weights_l6, weigthsQSPI, counterQSPILoading);
-    layer_6.setWeights(weights_l6);
+    LOAD_WEIGHTS(SHAPE_L_5, SHAPE_L_6, weights_l6_vec, weigthsQSPI, counterQSPILoading);
+    layer_6.setWeights(weights_l6_vec);
 
     LOAD_BIAS(SHAPE_L_6, bias_l6_buffer, weigthsQSPI, counterQSPILoading);
     layer_6.setBias(bias_l6_buffer);
