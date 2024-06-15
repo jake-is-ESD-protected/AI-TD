@@ -5,7 +5,6 @@
 #include "Utilities/Map.hpp"
 #include "ai.h"
 #include "cli.hpp"
-#include "daisysp.h"
 #include "mem.hpp"
 #include "transientDSP.hpp"
 #include "ui.hpp"
@@ -16,14 +15,12 @@ extern "C"
 }
 
 using namespace daisy;
-using namespace daisysp;
 using namespace k;
 
 DaisySeed hw;
 
 static Led BlueLed;
-// static AdEnv envA, envB;
-static Oscillator aiLFO;
+
 static Led RedLed;
 static Led PurpleLed;
 static Switch LeftButton;
@@ -39,6 +36,7 @@ bool lastPurpleButtonState = false;
 
 bool processAFFlag = false;   // THIS FLAG GOES UP WHILE RECORDING AND PROCESSING AND DOWN ON FINISHED PREPROCESSING AND AI INFRENCING
 bool cancelationFlag = false; // THIS FLAG GOES UP ON RECORDING CANCELATION VIA KNOB POSITION MOVEMENT
+bool aiMode = false;
 
 float lastKnobPos[4] = {0.5, 0.5, 0.5, 0.5}; // A1 A2 T1 T2
 
@@ -66,14 +64,24 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
         halStartAudio();
     }
-    if (processAFFlag && (fabs(lastKnobPos[0] - hw.adc.GetFloat(0)) > 0.1 || fabs(lastKnobPos[1] - hw.adc.GetFloat(1)) > 0.1 || fabs(lastKnobPos[2] - hw.adc.GetFloat(2)) > 0.1 || fabs(lastKnobPos[3] - hw.adc.GetFloat(3)) > 0.1))
+    // CHECK WHICH TIME CONSTANTS ARE BEING USED
+    if (aiMode)
+    {
+        if (fabs(lastKnobPos[2] - hw.adc.GetFloat(2)) > KNOB_WINDOW || fabs(lastKnobPos[3] - hw.adc.GetFloat(3)) > KNOB_WINDOW)
+        {
+            // LEAVE AI Mode
+            aiMode = false;
+            // TODO: TRIGGER ANIM
+        }
+    }
+    if (processAFFlag && (fabs(lastKnobPos[0] - hw.adc.GetFloat(0)) > KNOB_WINDOW || fabs(lastKnobPos[1] - hw.adc.GetFloat(1)) > KNOB_WINDOW || fabs(lastKnobPos[2] - hw.adc.GetFloat(2)) > KNOB_WINDOW || fabs(lastKnobPos[3] - hw.adc.GetFloat(3)) > KNOB_WINDOW))
     { // SCAN FOR CANCEL //TODO: MAYBE MOVE TO UI CALLBACK
         cancelationFlag = true;
         processAFFlag = false;
     }
     if (LeftButton.Pressed() && processAFFlag) // PUT INTO BUFFER ON PURPLE PRESSED
     {
-        halVCAwrite(0.6); // TODO: MAKE THIS A MACRO
+        halVCAwrite(AI_LISTENING_UX_GAIN);
         AFInCAppend(in[0][0]);
     }
     else
@@ -84,7 +92,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         }
         else
         {
-            halVCAwrite(0.6); // TODO: MAKE THIS A MACRO
+            halVCAwrite(AI_LISTENING_UX_GAIN);
         }
     }
     lastPurpleButtonState = LeftButton.Pressed();
@@ -121,7 +129,7 @@ void VisualCallback(void *data)
         if (processAFFlag)
         {
             // AI ANIM
-            float retVal = aiLFO.Process() + 0.5;
+            float retVal = Map::mapSkew(hw.adc.GetFloat(4), 1.2);
             BlueLed.Set(retVal);
             RedLed.Set(retVal);
         }
@@ -136,32 +144,34 @@ void VisualCallback(void *data)
         // REGULAR MODE OR CALC MODE
         if (processAFFlag) // CALC MODE
         {
-            /*float retVal = envA.Process();
-            BlueLed.Set(retVal);
-            RedLed.Set(retVal);*/
-            BlueLed.Set(1);
-            RedLed.Set(1);
+            BlueLed.Set(0.1);
+            RedLed.Set(0.1);
         }
         else // REGULAR MODE
         {
-            if (RightButton.Pressed())
+            if (aiMode)
             {
-                /*float retVal = Map::mapClip(envB.Process(), 0, 1, 0.8, 0);
-                BlueLed.Set(0);
-                RedLed.Set(retVal);*/
-                BlueLed.Set(0);
+                BlueLed.Set(0.8);
                 RedLed.Set(0.8);
             }
             else
             {
-                BlueLed.Set(0.8);
-                RedLed.Set(0);
-                aiAttack = 0.5; // RESET ON SWITCHBACK
-                aiSustain = 0.5;
+                if (RightButton.Pressed())
+                {
+                    BlueLed.Set(0);
+                    RedLed.Set(0.8);
+                }
+                else
+                {
+                    BlueLed.Set(0.8);
+                    RedLed.Set(0);
+                    aiAttack = 0.5; // RESET ON SWITCHBACK
+                    aiSustain = 0.5;
+                }
             }
         }
     }
-    PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN)); // TUNE ME DADDY //TODO: ANIMATE THIS!
+    PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN));
 
     RedLed.Update();
     BlueLed.Update();
@@ -185,25 +195,6 @@ void halInit()
     RedLed.Init(seed::D2, true, sampleRateUIUX);
     LeftButton.Init(seed::D3, sampleRateUIUX, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
     RightButton.Init(seed::D4, sampleRateUIUX, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
-
-    /*envA.Init(sampleRateUIUX);
-    envA.SetTime(ADENV_SEG_ATTACK, 0.01);
-    envA.SetTime(ADENV_SEG_DECAY, 1);
-    envA.SetMin(0.0);
-    envA.SetMax(1);
-    envA.SetCurve(0);
-
-    envB.Init(sampleRateUIUX);
-    envB.SetTime(ADENV_SEG_ATTACK, 1);
-    envB.SetTime(ADENV_SEG_DECAY, 0.1);
-    envB.SetMin(0.0);
-    envB.SetMax(1);
-    envB.SetCurve(0);*/
-
-    aiLFO.Init(sampleRateUIUX);
-    aiLFO.SetAmp(0.5);
-    aiLFO.SetWaveform(Oscillator::WAVE_SIN);
-    aiLFO.SetFreq(1);
 
     AdcChannelConfig adcConfig[4];
     adcConfig[0].InitSingle(hw.GetPin(15));

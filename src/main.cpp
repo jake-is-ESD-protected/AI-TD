@@ -58,10 +58,11 @@ int main(void)
                 aiRun(evalAFVector);
                 aiAttack = aiGetATTACK_T1();
                 aiSustain = aiGetSUSTAIN_T1();
+                aiMode = true;
+                // TODO: TRIGGER GLOW UP ANIM
 
                 halStartAudio();
                 resetBuffer();
-                // halLEDset(true);
             }
         }
         if (cancelationFlag)
