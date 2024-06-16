@@ -57,4 +57,4 @@ if __name__ == "__main__":
     d = json2dict(join("TauNet", "logs", newest, "taunet.json"))
     ls = getLayerShapes(d)
     writeHFile(join("src", "ai", "model.h"), d)
-    # writeHFile(join("src", "qspiFlashLoader", "modelData.h"), d)
+    writeHFile(join("src", "qspiFlashLoader", "modelData.h"), d)
