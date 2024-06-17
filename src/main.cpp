@@ -13,15 +13,14 @@ extern "C"
 using namespace daisy;
 using namespace k;
 
-float testArrayLuka[13] = {0.6035, 0.0948, 0.1893, 0.1793, 0.2599, 0.3051, 0.086, 0.0073, 0.1627, 0.441, 0.9564, 0, 0.19999999999999996}; // 0.75779283 0.88444906
-float testArrayKristof[13] = {0.3874, 0.0185, 0.1383, 1.0, 0.076, 0.091, 0.0953, 0.0121, 0.494, 0.0246, 0.8758, 0, 0.3475999999999999};   // 0.7210246, 0.3815809
-float testArrayZeros[13] = {0};                                                                                                           //
-float evalAFVector[13];
+float testArrayLuka[14] = {0.6793, 0.0421, 0.1622, 0.7628, 0.5817, 0.3864, 0.0514, 0.0175, 0.2437, 0.0, 0, 0.395, 0, 0.687};            // 0.31151158 0.78028417
+float testArrayKristof[14] = {0.3874, 0.0185, 0.1383, 1.0, 0.076, 0.091, 0.0953, 0.0121, 0.494, 0.0246, 0.8758, 0, 0.3475999999999999}; // 0.7210246, 0.3815809
+float testArrayZeros[14] = {0};                                                                                                         // 0.28777623 0.03888492
+float evalAFVector[14];
 
 int main(void)
 {
     halInit();
-
     for (;;)
     {
         if (processAFFlag)
@@ -29,7 +28,6 @@ int main(void)
             processBTT();             // PROCESS BTT SAMPLES WHILE RECORDING
             if (calculationsDoneFlag) // IF CALCULATION HAS HAPPEND IN ABOVE FUNCTION
             {
-                // halLEDset(false);
                 calculationsDoneFlag = false;
                 processAFFlag = false;
                 // TODO: MOVE ALL OF THIS TO SEPERATE FILE AI.C?
@@ -43,16 +41,27 @@ int main(void)
                 evalAFVector[7] = afGetPBandH();           // EQ_H
                 evalAFVector[8] = afGetCrestFactor();      // Crest
                 evalAFVector[9] = afGetSpectralFlux();     // Flux
-                evalAFVector[10] = KnobSustain.getValue(); // Sustain_gain
-                if (KnobAttack.getValue() > 0.5)           // BOOST
+
+                if (KnobAttack.getValue() > 0.5) // BOOST
                 {
-                    evalAFVector[11] = 0;                                 // Attack_cut
-                    evalAFVector[12] = (KnobAttack.getValue() - 0.5) * 2; // Attack_boost
+                    evalAFVector[10] = 0;                                 // Attack_cut
+                    evalAFVector[11] = (KnobAttack.getValue() - 0.5) * 2; // Attack_boost
                 }
                 else // CUT
                 {
-                    evalAFVector[11] = Map::mapClip(KnobAttack.getValue(), 0, 0.5, 1, 0); // Attack_cut
-                    evalAFVector[12] = 0;                                                 // Attack_boost
+                    evalAFVector[10] = Map::mapClip(KnobAttack.getValue(), 0, 0.5, 1, 0); // Attack_cut
+                    evalAFVector[11] = 0;                                                 // Attack_boost
+                }
+
+                if (KnobSustain.getValue() > 0.5) // BOOST
+                {
+                    evalAFVector[12] = 0;                                  // Sustain_cut
+                    evalAFVector[13] = (KnobSustain.getValue() - 0.5) * 2; // Sustain_boost
+                }
+                else // CUT
+                {
+                    evalAFVector[12] = Map::mapClip(KnobSustain.getValue(), 0, 0.5, 1, 0); // Sustain_cut
+                    evalAFVector[13] = 0;                                                  // Sustain_boost
                 }
 
                 aiRun(evalAFVector);

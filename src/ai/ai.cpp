@@ -46,8 +46,8 @@ RTNeural::ModelT<float, IN_SHAPE, IN_SHAPE,
 taunet;
 // clang-format on
 
-float ATTACK_T1 = 2;
-float SUSTAIN_T1 = 2;
+float ATTACK_T1 = 0.5;
+float SUSTAIN_T1 = 0.5;
 
 #define QSPI_STORAGE_SPACE (IN_SHAPE * SHAPE_L_1 + SHAPE_L_1) + (SHAPE_L_1 * SHAPE_L_2 + SHAPE_L_2) + (SHAPE_L_2 * SHAPE_L_3 + SHAPE_L_3) + (SHAPE_L_3 * SHAPE_L_4 + SHAPE_L_4) + (SHAPE_L_4 * SHAPE_L_5 + SHAPE_L_5) + (SHAPE_L_5 * SHAPE_L_6 + SHAPE_L_6)
 uint32_t DSY_QSPI_BSS weigthsQSPI[QSPI_STORAGE_SPACE];
