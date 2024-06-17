@@ -117,6 +117,7 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
         human_input.pop("SONG_ID")
         human_input.pop("ATTACK_T2")    # not yet needed
         human_input.pop("SUSTAIN_T2")   # not yet needed
+
         attack = human_input.pop("ATTACK_GAIN")
         if attack < 0.5:
             human_input["ATTACK_CUT"] = 1 - (attack * 2)
@@ -124,6 +125,15 @@ def create_dataset(audio_dir, human_input_csv, dsp_dll_path, save=None):
         else:
             human_input["ATTACK_CUT"] = 0
             human_input["ATTACK_BOOST"] = (attack * 2) - 1
+        
+        sustain = human_input.pop("SUSTAIN_GAIN")
+        if sustain < 0.5:
+            human_input["SUSTAIN_CUT"] = 1 - (sustain * 2)
+            human_input["SUSTAIN_BOOST"] = 0
+        else:
+            human_input["SUSTAIN_CUT"] = 0
+            human_input["SUSTAIN_BOOST"] = (sustain * 2) - 1
+
         human_output = dict()
         human_output["ATTACK_T1"] = human_input.pop("ATTACK_T1") / 500 # force-normalize, see transientDSP.cpp
         human_output["SUSTAIN_T1"] = human_input.pop("SUSTAIN_T1") / 3000 # see above ^
