@@ -28,7 +28,6 @@ int main(void)
             processBTT();             // PROCESS BTT SAMPLES WHILE RECORDING
             if (calculationsDoneFlag) // IF CALCULATION HAS HAPPEND IN ABOVE FUNCTION
             {
-                calculationsDoneFlag = false;
                 processAFFlag = false;
                 // TODO: MOVE ALL OF THIS TO SEPERATE FILE AI.C?
                 evalAFVector[0] = afGetTempo();            // Tempo
@@ -71,6 +70,7 @@ int main(void)
                 // TODO: TRIGGER GLOW UP ANIM
 
                 halStartAudio();
+                calculationsDoneFlag = false;
                 resetBuffer();
             }
         }

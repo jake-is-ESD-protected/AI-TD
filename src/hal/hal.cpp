@@ -110,69 +110,114 @@ void UICallback(void *data)
 {
 }
 
+#define VIS_STARTUP_TIME sampleRateUIUX * 3 // 600=1s
+uint32_t startUpTimer = 0;
+
 void VisualCallback(void *data)
 {
     LeftButton.Debounce();
     RightButton.Debounce();
 
-    KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Pressed());
-    KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Pressed());
-    KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
-    KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed());
-
-    transientDSPuiProcess();
-    // UI TILL HERE
-    // VISUAL FROM HERE
-
-    if (LeftButton.Pressed())
+    if (startUpTimer < VIS_STARTUP_TIME)
     {
-        if (processAFFlag)
+        float fadeVar = 0;
+        float currentNormalizedTime = ((float)startUpTimer) / ((float)VIS_STARTUP_TIME);
+        if (startUpTimer < VIS_STARTUP_TIME * 0.333333)
         {
-            // AI ANIM
-            float retVal = Map::mapSkew(hw.adc.GetFloat(4), 1.2);
-            BlueLed.Set(retVal);
-            RedLed.Set(retVal);
+            fadeVar = Map::mapSkew(currentNormalizedTime * 3, 1.5); // GLOW UP
+            BlueLed.Set(0);
+            RedLed.Set(0);
         }
-        else // AI CANCELD
+        else if (startUpTimer < VIS_STARTUP_TIME * 0.6666666)
         {
-            BlueLed.Set(0.0);
-            RedLed.Set(1);
-        }
-    }
-    else
-    {
-        // REGULAR MODE OR CALC MODE
-        if (processAFFlag) // CALC MODE
-        {
-            BlueLed.Set(0.1);
-            RedLed.Set(0.1);
-        }
-        else // REGULAR MODE
-        {
-            if (aiMode)
+            fadeVar = Map::mapSkew(Map::mapClip((currentNormalizedTime - 0.333333) * 3, 1, 0, 0, 1), 2.4); // GLOW DOWN; // HOLD
+            if (RightButton.Pressed())
             {
-                BlueLed.Set(0.8);
+                BlueLed.Set(0);
+                RedLed.Set(Map::mapSkew((currentNormalizedTime - 0.333333) * 3 * 0.8, 1.8)); // GLOW UP
+            }
+            else
+            {
+                BlueLed.Set(Map::mapSkew((currentNormalizedTime - 0.333333) * 3 * 0.8, 1.8)); // GLOW UP
+                RedLed.Set(0);
+            }
+        }
+        else if (startUpTimer < VIS_STARTUP_TIME)
+        {
+            fadeVar = Map::mapSkew(Map::mapClip((currentNormalizedTime - 0.333333) * 3, 1, 0, 0, 1), 2.4); // GLOW DOWN; // HOLD
+            // Map::mapSkew(Map::mapClip((currentNormalizedTime - 0.666666) * 3, 1, 0, 0, 1), 2.1); // GLOW DOWN
+            if (RightButton.Pressed())
+            {
+                BlueLed.Set(0);
                 RedLed.Set(0.8);
             }
             else
             {
-                if (RightButton.Pressed())
+                BlueLed.Set(0.8);
+                RedLed.Set(0);
+            }
+        }
+        PurpleLed.Set(fadeVar);
+        startUpTimer++;
+    }
+    else // NOT STARTUP
+    {
+        KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Pressed());
+        KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Pressed());
+        KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
+        KnobSustainTime.updateKnob(hw.adc.GetFloat(3), LeftButton.Pressed());
+
+        transientDSPuiProcess();
+        // UI TILL HERE
+        // VISUAL FROM HERE
+
+        if (LeftButton.Pressed())
+        {
+            if (processAFFlag)
+            {
+                // AI ANIM
+                float retVal = Map::mapSkew(hw.adc.GetFloat(4), 1.2);
+                BlueLed.Set(retVal);
+                RedLed.Set(retVal);
+            }
+            else // AI CANCELD
+            {
+                BlueLed.Set(0.0);
+                RedLed.Set(1);
+            }
+        }
+        else
+        {
+            // REGULAR MODE OR CALC MODE
+            if (calculationsDoneFlag) // CALC MODE
+            {                         // TODO:FADE ANIM
+                BlueLed.Set(0.1);
+                RedLed.Set(0.1);
+            }
+            else // REGULAR MODE
+            {    // TODO: ADD SLOW PULSING ANIMATION
+                if (aiMode)
                 {
-                    BlueLed.Set(0);
+                    BlueLed.Set(0.8);
                     RedLed.Set(0.8);
                 }
                 else
                 {
-                    BlueLed.Set(0.8);
-                    RedLed.Set(0);
-                    aiAttack = 0.5; // RESET ON SWITCHBACK
-                    aiSustain = 0.5;
+                    if (RightButton.Pressed())
+                    {
+                        BlueLed.Set(0);
+                        RedLed.Set(0.8);
+                    }
+                    else
+                    {
+                        BlueLed.Set(0.8);
+                        RedLed.Set(0);
+                    }
                 }
             }
         }
+        PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN));
     }
-    PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN));
-
     RedLed.Update();
     BlueLed.Update();
     PurpleLed.Update();
@@ -182,6 +227,7 @@ void halInit()
 {
     hw.Configure();
     hw.Init(true); // ENABLE BOOST MODE
+
     hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
     hw.SetAudioBlockSize(1);
 
@@ -193,6 +239,10 @@ void halInit()
     BlueLed.Init(seed::D1, true, sampleRateUIUX);
     PurpleLed.Init(seed::D6, false, sampleRateUIUX);
     RedLed.Init(seed::D2, true, sampleRateUIUX);
+    BlueLed.Set(0);
+    RedLed.Set(0);
+    RedLed.Update();
+    BlueLed.Update();
     LeftButton.Init(seed::D3, sampleRateUIUX, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
     RightButton.Init(seed::D4, sampleRateUIUX, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
 
@@ -205,10 +255,9 @@ void halInit()
     hw.adc.Init(adcConfig, 5);
 
     hw.adc.Start();
-
+    halTimerInit();
     cliInit();
     transientDSPinit();
-    halTimerInit();
     aiInit();
     initAf();
     resetBuffer();
@@ -237,7 +286,7 @@ void halTimerInit()
     timcfgB.periph = daisy::TimerHandle::Config::Peripheral::TIM_5;
     timcfgB.dir = daisy::TimerHandle::Config::CounterDir::UP;
     uint32_t tim_base_freq = daisy::System::GetPClk2Freq();
-    unsigned long tim_periodB = tim_base_freq / 600; // per second
+    unsigned long tim_periodB = tim_base_freq / sampleRateUIUX; // per second
     timcfgB.period = tim_periodB;
     timcfgB.enable_irq = true;
     timerVisual.Init(timcfgB);
