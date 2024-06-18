@@ -195,32 +195,33 @@ void VisualCallback(void *data)
                 RedLed.Set(0.1);
             }
             else // REGULAR MODE
-            {    // TODO: ADD SLOW PULSING ANIMATION
-                if (aiMode)
+            {
+                if (RightButton.Pressed())
                 {
-                    BlueLed.Set(0.8);
-                    RedLed.Set(0.8);
-                }
-                else
-                {
-                    if (RightButton.Pressed())
+                    if (aiMode)
                     {
-                        BlueLed.Set(0);
+                        BlueLed.Set(0.8);
                         RedLed.Set(0.8);
                     }
                     else
-                    {
-                        BlueLed.Set(0.8);
-                        RedLed.Set(0);
+                    { // TODO: ADD SLOW PULSING ANIMATION
+                        BlueLed.Set(0);
+                        RedLed.Set(0.8);
                     }
                 }
+                else
+                {
+                    aiMode = false;
+                    BlueLed.Set(0.8);
+                    RedLed.Set(0);
+                }
             }
+            PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN));
         }
-        PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN));
+        RedLed.Update();
+        BlueLed.Update();
+        PurpleLed.Update();
     }
-    RedLed.Update();
-    BlueLed.Update();
-    PurpleLed.Update();
 }
 
 void halInit()
