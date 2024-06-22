@@ -85,6 +85,7 @@ int main(void)
             processAFFlag = false;
             calculationsDoneFlag = false;
             cancelationFlag = false;
+            aiMode = false;
         }
     }
 }

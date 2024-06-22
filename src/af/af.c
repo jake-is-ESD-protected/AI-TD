@@ -23,6 +23,7 @@
 
 bool calculateAFFlag = false; //THIS FLAG IS UP WHEN THE BUFFER IS FULLY RECORDED AND CALCULATIONS COULD START TO HAPPEN
 bool calculationsDoneFlag = false; //THIS FLAG IS UP WHEN THE PREPROCESSING IS DONE
+bool cancelationFlag = false; // THIS FLAG GOES UP ON RECORDING CANCELATION VIA KNOB POSITION MOVEMENT
 
 BTT *btt;
 
@@ -169,9 +170,16 @@ void processBTT()
     }
     if(calculateAFFlag && audioBufferRuntimeIndex >= audioBufferIndex) //IF WHOLE BUFFER IS PROCESSED AND BTN RELEASED
     {
-        AFInCProcess();
-        calculateAFFlag = false;
-        calculationsDoneFlag = true; //TELL THE MAIN LOOP THAT THE PREPROCESSING IS DONE
+        if(onsetBufferIndex == 0)//CATCH FOR NO BEATS DETECTED
+        {
+            cancelationFlag = true;
+        }
+        else
+        {
+            AFInCProcess();
+            calculateAFFlag = false;
+            calculationsDoneFlag = true; //TELL THE MAIN LOOP THAT THE PREPROCESSING IS DONE
+        }
     }
 }
 

@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-#define sampleRateUIUX 600
+#define sampleRateUIUX 6000
 
 #define sampleRate 96000
 

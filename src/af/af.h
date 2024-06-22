@@ -43,6 +43,7 @@ extern dft_sample_t dftBuffer[BEAT_DETECTION_BUFFER_SIZE];
 
 extern bool calculateAFFlag;
 extern bool calculationsDoneFlag;
+extern bool cancelationFlag;
 
 void resetBuffer();
 
