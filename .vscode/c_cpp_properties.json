@@ -1,9 +1,9 @@
 {
   "configurations": [
     {
-      "cStandard": "c11",
-      "compilerPath": "arm-none-eabi-g++.exe",
-      "cppStandard": "c++17",
+      "cStandard": "${default}",
+      "compilerPath": "gcc",
+      "cppStandard": "${default}",
       "defines": [
         "_DEBUG",
         "UNICODE",
@@ -11,27 +11,22 @@
       ],
       "includePath": [
         "${workspaceFolder}/**",
-        "${workspaceFolder}/../../libDaisy/**",
-        "${workspaceFolder}/../../DaisySP/**"
+        "${workspaceFolder}/RTNeural/RTNeural",
+        "${workspaceFolder}/lib/AI_driver/inc",
+        "${workspaceFolder}/lib/AI_model",
+        "${workspaceFolder}/seedcli/seedcli_src",
+        "${workspaceFolder}/src/hal",
+        "${workspaceFolder}/src/transientDSP",
+        "${workspaceFolder}/af/transientDetectionDSP",
+        "${workspaceFolder}/src/ui",
+        "${workspaceFolder}/src/ai",
+        "${LIBDAISY_DIR}/**",
+        "${LIBDAISY_DIR}/src",
+        "${DAISYSP_DIR}/**",
+        "${LIBK_DIR}/**"
       ],
-      "name": "Win32",
+      "name": "windows-gcc-x64",
       "windowsSdkVersion": "10.0.17763.0"
-    },
-    {
-      "cStandard": "c11",
-      "compilerPath": "/usr/local/bin/arm-none-eabi-g++",
-      "cppStandard": "c++17",
-      "defines": [
-        "_DEBUG",
-        "UNICODE",
-        "_UNICODE"
-      ],
-      "includePath": [
-        "${workspaceFolder}/**",
-        "${workspaceFolder}/../../libDaisy/**",
-        "${workspaceFolder}/../../DaisySP/**"
-      ],
-      "name": "macOS"
     }
   ],
   "version": 4

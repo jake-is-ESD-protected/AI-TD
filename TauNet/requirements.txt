@@ -1,0 +1,12 @@
+wheel
+numpy==1.23
+scipy
+tensorflow==2.12
+keras==2.12
+matplotlib
+scikit-learn
+librosa
+import-ipynb
+pandas
+seaborn
+augmolino

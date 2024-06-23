@@ -23,7 +23,7 @@
 # Compiled Static libraries
 *.lai
 *.la
-*.a
+# *.a
 *.lib
 
 # Executables
@@ -33,3 +33,27 @@
 
 #Build directory
 /build
+/src/qspiFlashLoader/build
+
+# vscode stuff
+.vscode/extensions.json
+.vscode/.cortex*
+.vscode/STM32H750x.svd
+/src/qspiFlashLoader/.vscode
+
+# venv stuff
+.venv
+*.pyc
+
+# unneeded:
+include
+
+# IP
+transient_shaper.ipynb
+transient_shaper_lib.ipynb
+
+
+renders
+*.wav
+*.csv
+logs
