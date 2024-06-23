@@ -3,6 +3,20 @@
 #include "model.h"
 #include <vector>
 
+#include "Utilities/Map.hpp"
+#include "ai.h"
+#include "daisy_seed.h"
+#include "hal.hpp"
+#include "transientDSP.hpp"
+#include "ui.hpp"
+
+extern "C"
+{
+#include "af.h"
+}
+
+using namespace k;
+
 #define LOAD_WEIGHTS(SHAPE_IN, SHAPE_OUT, target, source, counter)                                                                                                                                                                                                                                                                                                                                             \
     do                                                                                                                                                                                                                                                                                                                                                                                                         \
     {                                                                                                                                                                                                                                                                                                                                                                                                          \
@@ -48,6 +62,14 @@ taunet;
 
 float ATTACK_T1 = 0.5;
 float SUSTAIN_T1 = 0.5;
+
+float evalAFVector[14];
+
+bool processAFFlag = false; // THIS FLAG GOES UP WHILE RECORDING AND PROCESSING AND DOWN ON FINISHED PREPROCESSING AND AI INFRENCING
+bool aiMode = false;
+
+float aiAttack = 0.5;
+float aiSustain = 0.5;
 
 #define QSPI_STORAGE_SPACE (IN_SHAPE * SHAPE_L_1 + SHAPE_L_1) + (SHAPE_L_1 * SHAPE_L_2 + SHAPE_L_2) + (SHAPE_L_2 * SHAPE_L_3 + SHAPE_L_3) + (SHAPE_L_3 * SHAPE_L_4 + SHAPE_L_4) + (SHAPE_L_4 * SHAPE_L_5 + SHAPE_L_5) + (SHAPE_L_5 * SHAPE_L_6 + SHAPE_L_6)
 uint32_t DSY_QSPI_BSS weigthsQSPI[QSPI_STORAGE_SPACE];
@@ -116,19 +138,98 @@ void aiInit(void)
     taunet.reset();
 }
 
+// float testArrayLuka[14] = {0.6793, 0.0421, 0.1622, 0.7628, 0.5817, 0.3864, 0.0514, 0.0175, 0.2437, 0.0, 0, 0.395, 0, 0.687};            // 0.31151158 0.78028417
+// float testArrayKristof[14] = {0.3874, 0.0185, 0.1383, 1.0, 0.076, 0.091, 0.0953, 0.0121, 0.494, 0.0246, 0.8758, 0, 0.3475999999999999}; // 0.7210246, 0.3815809
+// float testArrayZeros[14] = {0};                                                                                                         // 0.28777623 0.03888492
+
+void aiProcess()
+{
+    if (processAFFlag)
+    {
+        processBTT();             // PROCESS BTT SAMPLES WHILE RECORDING
+        if (calculationsDoneFlag) // IF CALCULATION HAS HAPPEND IN ABOVE FUNCTION
+        {
+            processAFFlag = false;
+            evalAFVector[0] = afGetTempo();            // Tempo
+            evalAFVector[1] = afGetT1A();              // T1A
+            evalAFVector[2] = afGetT2A();              // T2A
+            evalAFVector[3] = afGetSpectralCentroid(); // Centroid
+            evalAFVector[4] = afGetPBandL();           // EQ_L
+            evalAFVector[5] = afGetPBandML();          // EQ_ML
+            evalAFVector[6] = afGetPBandMH();          // EQ_MH
+            evalAFVector[7] = afGetPBandH();           // EQ_H
+            evalAFVector[8] = afGetCrestFactor();      // Crest
+            evalAFVector[9] = afGetSpectralFlux();     // Flux
+
+            if (KnobAttack.getValue() > 0.5) // BOOST
+            {
+                evalAFVector[10] = 0;                                 // Attack_cut
+                evalAFVector[11] = (KnobAttack.getValue() - 0.5) * 2; // Attack_boost
+            }
+            else // CUT
+            {
+                evalAFVector[10] = Map::mapClip(KnobAttack.getValue(), 0, 0.5, 1, 0); // Attack_cut
+                evalAFVector[11] = 0;                                                 // Attack_boost
+            }
+
+            if (KnobSustain.getValue() > 0.5) // BOOST
+            {
+                evalAFVector[12] = 0;                                  // Sustain_cut
+                evalAFVector[13] = (KnobSustain.getValue() - 0.5) * 2; // Sustain_boost
+            }
+            else // CUT
+            {
+                evalAFVector[12] = Map::mapClip(KnobSustain.getValue(), 0, 0.5, 1, 0); // Sustain_cut
+                evalAFVector[13] = 0;                                                  // Sustain_boost
+            }
+
+            aiRun(evalAFVector);
+
+            halStartAudio();
+            aiReset();
+        }
+    }
+
+    if (cancelationFlag) // FLAG BASED INSPECTION OF CANCELATION
+    {
+        halStopAudio();
+        hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_96KHZ);
+        System::Delay(1);
+        halStartAudio();
+        aiReset();
+    }
+}
+
 void aiRun(float *input)
 {
     taunet.forward((float *)input);
-    ATTACK_T1 = taunet.getOutputs()[0];
-    SUSTAIN_T1 = taunet.getOutputs()[1];
+    aiAttack = taunet.getOutputs()[0];
+    aiSustain = taunet.getOutputs()[1];
+    aiMode = true;
+}
+
+void aiCancel()
+{
+    cancelationFlag = true;
+    processAFFlag = false;
+    aiMode = false;
+}
+
+void aiReset()
+{
+    resetBuffer();
+    calculateAFFlag = false;
+    processAFFlag = false;
+    calculationsDoneFlag = false;
+    cancelationFlag = false;
 }
 
 float aiGetATTACK_T1(void)
 {
-    return ATTACK_T1;
+    return aiAttack;
 }
 
 float aiGetSUSTAIN_T1(void)
 {
-    return SUSTAIN_T1;
+    return aiSustain;
 }

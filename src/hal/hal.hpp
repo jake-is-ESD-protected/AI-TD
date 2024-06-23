@@ -36,4 +36,6 @@ void halStartAudio();
 /// @brief
 void halStopAudio();
 
+void aiReset();
+
 extern DaisySeed hw;

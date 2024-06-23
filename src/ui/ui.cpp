@@ -11,7 +11,7 @@ Knob KnobAttackTime = Knob(0.1, 0.5);
 Knob KnobSustain = Knob(0.1, 0.5);
 Knob KnobSustainTime = Knob(0.1, 0.5);
 
-#define ATTACK_BOOST_GAIN 0.2 // REDUCED FOR DEMO!!!
+#define ATTACK_BOOST_GAIN 0.6
 #define SUSTAIN_BOOST_GAIN 0.7
 
 #define ATTACK_ATT_GAIN 0.6

@@ -2,7 +2,6 @@
 #include "daisy_seed.h"
 #include <math.h>
 
-#include "FastMath/fastOscApprox.h"
 #include "Utilities/Map.hpp."
 #include "ai.h"
 #include "cli.hpp"
@@ -34,10 +33,6 @@ uint64_t uiProcessCounter = 0;
 uint64_t visualProcessCounter = 0;
 
 bool lastPurpleButtonState = false;
-
-bool processAFFlag = false; // THIS FLAG GOES UP WHILE RECORDING AND PROCESSING AND DOWN ON FINISHED PREPROCESSING AND AI INFRENCING
-
-bool aiMode = false;
 
 float lastKnobPos[4] = {0.5, 0.5, 0.5, 0.5}; // A1 A2 T1 T2
 
@@ -72,13 +67,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
         {
             // LEAVE AI Mode
             aiMode = false;
-            // TODO: TRIGGER ANIM
         }
-    }
-    if (processAFFlag && (fabs(lastKnobPos[0] - hw.adc.GetFloat(0)) > KNOB_WINDOW || fabs(lastKnobPos[1] - hw.adc.GetFloat(1)) > KNOB_WINDOW || fabs(lastKnobPos[2] - hw.adc.GetFloat(2)) > KNOB_WINDOW || fabs(lastKnobPos[3] - hw.adc.GetFloat(3)) > KNOB_WINDOW))
-    { // SCAN FOR CANCEL //TODO: MAYBE MOVE TO UI CALLBACK
-        cancelationFlag = true;
-        processAFFlag = false;
     }
     if (LeftButton.Pressed() && processAFFlag) // PUT INTO BUFFER ON PURPLE PRESSED
     {
@@ -120,6 +109,11 @@ void VisualCallback(void *data)
 {
     LeftButton.Debounce();
     RightButton.Debounce();
+
+    if (processAFFlag && (fabs(lastKnobPos[0] - hw.adc.GetFloat(0)) > KNOB_WINDOW || fabs(lastKnobPos[1] - hw.adc.GetFloat(1)) > KNOB_WINDOW || fabs(lastKnobPos[2] - hw.adc.GetFloat(2)) > KNOB_WINDOW || fabs(lastKnobPos[3] - hw.adc.GetFloat(3)) > KNOB_WINDOW))
+    { // SCAN FOR CANCEL
+        aiCancel();
+    }
 
     if (startUpTimer < VIS_STARTUP_TIME)
     {
@@ -165,6 +159,8 @@ void VisualCallback(void *data)
     }
     else // NOT STARTUP
     {
+        if (glowUpTimer > VIS_GLOW_TIME)
+            glowUpTimer = 0;
         KnobAttack.updateKnob(hw.adc.GetFloat(0), LeftButton.Pressed());
         KnobSustain.updateKnob(hw.adc.GetFloat(1), LeftButton.Pressed());
         KnobAttackTime.updateKnob(hw.adc.GetFloat(2), LeftButton.Pressed());
@@ -186,16 +182,15 @@ void VisualCallback(void *data)
             else // AI CANCELD
             {
                 BlueLed.Set(0.0);
-                RedLed.Set(1);
+                RedLed.Set(0.9);
+                PurpleLed.Set(1);
             }
         }
         else
         {
-            if (glowUpTimer > VIS_GLOW_TIME)
-                glowUpTimer = 0;
             // REGULAR MODE OR CALC MODE
-            if (calculateAFFlag || calculationsDoneFlag)                                                                   // CALC MODE
-            {                                                                                                              // TODO:FADE ANIM
+            if (calculateAFFlag || calculationsDoneFlag) // CALC MODE
+            {
                 float temp2 = Map::mapSkew((sin(2 * M_PI * glowUpTimer * 16 * (1.0 / VIS_GLOW_TIME)) + 2) / 2.0, 1) * 0.6; // IMPROVEMENT: MOVE THIS TO NICER VERSION
                 BlueLed.Set(0.4 + temp2);
                 RedLed.Set(0.4 + temp2);
@@ -205,14 +200,13 @@ void VisualCallback(void *data)
                 if (RightButton.Pressed())
                 {
                     if (aiMode)
-                    {                                                                                                         // TODO: TUNE ME
+                    {
                         float temp2 = Map::mapSkew((sin(2 * M_PI * glowUpTimer * (1.0 / VIS_GLOW_TIME)) + 2) / 2.0, 1) * 0.3; // IMPROVEMENT: MOVE THIS TO NICER VERSION
                         BlueLed.Set(0.55 + temp2);
                         RedLed.Set(0.55 + temp2);
                     }
                     else
                     {
-                        float temp = Map::mapSkew((processFastOsc() + 1.0) / 2.0, 1.0);
                         float temp2 = Map::mapSkew((sin(2 * M_PI * glowUpTimer * (1.0 / VIS_GLOW_TIME)) + 2) / 2.0, 1) * 0.3; // IMPROVEMENT: MOVE THIS TO NICER VERSION
                         BlueLed.Set(0);
                         RedLed.Set(0.55 + temp2);
@@ -225,9 +219,9 @@ void VisualCallback(void *data)
                     RedLed.Set(0);
                 }
             }
-            glowUpTimer++;
             PurpleLed.Set(LeftButton.Pressed() ? 1 : (fabs(lastVarGainValue) * LED_DISPLAY_GAIN));
         }
+        glowUpTimer++;
     }
     RedLed.Update();
     BlueLed.Update();
@@ -266,7 +260,6 @@ void halInit()
     hw.adc.Init(adcConfig, 5);
 
     hw.adc.Start();
-    initFastOsc(sampleRateUIUX, 0.25);
     halTimerInit();
     cliInit();
     transientDSPinit();
