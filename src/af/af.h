@@ -45,6 +45,8 @@ extern bool calculateAFFlag;
 extern bool calculationsDoneFlag;
 extern bool cancelationFlag;
 
+extern uint32_t time_af;
+
 void resetBuffer();
 
 void initAf();
@@ -60,6 +62,14 @@ void AFInCProcess();
 void processBTTAndAFInC();
 
 void processBTT();
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+uint32_t afGetTimeAF(void);
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 /// @brief Get the envelope of a given signal.
 /// @param sig Given signal.

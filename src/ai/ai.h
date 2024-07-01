@@ -18,5 +18,9 @@ float aiGetSUSTAIN_T1(void);
 
 void aiProcess();
 
+uint32_t aiGetTimeInf(void);
+
 extern bool processAFFlag;
 extern bool aiMode;
+
+extern uint32_t time_inf;

@@ -9,6 +9,7 @@
 #include "hal.hpp"
 #include "transientDSP.hpp"
 #include "ui.hpp"
+#include "stm32h7xx_hal.h"
 
 extern "C"
 {
@@ -73,6 +74,8 @@ float aiSustain = 0.5;
 
 #define QSPI_STORAGE_SPACE (IN_SHAPE * SHAPE_L_1 + SHAPE_L_1) + (SHAPE_L_1 * SHAPE_L_2 + SHAPE_L_2) + (SHAPE_L_2 * SHAPE_L_3 + SHAPE_L_3) + (SHAPE_L_3 * SHAPE_L_4 + SHAPE_L_4) + (SHAPE_L_4 * SHAPE_L_5 + SHAPE_L_5) + (SHAPE_L_5 * SHAPE_L_6 + SHAPE_L_6)
 uint32_t DSY_QSPI_BSS weigthsQSPI[QSPI_STORAGE_SPACE];
+
+uint32_t time_inf = 0;
 
 float __attribute__((section(".sdram_bss"))) bias_l1_buffer[SHAPE_L_1];
 float __attribute__((section(".sdram_bss"))) bias_l2_buffer[SHAPE_L_2];
@@ -183,7 +186,10 @@ void aiProcess()
                 evalAFVector[13] = 0;                                                  // Sustain_boost
             }
 
+            uint32_t start_inf = HAL_GetTick();
             aiRun(evalAFVector);
+            uint32_t stop_inf = HAL_GetTick();
+            time_inf = stop_inf - start_inf;
 
             halStartAudio();
             aiReset();
@@ -222,6 +228,7 @@ void aiReset()
     processAFFlag = false;
     calculationsDoneFlag = false;
     cancelationFlag = false;
+    time_inf = 0;
 }
 
 float aiGetATTACK_T1(void)
@@ -232,4 +239,9 @@ float aiGetATTACK_T1(void)
 float aiGetSUSTAIN_T1(void)
 {
     return aiSustain;
+}
+
+uint32_t aiGetTimeInf(void)
+{
+    return time_inf;
 }
