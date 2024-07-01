@@ -95,7 +95,6 @@ void resetBuffer()
     onsetBufferIndex = 0;
     firstSepctrumFlag = true;
     spectralFluxIndex = 0;
-    time_af = 0;
 }
 
 void onset_detected_callback(void *SELF, unsigned long long sample_time)

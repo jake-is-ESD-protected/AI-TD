@@ -7,9 +7,9 @@
 #include "ai.h"
 #include "daisy_seed.h"
 #include "hal.hpp"
+#include "stm32h7xx_hal.h"
 #include "transientDSP.hpp"
 #include "ui.hpp"
-#include "stm32h7xx_hal.h"
 
 extern "C"
 {
@@ -228,7 +228,6 @@ void aiReset()
     processAFFlag = false;
     calculationsDoneFlag = false;
     cancelationFlag = false;
-    time_inf = 0;
 }
 
 float aiGetATTACK_T1(void)
