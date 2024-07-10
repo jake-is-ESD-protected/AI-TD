@@ -172,7 +172,7 @@ void processBTT()
     }
     if(calculateAFFlag && audioBufferRuntimeIndex >= audioBufferIndex) //IF WHOLE BUFFER IS PROCESSED AND BTN RELEASED
     {
-        if(onsetBufferIndex == 0)//CATCH FOR NO BEATS DETECTED
+        if(onsetBufferIndex == 0 || audioBufferIndex < slowsampleRate * 2)//CATCH FOR NO BEATS DETECTED OR SUB 2 SEC RECORDING
         {
             cancelationFlag = true;
         }
