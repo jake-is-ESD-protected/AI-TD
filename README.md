@@ -11,4 +11,4 @@ AI-TD is a unique approach to transient shaping. This project utilizes the **Dai
 |AI:|**Driven by RTNeural**|
 |AI-Model:|**Selfmade, see Taunet Folder**|
 |Effect:|**Transient shaping**|
-|Further Infos:|**[*here*](https://kristof-konya.dev/projects/AITD)**|
+|Further Infos and Demo:|**[*here*](https://kristof-konya.dev/projects/AITD)**|
