@@ -251,7 +251,7 @@ void halInit()
     LeftButton.Init(seed::D3, sampleRateUIUX, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
     RightButton.Init(seed::D4, sampleRateUIUX, Switch::Type::TYPE_MOMENTARY, Switch::Polarity::POLARITY_NORMAL, Switch::Pull::PULL_UP);
 
-    AdcChannelConfig adcConfig[4];
+    AdcChannelConfig adcConfig[4]; // THIS SEEMS WRONG
     adcConfig[0].InitSingle(hw.GetPin(15));
     adcConfig[1].InitSingle(hw.GetPin(16));
     adcConfig[2].InitSingle(hw.GetPin(17));

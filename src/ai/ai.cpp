@@ -7,6 +7,7 @@
 #include "ai.h"
 #include "daisy_seed.h"
 #include "hal.hpp"
+#include "stm32h7xx_hal.h"
 #include "transientDSP.hpp"
 #include "ui.hpp"
 
@@ -74,6 +75,8 @@ float aiSustain = 0.5;
 #define QSPI_STORAGE_SPACE (IN_SHAPE * SHAPE_L_1 + SHAPE_L_1) + (SHAPE_L_1 * SHAPE_L_2 + SHAPE_L_2) + (SHAPE_L_2 * SHAPE_L_3 + SHAPE_L_3) + (SHAPE_L_3 * SHAPE_L_4 + SHAPE_L_4) + (SHAPE_L_4 * SHAPE_L_5 + SHAPE_L_5) + (SHAPE_L_5 * SHAPE_L_6 + SHAPE_L_6)
 uint32_t DSY_QSPI_BSS weigthsQSPI[QSPI_STORAGE_SPACE];
 
+uint32_t time_inf = 0;
+
 float __attribute__((section(".sdram_bss"))) bias_l1_buffer[SHAPE_L_1];
 float __attribute__((section(".sdram_bss"))) bias_l2_buffer[SHAPE_L_2];
 float __attribute__((section(".sdram_bss"))) bias_l3_buffer[SHAPE_L_3];
@@ -138,8 +141,8 @@ void aiInit(void)
     taunet.reset();
 }
 
-// float testArrayLuka[14] = {0.6793, 0.0421, 0.1622, 0.7628, 0.5817, 0.3864, 0.0514, 0.0175, 0.2437, 0.0, 0, 0.395, 0, 0.687};            // 0.31151158 0.78028417
-// float testArrayKristof[14] = {0.3874, 0.0185, 0.1383, 1.0, 0.076, 0.091, 0.0953, 0.0121, 0.494, 0.0246, 0.8758, 0, 0.3475999999999999}; // 0.7210246, 0.3815809
+// float testArrayB[14] = {0.6793, 0.0421, 0.1622, 0.7628, 0.5817, 0.3864, 0.0514, 0.0175, 0.2437, 0.0, 0, 0.395, 0, 0.687};            // 0.31151158 0.78028417
+// float testArrayA[14] = {0.3874, 0.0185, 0.1383, 1.0, 0.076, 0.091, 0.0953, 0.0121, 0.494, 0.0246, 0.8758, 0, 0.3475999999999999}; // 0.7210246, 0.3815809
 // float testArrayZeros[14] = {0};                                                                                                         // 0.28777623 0.03888492
 
 void aiProcess()
@@ -183,7 +186,10 @@ void aiProcess()
                 evalAFVector[13] = 0;                                                  // Sustain_boost
             }
 
+            uint32_t start_inf = HAL_GetTick();
             aiRun(evalAFVector);
+            uint32_t stop_inf = HAL_GetTick();
+            time_inf = stop_inf - start_inf;
 
             halStartAudio();
             aiReset();
@@ -232,4 +238,9 @@ float aiGetATTACK_T1(void)
 float aiGetSUSTAIN_T1(void)
 {
     return aiSustain;
+}
+
+uint32_t aiGetTimeInf(void)
+{
+    return time_inf;
 }

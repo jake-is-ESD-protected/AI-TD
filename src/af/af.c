@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include "stm32h7xx_hal.h"
 
 bool calculateAFFlag = false; //THIS FLAG IS UP WHEN THE BUFFER IS FULLY RECORDED AND CALCULATIONS COULD START TO HAPPEN
 bool calculationsDoneFlag = false; //THIS FLAG IS UP WHEN THE PREPROCESSING IS DONE
@@ -64,6 +65,8 @@ float crestFactor = 0;
 float spectralFlux = 0;
 float T1A = 0;
 float T2A = 0;
+
+uint32_t time_af = 0;
 
 //FILTER START
 float filterBuffer;
@@ -169,7 +172,7 @@ void processBTT()
     }
     if(calculateAFFlag && audioBufferRuntimeIndex >= audioBufferIndex) //IF WHOLE BUFFER IS PROCESSED AND BTN RELEASED
     {
-        if(onsetBufferIndex == 0)//CATCH FOR NO BEATS DETECTED
+        if(onsetBufferIndex == 0 || audioBufferIndex < slowsampleRate * 2)//CATCH FOR NO BEATS DETECTED OR SUB 2 SEC RECORDING
         {
             cancelationFlag = true;
         }
@@ -221,6 +224,7 @@ void spectrumCalculatedCallback(float* mag, uint64_t N, float spectralFlux)
 
 void AFInCProcess()
 {
+    uint32_t start_af = HAL_GetTick();
     for (uint64_t i = 0; i < audioBufferIndex; i++)
     {
         envBuffer[i] = processEnvelopeAf(EnvelopeFollowerPeakHoldProcessAf(audioBuffer[i]));
@@ -286,8 +290,13 @@ void AFInCProcess()
     spectralFlux = findPercentile(spectralFluxBuffer, spectralFluxIndex, 75);
     T1A = findPercentile(onsetT1ABuffer, onsetBufferIndex, 75);
     T2A = findPercentile(onsetT2ABuffer, onsetBufferIndex, 75);
+    uint32_t stop_af = HAL_GetTick();
+    time_af = stop_af - start_af;
 }
 
+uint32_t afGetTimeAF(void){
+    return time_af;
+}
 
 uint64_t __afGetIdxOfMax(float *sig, uint64_t fromIdx, uint64_t toIdx)
 {
