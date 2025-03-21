@@ -1,0 +1,2328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>G:\My Drive\Projects\Transient Designer\BoardFiles\prototype rev5\td_prototype_rev5\td_prototype_rev5.kicad_sch</source>
+    <date>12/20/2023 12:17:42 PM</date>
+    <tool>Eeschema 7.0.2</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>AI Transient Designer</title>
+        <company>Kristof Komya</company>
+        <rev>0.5</rev>
+        <date>2023-10-16</date>
+        <source>td_prototype_rev5.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="A1">
+      <value>Electrosmith_Daisy_Seed_Rev4</value>
+      <footprint>Module:Electrosmith_Daisy_Seed</footprint>
+      <datasheet>https://static1.squarespace.com/static/58d03fdc1b10e3bf442567b8/t/6227e6236f02fb68d1577146/1646781988478/Daisy_Seed_datasheet_v1.0.3.pdf</datasheet>
+      <libsource lib="MCU_Module" part="Electrosmith_Daisy_Seed_Rev4" description="Daisy is an embedded platform for music."/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Daisy is an embedded platform for music."/>
+      <property name="ki_keywords" value="Electrosmith Daisy Seed Microcontroller Module ARM Cortex-M7"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>427c6353-fc30-403d-9368-4c779e738486</tstamps>
+    </comp>
+    <comp ref="A2P1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d06e1e61-bc56-4fdb-b8b9-999a9a46d125</tstamps>
+    </comp>
+    <comp ref="BL1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>53752324-849e-4e58-bb37-7e908ae019a1</tstamps>
+    </comp>
+    <comp ref="C1">
+      <value>0603,2.2uF,16V,X5R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810271109_Samsung-Electro-Mechanics-CL10A225KO8NNNC_C23630.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23630</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A225KO8NNNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,2.2uF,16V,X5R " description="16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C23630"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A225KO8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>82bb6bd5-ebb7-4237-919a-958feb1a7f5b</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>0603,2.2uF,16V,X5R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810271109_Samsung-Electro-Mechanics-CL10A225KO8NNNC_C23630.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23630</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A225KO8NNNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,2.2uF,16V,X5R " description="16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C23630"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A225KO8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>292a2505-07dc-419e-adeb-2868de7f311a</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>0603,10uF,25V,X5R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1811110921_Samsung-Electro-Mechanics-CL10A106MA8NRNC_C96446.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C96446</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A106MA8NRNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,10uF,25V,X5R " description="25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C96446"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A106MA8NRNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7296da0a-6e37-47ac-82fa-8fd169782751</tstamps>
+    </comp>
+    <comp ref="C4">
+      <value>0603,10uF,25V,X5R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1811110921_Samsung-Electro-Mechanics-CL10A106MA8NRNC_C96446.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C96446</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A106MA8NRNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,10uF,25V,X5R " description="25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C96446"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A106MA8NRNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>503a666b-b835-44c7-9898-a5ef8ee37761</tstamps>
+    </comp>
+    <comp ref="C5">
+      <value>680pF,50V,X7R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1811061822_FH-Guangdong-Fenghua-Advanced-Tech-0603B681K500NT_C1630.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C1630</field>
+        <field name="MFG">FH(Guangdong Fenghua Advanced Tech)</field>
+        <field name="MFGPN">0603B681K500NT</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="680pF,50V,X7R " description="50V 680pF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C1630"/>
+      <property name="MFG" value="FH(Guangdong Fenghua Advanced Tech)"/>
+      <property name="MFGPN" value="0603B681K500NT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 680pF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d5d20063-a119-4c80-8e97-e31fafb76e80</tstamps>
+    </comp>
+    <comp ref="C6">
+      <value>680pF,50V,X7R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1811061822_FH-Guangdong-Fenghua-Advanced-Tech-0603B681K500NT_C1630.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C1630</field>
+        <field name="MFG">FH(Guangdong Fenghua Advanced Tech)</field>
+        <field name="MFGPN">0603B681K500NT</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="680pF,50V,X7R " description="50V 680pF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C1630"/>
+      <property name="MFG" value="FH(Guangdong Fenghua Advanced Tech)"/>
+      <property name="MFGPN" value="0603B681K500NT"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 680pF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1c96b098-a93a-4f06-ac09-97f4ced6fa1b</tstamps>
+    </comp>
+    <comp ref="C7">
+      <value>0603,100pF,50V,C0G </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1811151136_Samsung-Electro-Mechanics-CL10C101JB8NNNC_C14858.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C14858</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10C101JB8NNNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,100pF,50V,C0G " description="50V 100pF C0G   5% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C14858"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10C101JB8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 100pF C0G   5% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00902155-1dc7-47c7-a206-c9ab8abe8554</tstamps>
+    </comp>
+    <comp ref="C8">
+      <value>0603,100pF,50V,C0G </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1811151136_Samsung-Electro-Mechanics-CL10C101JB8NNNC_C14858.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C14858</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10C101JB8NNNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,100pF,50V,C0G " description="50V 100pF C0G   5% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C14858"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10C101JB8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 100pF C0G   5% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7c2f30a1-b2ad-499c-8036-8229e48d34eb</tstamps>
+    </comp>
+    <comp ref="C9">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:CP_Elec_6.3x7.7</footprint>
+      <fields>
+        <field name="LCSC">C72482</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="LCSC" value="C72482"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Polarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>01229f66-0bd2-459a-83d0-b61077ec5397</tstamps>
+    </comp>
+    <comp ref="C10">
+      <value>0603,2.2uF,16V,X5R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810271109_Samsung-Electro-Mechanics-CL10A225KO8NNNC_C23630.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23630</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A225KO8NNNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,2.2uF,16V,X5R " description="16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C23630"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A225KO8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>065df659-b32d-4371-aa7d-087a153d4409</tstamps>
+    </comp>
+    <comp ref="C11">
+      <value>0603,2.2uF,16V,X5R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810271109_Samsung-Electro-Mechanics-CL10A225KO8NNNC_C23630.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23630</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A225KO8NNNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,2.2uF,16V,X5R " description="16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C23630"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A225KO8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c4d01836-bc37-46d3-a8b6-f0ce2146e12e</tstamps>
+    </comp>
+    <comp ref="C12">
+      <value>10uF</value>
+      <footprint>Capacitor_SMD:CP_Elec_6.3x7.7</footprint>
+      <fields>
+        <field name="LCSC">C72482</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="LCSC" value="C72482"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Polarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>de4d662b-b9af-4d0b-bc49-59723340fc5d</tstamps>
+    </comp>
+    <comp ref="C13">
+      <value>100nF,50V,X7R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1809301912_YAGEO-CC0603KRX7R9BB104_C14663.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C14663</field>
+        <field name="MFG">YAGEO</field>
+        <field name="MFGPN">CC0603KRX7R9BB104</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="100nF,50V,X7R " description="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C14663"/>
+      <property name="MFG" value="YAGEO"/>
+      <property name="MFGPN" value="CC0603KRX7R9BB104"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1526abc2-aaed-4945-b485-c44f366c888c</tstamps>
+    </comp>
+    <comp ref="C14">
+      <value>0603,10uF,25V,X5R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1811110921_Samsung-Electro-Mechanics-CL10A106MA8NRNC_C96446.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C96446</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A106MA8NRNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,10uF,25V,X5R " description="25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C96446"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A106MA8NRNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ac3b4235-c39d-4013-a161-3cce18e35eea</tstamps>
+    </comp>
+    <comp ref="C15">
+      <value>100nF,50V,X7R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1809301912_YAGEO-CC0603KRX7R9BB104_C14663.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C14663</field>
+        <field name="MFG">YAGEO</field>
+        <field name="MFGPN">CC0603KRX7R9BB104</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="100nF,50V,X7R " description="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C14663"/>
+      <property name="MFG" value="YAGEO"/>
+      <property name="MFGPN" value="CC0603KRX7R9BB104"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b28a2e51-0725-48b0-a855-b5453cf1a167</tstamps>
+    </comp>
+    <comp ref="C16">
+      <value>100nF,50V,X7R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1809301912_YAGEO-CC0603KRX7R9BB104_C14663.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C14663</field>
+        <field name="MFG">YAGEO</field>
+        <field name="MFGPN">CC0603KRX7R9BB104</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="100nF,50V,X7R " description="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C14663"/>
+      <property name="MFG" value="YAGEO"/>
+      <property name="MFGPN" value="CC0603KRX7R9BB104"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>56748107-3f25-4d39-b8cc-189bd6720a7c</tstamps>
+    </comp>
+    <comp ref="C17">
+      <value>100nF,50V,X7R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1809301912_YAGEO-CC0603KRX7R9BB104_C14663.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C14663</field>
+        <field name="MFG">YAGEO</field>
+        <field name="MFGPN">CC0603KRX7R9BB104</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="100nF,50V,X7R " description="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C14663"/>
+      <property name="MFG" value="YAGEO"/>
+      <property name="MFGPN" value="CC0603KRX7R9BB104"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1ba6e72e-09f9-43cb-8598-7a0d0034bb2a</tstamps>
+    </comp>
+    <comp ref="C18">
+      <value>100nF,50V,X7R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1809301912_YAGEO-CC0603KRX7R9BB104_C14663.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C14663</field>
+        <field name="MFG">YAGEO</field>
+        <field name="MFGPN">CC0603KRX7R9BB104</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="100nF,50V,X7R " description="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C14663"/>
+      <property name="MFG" value="YAGEO"/>
+      <property name="MFGPN" value="CC0603KRX7R9BB104"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f799ce4b-d707-488a-a202-833039832627</tstamps>
+    </comp>
+    <comp ref="C19">
+      <value>0603,10uF,25V,X5R </value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1811110921_Samsung-Electro-Mechanics-CL10A106MA8NRNC_C96446.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C96446</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A106MA8NRNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor" part="0603,10uF,25V,X5R " description="25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C96446"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A106MA8NRNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>02fdcfa2-0d59-4b99-8ffc-962c11d1fcac</tstamps>
+    </comp>
+    <comp ref="C20">
+      <value>1uF,50V,X5R </value>
+      <footprint>C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810261812_Samsung-Electro-Mechanics-CL10A105KB8NNNC_C15849.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C15849</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A105KB8NNNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="1uF,50V,X5R " description="50V 1uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C15849"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A105KB8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 1uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>84e7b041-8649-4fcd-bd1d-397ef62bcbcf</tstamps>
+    </comp>
+    <comp ref="C21">
+      <value>1uF,50V,X5R </value>
+      <footprint>C_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/1810261812_Samsung-Electro-Mechanics-CL10A105KB8NNNC_C15849.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C15849</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A105KB8NNNC</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-capacitor-0603" part="1uF,50V,X5R " description="50V 1uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <property name="LCSC" value="C15849"/>
+      <property name="MFG" value="Samsung Electro-Mechanics"/>
+      <property name="MFGPN" value="CL10A105KB8NNNC"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="50V 1uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6826b2fd-1f13-4aec-ab7b-54b13610045d</tstamps>
+    </comp>
+    <comp ref="C22">
+      <value>680uF</value>
+      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P3.80mm</footprint>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Polarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>43033b6b-6326-48cb-8819-d2370117de8b</tstamps>
+    </comp>
+    <comp ref="GL1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a53a4d32-2df0-4185-a317-741fb3266044</tstamps>
+    </comp>
+    <comp ref="IL1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6544ad3d-22ed-4b20-819e-a030e39f858d</tstamps>
+    </comp>
+    <comp ref="IR1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>102d47a9-e327-4a6c-b78f-35b00683b1a1</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Rounded_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bf696b89-7a11-4206-879a-214f4b90bc26</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d3f50199-f98e-432a-8d89-b3e94657a527</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dc8401a6-2467-46f2-8b77-f190a151e73f</tstamps>
+    </comp>
+    <comp ref="J4">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>016bcccc-51fb-424f-8865-730b68da84d8</tstamps>
+    </comp>
+    <comp ref="J5">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5ab32dd5-d9dc-460c-9afa-33ebca983c8e</tstamps>
+    </comp>
+    <comp ref="J6">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3145ded0-8be0-4079-a663-1572db1d7065</tstamps>
+    </comp>
+    <comp ref="J11">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Rounded_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>aae2520b-cbe0-4f32-bc0a-cf81fece7c21</tstamps>
+    </comp>
+    <comp ref="J12">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f5fc27e4-e596-489b-bbe1-b49fca8eb5b7</tstamps>
+    </comp>
+    <comp ref="J16">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Rounded_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>757d82b4-a278-4ba5-82d8-58478ba84303</tstamps>
+    </comp>
+    <comp ref="J17">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cb1214a3-6625-4a76-98af-673c55a0d0d6</tstamps>
+    </comp>
+    <comp ref="LO1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>29494e5f-b979-47fc-a339-b70fe69e7930</tstamps>
+    </comp>
+    <comp ref="PL1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>11a43aa0-5196-4273-8422-d0fd6141b16e</tstamps>
+    </comp>
+    <comp ref="PWR+1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Rounded_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>17cce77a-3d47-4cf2-92cf-8bec2fcf2c79</tstamps>
+    </comp>
+    <comp ref="PWR-1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Square</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2efc02c4-c591-4fea-9a9b-f0857215e8e6</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>2M</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2004T5E_C22976.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22976</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2004T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2M" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22976"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2004T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e96f2156-e8a7-460a-92c3-901873bce4d2</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>2M</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2004T5E_C22976.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22976</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2004T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2M" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22976"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2004T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e89ea874-fc3f-463e-8764-5adc792955b1</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>2M</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2004T5E_C22976.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22976</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2004T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2M" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22976"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2004T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>92a5d6f9-7521-43da-9265-e582654cc9cc</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>2M</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2004T5E_C22976.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22976</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2004T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2M" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22976"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2004T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c8248be6-5dcb-4563-8aa4-2c41ddcb0f62</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>2k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2001T5E_C22975.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22975</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2001T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22975"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2001T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bdf19867-c67b-467e-b565-414110ca7bd6</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>2k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2001T5E_C22975.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22975</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2001T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22975"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2001T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>42169d4b-9845-49af-9941-0302d641b985</tstamps>
+    </comp>
+    <comp ref="R7">
+      <value>3k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3001T5E_C4211.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C4211</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF3001T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="3k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   3k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C4211"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF3001T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   3k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bf0e2acc-314c-46aa-94e6-bc4ed3be6daf</tstamps>
+    </comp>
+    <comp ref="R8">
+      <value>3k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3001T5E_C4211.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C4211</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF3001T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="3k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   3k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C4211"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF3001T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   3k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3b4d172e-deac-4d9f-a5f7-4e18c3601ce9</tstamps>
+    </comp>
+    <comp ref="R9">
+      <value>0603,33k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3302T5E_C4216.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C4216</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF3302T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,33k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C4216"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF3302T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>80e88bf5-6639-48a8-a907-3d8403b17c1c</tstamps>
+    </comp>
+    <comp ref="R10">
+      <value>5.1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF5101T5E_C23186.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23186</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF5101T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="5.1k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   5 1k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C23186"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF5101T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   5 1k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c0c5a108-ca29-4ba0-9bf5-e93a76483dbc</tstamps>
+    </comp>
+    <comp ref="R11">
+      <value>5.1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF5101T5E_C23186.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23186</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF5101T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="5.1k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   5 1k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C23186"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF5101T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   5 1k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>34af5ebd-1a7c-4c99-a75a-fdb20af47e27</tstamps>
+    </comp>
+    <comp ref="R12">
+      <value>0603,33k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3302T5E_C4216.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C4216</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF3302T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,33k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C4216"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF3302T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8828f520-c3d1-4634-9ac7-f2b746c021b5</tstamps>
+    </comp>
+    <comp ref="R13">
+      <value>1.5k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252030_UNI-ROYAL-Uniroyal-Elec-0603WAF1501T5E_C22843.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22843</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1501T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="1.5k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1 5k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22843"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1501T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1 5k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7acd8a34-c1f0-4f09-b9ad-de8a488eae7f</tstamps>
+    </comp>
+    <comp ref="R14">
+      <value>1.5k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252030_UNI-ROYAL-Uniroyal-Elec-0603WAF1501T5E_C22843.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22843</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1501T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="1.5k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1 5k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22843"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1501T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1 5k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2770d73b-3e72-4630-8d11-0960e38ac193</tstamps>
+    </comp>
+    <comp ref="R15">
+      <value>0603,560</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF5600T5E_C23204.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23204</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF5600T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,560" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   560   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C23204"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF5600T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   560   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>45d1c2a2-1dce-4d4e-a6ef-c9c72b660bb0</tstamps>
+    </comp>
+    <comp ref="R16">
+      <value>0603,560</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF5600T5E_C23204.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23204</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF5600T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,560" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   560   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C23204"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF5600T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   560   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>410e350a-c8dc-41c7-b03c-dce3f42a3227</tstamps>
+    </comp>
+    <comp ref="R17">
+      <value>2k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2001T5E_C22975.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22975</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2001T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22975"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2001T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4e039034-92ac-409e-bea5-47cc24f1c298</tstamps>
+    </comp>
+    <comp ref="R18">
+      <value>2k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2001T5E_C22975.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22975</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2001T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22975"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2001T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3b0f4ede-9078-44b2-8464-2d7802a11a2a</tstamps>
+    </comp>
+    <comp ref="R19">
+      <value>0603,33k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3302T5E_C4216.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C4216</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF3302T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,33k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C4216"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF3302T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e691b477-08e0-473f-85cd-8aad05ade63e</tstamps>
+    </comp>
+    <comp ref="R20">
+      <value>0603,33k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3302T5E_C4216.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C4216</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF3302T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,33k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C4216"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF3302T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f921b458-6cc3-49cf-aed7-6e89c1040fc9</tstamps>
+    </comp>
+    <comp ref="R21">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252030_UNI-ROYAL-Uniroyal-Elec-0603WAF1001T5E_C21190.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C21190</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1001T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="1k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C21190"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1001T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a2d7a2b4-7b49-46bf-80de-a3a60a9977a3</tstamps>
+    </comp>
+    <comp ref="R22">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252030_UNI-ROYAL-Uniroyal-Elec-0603WAF1001T5E_C21190.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C21190</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1001T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="1k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C21190"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1001T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fdbe1cdb-bbe2-45b4-ad81-873c5eb72d46</tstamps>
+    </comp>
+    <comp ref="R23">
+      <value>2M</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2004T5E_C22976.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22976</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2004T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2M" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22976"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2004T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ce8701a1-cc02-4bd9-afd0-4a1c91381321</tstamps>
+    </comp>
+    <comp ref="R24">
+      <value>2M</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2004T5E_C22976.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C22976</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2004T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="2M" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C22976"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF2004T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ee253403-fbaa-4c4b-b70e-3b9d4c6d0759</tstamps>
+    </comp>
+    <comp ref="R25">
+      <value>0603,10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110260030_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C25804</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1002T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,10k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C25804"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1002T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2b7a6cdd-c97f-422e-a2d2-fad0f1df630c</tstamps>
+    </comp>
+    <comp ref="R26">
+      <value>0603,10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110260030_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C25804</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1002T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,10k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C25804"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1002T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b712d839-92ca-406c-8ba5-a00389a927b5</tstamps>
+    </comp>
+    <comp ref="R27">
+      <value>0603,10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110260030_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C25804</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1002T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,10k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C25804"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1002T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>27666f04-f78e-4de1-b8e3-881c1c10d4d7</tstamps>
+    </comp>
+    <comp ref="R28">
+      <value>0603,10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110260030_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C25804</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1002T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor" part="0603,10k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C25804"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1002T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cf6d1f31-edb1-4ffb-8aaf-82eac0be04ac</tstamps>
+    </comp>
+    <comp ref="R29">
+      <value>1.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF1801T5E_C4177.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C4177</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1801T5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="1.8k" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1 8k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C4177"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF1801T5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1 8k   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e92570a9-42fd-400d-9648-cb7ec97b0d13</tstamps>
+    </comp>
+    <comp ref="R30">
+      <value>33</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF330JT5E_C23140.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23140</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF330JT5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="33" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C23140"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF330JT5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8bf0c704-6771-4909-a1a7-b7a4237bf3d6</tstamps>
+    </comp>
+    <comp ref="R31">
+      <value>33</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF330JT5E_C23140.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23140</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF330JT5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="33" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C23140"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF330JT5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2acbc8c5-2cdf-4d17-9145-38c801e03d7a</tstamps>
+    </comp>
+    <comp ref="R32">
+      <value>33</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF330JT5E_C23140.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C23140</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF330JT5E</field>
+      </fields>
+      <libsource lib="jlcpcb-basic-resistor-0603" part="33" description="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33   0603 Chip Resistor - Surface Mount ROHS"/>
+      <property name="LCSC" value="C23140"/>
+      <property name="MFG" value="UNI-ROYAL(Uniroyal Elec)"/>
+      <property name="MFGPN" value="0603WAF330JT5E"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33   0603 Chip Resistor - Surface Mount ROHS"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2512f2f8-42e6-49b2-bead-a309a304d966</tstamps>
+    </comp>
+    <comp ref="RO1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f5fb8d85-6771-45fd-a545-f6ec83261813</tstamps>
+    </comp>
+    <comp ref="RV1">
+      <value>R_Potentiometer</value>
+      <footprint>Potentiometer_THT:Potentiometer_Alpha_RD901F-40-00D_Single_Vertical_CircularHoles</footprint>
+      <libsource lib="Device" part="R_Potentiometer" description="Potentiometer"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Potentiometer"/>
+      <property name="ki_keywords" value="resistor variable"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bdea5068-7396-43c0-8df9-602f585049c4</tstamps>
+    </comp>
+    <comp ref="RV2">
+      <value>R_Potentiometer</value>
+      <footprint>Potentiometer_THT:Potentiometer_Alpha_RD901F-40-00D_Single_Vertical_CircularHoles</footprint>
+      <libsource lib="Device" part="R_Potentiometer" description="Potentiometer"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Potentiometer"/>
+      <property name="ki_keywords" value="resistor variable"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d6dceb13-3b5f-42fb-8ca1-d8feab647da7</tstamps>
+    </comp>
+    <comp ref="S2P1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>acfcb76f-72ce-40f0-b64a-047d610186f5</tstamps>
+    </comp>
+    <comp ref="SWL1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>47ef4fe0-6b84-4f3c-ac11-28aefe902b67</tstamps>
+    </comp>
+    <comp ref="SWR1">
+      <value>Conn_01x01</value>
+      <footprint>KUtilities:Solder_Hole_Oval</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>53c3113b-899e-49a2-b6ae-c13abc3f9a27</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>MCP6004</value>
+      <footprint>Package_SO:SOIC-14_3.9x8.7mm_P1.27mm</footprint>
+      <datasheet>http://ww1.microchip.com/downloads/en/DeviceDoc/21733j.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C7378</field>
+      </fields>
+      <libsource lib="Amplifier_Operational" part="MCP6004" description="1MHz, Low-Power Op Amp, DIP-14/SOIC-14/TSSOP-14"/>
+      <property name="LCSC" value="C7378"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="1MHz, Low-Power Op Amp, DIP-14/SOIC-14/TSSOP-14"/>
+      <property name="ki_keywords" value="quad opamp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fa0e4717-a03d-4a0e-91c5-9676928b260d 58b2818e-bf72-4bc7-9c27-0ebb7b21d0be 409fd787-e9d6-48ae-b1d3-f50ea82c248a 9df7fd11-8bda-467a-ace7-c409c6c38c9d 0f85080e-2578-4c7e-ade8-9ace1734ba5a</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>TLV274CPWR</value>
+      <footprint>Package_SO:TSSOP-14_4.4x5mm_P0.65mm</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/tl071.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C9914</field>
+      </fields>
+      <libsource lib="Amplifier_Operational" part="TL074" description="Quad Low-Noise JFET-Input Operational Amplifiers, DIP-14/SOIC-14"/>
+      <property name="LCSC" value="C9914"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Quad Low-Noise JFET-Input Operational Amplifiers, DIP-14/SOIC-14"/>
+      <property name="ki_keywords" value="quad opamp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bfb15685-778e-4267-b240-2b9456951e3b e831eb05-2cd7-42df-9913-d7eb58422fab 828eb483-17f9-43fa-8c9d-eee63b22b3f6 6fba7d1e-52dd-4539-9e3f-4c2acb1c934b 2f8b94ea-cdda-4552-95cc-4508da8868cd</tstamps>
+    </comp>
+    <comp ref="U3">
+      <value>TL072</value>
+      <footprint>Package_SO:SOP-8_3.9x4.9mm_P1.27mm</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/tl071.pdf</datasheet>
+      <fields>
+        <field name="LCSC">C67473</field>
+      </fields>
+      <libsource lib="Amplifier_Operational" part="TL072" description="Dual Low-Noise JFET-Input Operational Amplifiers, DIP-8/SOIC-8"/>
+      <property name="LCSC" value="C67473"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Dual Low-Noise JFET-Input Operational Amplifiers, DIP-8/SOIC-8"/>
+      <property name="ki_keywords" value="dual opamp"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>83c702c3-3a1a-4344-a934-c1093cb47c02 9c65663e-01fa-42de-bea7-17f6e81de2b2 094eb627-96e0-4786-b530-b400406eb988</tstamps>
+    </comp>
+    <comp ref="U4">
+      <value>SSI2164</value>
+      <footprint>Package_DIP:DIP-16_W7.62mm_Socket</footprint>
+      <datasheet>http://www.soundsemiconductor.com/downloads/ssi2164datasheet.pdf</datasheet>
+      <libsource lib="Audio" part="SSI2164" description="Quad VCA, SOIC-16"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="td_prototype_rev5.kicad_sch"/>
+      <property name="ki_description" value="Quad VCA, SOIC-16"/>
+      <property name="ki_keywords" value="Sound Semiconductor VCA SSM2164"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>78d9bbd5-b324-4fbc-a8af-92370269f326</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Amplifier_Operational" part="MCP6004">
+      <description>1MHz, Low-Power Op Amp, DIP-14/SOIC-14/TSSOP-14</description>
+      <docs>http://ww1.microchip.com/downloads/en/DeviceDoc/21733j.pdf</docs>
+      <footprints>
+        <fp>SOIC*3.9x8.7mm*P1.27mm*</fp>
+        <fp>DIP*W7.62mm*</fp>
+        <fp>TSSOP*4.4x5mm*P0.65mm*</fp>
+        <fp>SSOP*5.3x6.2mm*P0.65mm*</fp>
+        <fp>MSOP*3x3mm*P0.5mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MCP6004</field>
+        <field name="Datasheet">http://ww1.microchip.com/downloads/en/DeviceDoc/21733j.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="output"/>
+        <pin num="2" name="-" type="input"/>
+        <pin num="3" name="+" type="input"/>
+        <pin num="4" name="V+" type="power_in"/>
+        <pin num="5" name="+" type="input"/>
+        <pin num="6" name="-" type="input"/>
+        <pin num="7" name="" type="output"/>
+        <pin num="8" name="" type="output"/>
+        <pin num="9" name="-" type="input"/>
+        <pin num="10" name="+" type="input"/>
+        <pin num="11" name="V-" type="power_in"/>
+        <pin num="12" name="+" type="input"/>
+        <pin num="13" name="-" type="input"/>
+        <pin num="14" name="" type="output"/>
+      </pins>
+    </libpart>
+    <libpart lib="Amplifier_Operational" part="TL072">
+      <description>Dual Low-Noise JFET-Input Operational Amplifiers, DIP-8/SOIC-8</description>
+      <docs>http://www.ti.com/lit/ds/symlink/tl071.pdf</docs>
+      <footprints>
+        <fp>SOIC*3.9x4.9mm*P1.27mm*</fp>
+        <fp>DIP*W7.62mm*</fp>
+        <fp>TO*99*</fp>
+        <fp>OnSemi*Micro8*</fp>
+        <fp>TSSOP*3x3mm*P0.65mm*</fp>
+        <fp>TSSOP*4.4x3mm*P0.65mm*</fp>
+        <fp>MSOP*3x3mm*P0.65mm*</fp>
+        <fp>SSOP*3.9x4.9mm*P0.635mm*</fp>
+        <fp>LFCSP*2x2mm*P0.5mm*</fp>
+        <fp>*SIP*</fp>
+        <fp>SOIC*5.3x6.2mm*P1.27mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TL072</field>
+        <field name="Datasheet">http://www.ti.com/lit/ds/symlink/tl071.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="output"/>
+        <pin num="2" name="-" type="input"/>
+        <pin num="3" name="+" type="input"/>
+        <pin num="4" name="V-" type="power_in"/>
+        <pin num="5" name="+" type="input"/>
+        <pin num="6" name="-" type="input"/>
+        <pin num="7" name="" type="output"/>
+        <pin num="8" name="V+" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Amplifier_Operational" part="TL074">
+      <description>Quad Low-Noise JFET-Input Operational Amplifiers, DIP-14/SOIC-14</description>
+      <docs>http://www.ti.com/lit/ds/symlink/tl071.pdf</docs>
+      <footprints>
+        <fp>SOIC*3.9x8.7mm*P1.27mm*</fp>
+        <fp>DIP*W7.62mm*</fp>
+        <fp>TSSOP*4.4x5mm*P0.65mm*</fp>
+        <fp>SSOP*5.3x6.2mm*P0.65mm*</fp>
+        <fp>MSOP*3x3mm*P0.5mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TL074</field>
+        <field name="Datasheet">http://www.ti.com/lit/ds/symlink/tl071.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="output"/>
+        <pin num="2" name="-" type="input"/>
+        <pin num="3" name="+" type="input"/>
+        <pin num="4" name="V+" type="power_in"/>
+        <pin num="5" name="+" type="input"/>
+        <pin num="6" name="-" type="input"/>
+        <pin num="7" name="" type="output"/>
+        <pin num="8" name="" type="output"/>
+        <pin num="9" name="-" type="input"/>
+        <pin num="10" name="+" type="input"/>
+        <pin num="11" name="V-" type="power_in"/>
+        <pin num="12" name="+" type="input"/>
+        <pin num="13" name="-" type="input"/>
+        <pin num="14" name="" type="output"/>
+      </pins>
+    </libpart>
+    <libpart lib="Audio" part="SSI2164">
+      <description>Quad VCA, SOIC-16</description>
+      <docs>http://www.soundsemiconductor.com/downloads/ssi2164datasheet.pdf</docs>
+      <footprints>
+        <fp>SOIC*3.9x9.9mm*P1.27mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">SSI2164</field>
+        <field name="Footprint">Package_SO:SOIC-16_3.9x9.9mm_P1.27mm</field>
+        <field name="Datasheet">http://www.soundsemiconductor.com/downloads/ssi2164datasheet.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="MODE" type="passive"/>
+        <pin num="2" name="I_IN1" type="input"/>
+        <pin num="3" name="VC1" type="passive"/>
+        <pin num="4" name="I_OUT1" type="output"/>
+        <pin num="5" name="I_OUT2" type="output"/>
+        <pin num="6" name="VC2" type="passive"/>
+        <pin num="7" name="I_IN2" type="input"/>
+        <pin num="8" name="GND" type="power_in"/>
+        <pin num="9" name="V-" type="power_in"/>
+        <pin num="10" name="I_IN3" type="input"/>
+        <pin num="11" name="VC3" type="passive"/>
+        <pin num="12" name="I_OUT3" type="output"/>
+        <pin num="13" name="I_OUT4" type="output"/>
+        <pin num="14" name="VC4" type="passive"/>
+        <pin num="15" name="I_IN4" type="input"/>
+        <pin num="16" name="V+" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x01">
+      <description>Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x01</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C_Polarized">
+      <description>Polarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Polarized</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R_Potentiometer">
+      <description>Potentiometer</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Potentiometer*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">RV</field>
+        <field name="Value">R_Potentiometer</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="MCU_Module" part="Electrosmith_Daisy_Seed_Rev4">
+      <description>Daisy is an embedded platform for music.</description>
+      <docs>https://static1.squarespace.com/static/58d03fdc1b10e3bf442567b8/t/6227e6236f02fb68d1577146/1646781988478/Daisy_Seed_datasheet_v1.0.3.pdf</docs>
+      <footprints>
+        <fp>Electrosmith*Daisy*Seed*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">Electrosmith_Daisy_Seed_Rev4</field>
+        <field name="Footprint">Module:Electrosmith_Daisy_Seed</field>
+        <field name="Datasheet">https://static1.squarespace.com/static/58d03fdc1b10e3bf442567b8/t/6227e6236f02fb68d1577146/1646781988478/Daisy_Seed_datasheet_v1.0.3.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="USB_ID" type="bidirectional"/>
+        <pin num="2" name="SD_DATA_3" type="bidirectional"/>
+        <pin num="3" name="SD_DATA_2" type="bidirectional"/>
+        <pin num="4" name="SD_DATA_1" type="bidirectional"/>
+        <pin num="5" name="SD_DATA_0" type="bidirectional"/>
+        <pin num="6" name="SD_CMD" type="bidirectional"/>
+        <pin num="7" name="SD_CLK" type="bidirectional"/>
+        <pin num="8" name="SPI1_CS" type="bidirectional"/>
+        <pin num="9" name="SPI1_SCK" type="bidirectional"/>
+        <pin num="10" name="SPI1_POCI" type="bidirectional"/>
+        <pin num="11" name="SPI1_PICO" type="bidirectional"/>
+        <pin num="12" name="I2C1_SCL" type="bidirectional"/>
+        <pin num="13" name="I2C1_SDA" type="bidirectional"/>
+        <pin num="14" name="USART1_TX" type="bidirectional"/>
+        <pin num="15" name="USART1_RX" type="bidirectional"/>
+        <pin num="16" name="AUDIO_IN_1" type="input"/>
+        <pin num="17" name="AUDIO_IN_2" type="input"/>
+        <pin num="18" name="AUDIO_OUT_1" type="output"/>
+        <pin num="19" name="AUDIO_OUT_2" type="output"/>
+        <pin num="20" name="AGND" type="power_in"/>
+        <pin num="21" name="3V3_A" type="power_out"/>
+        <pin num="22" name="ADC_0" type="bidirectional"/>
+        <pin num="23" name="ADC_1" type="bidirectional"/>
+        <pin num="24" name="ADC_2" type="bidirectional"/>
+        <pin num="25" name="ADC_3" type="bidirectional"/>
+        <pin num="26" name="ADC_4" type="bidirectional"/>
+        <pin num="27" name="ADC_5" type="bidirectional"/>
+        <pin num="28" name="ADC_6" type="bidirectional"/>
+        <pin num="29" name="DAC_OUT2" type="bidirectional"/>
+        <pin num="30" name="DAC_OUT1" type="bidirectional"/>
+        <pin num="31" name="SAI2_MCLK" type="bidirectional"/>
+        <pin num="32" name="SAI2_SD_B" type="bidirectional"/>
+        <pin num="33" name="SAI2_SD_A" type="bidirectional"/>
+        <pin num="34" name="SAI2_FS" type="bidirectional"/>
+        <pin num="35" name="SAI2_SCK" type="bidirectional"/>
+        <pin num="36" name="USB_D_-" type="bidirectional"/>
+        <pin num="37" name="USB_D_+" type="bidirectional"/>
+        <pin num="38" name="3V3_D" type="power_out"/>
+        <pin num="39" name="VIN" type="power_in"/>
+        <pin num="40" name="DGND" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-capacitor" part="0603,100pF,50V,C0G ">
+      <description>50V 100pF C0G   5% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/1811151136_Samsung-Electro-Mechanics-CL10C101JB8NNNC_C14858.pdf</docs>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">0603,100pF,50V,C0G </field>
+        <field name="Footprint">C_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/1811151136_Samsung-Electro-Mechanics-CL10C101JB8NNNC_C14858.pdf</field>
+        <field name="LCSC">C14858</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10C101JB8NNNC</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-capacitor" part="0603,10uF,25V,X5R ">
+      <description>25V 10uF X5R   20% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/1811110921_Samsung-Electro-Mechanics-CL10A106MA8NRNC_C96446.pdf</docs>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">0603,10uF,25V,X5R </field>
+        <field name="Footprint">C_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/1811110921_Samsung-Electro-Mechanics-CL10A106MA8NRNC_C96446.pdf</field>
+        <field name="LCSC">C96446</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A106MA8NRNC</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-capacitor" part="0603,2.2uF,16V,X5R ">
+      <description>16V 2 2uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/1810271109_Samsung-Electro-Mechanics-CL10A225KO8NNNC_C23630.pdf</docs>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">0603,2.2uF,16V,X5R </field>
+        <field name="Footprint">C_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/1810271109_Samsung-Electro-Mechanics-CL10A225KO8NNNC_C23630.pdf</field>
+        <field name="LCSC">C23630</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A225KO8NNNC</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-capacitor-0603" part="100nF,50V,X7R ">
+      <description>50V 100nF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/1809301912_YAGEO-CC0603KRX7R9BB104_C14663.pdf</docs>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">100nF,50V,X7R </field>
+        <field name="Footprint">C_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/1809301912_YAGEO-CC0603KRX7R9BB104_C14663.pdf</field>
+        <field name="LCSC">C14663</field>
+        <field name="MFG">YAGEO</field>
+        <field name="MFGPN">CC0603KRX7R9BB104</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-capacitor-0603" part="1uF,50V,X5R ">
+      <description>50V 1uF X5R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/1810261812_Samsung-Electro-Mechanics-CL10A105KB8NNNC_C15849.pdf</docs>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">1uF,50V,X5R </field>
+        <field name="Footprint">C_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/1810261812_Samsung-Electro-Mechanics-CL10A105KB8NNNC_C15849.pdf</field>
+        <field name="LCSC">C15849</field>
+        <field name="MFG">Samsung Electro-Mechanics</field>
+        <field name="MFGPN">CL10A105KB8NNNC</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-capacitor-0603" part="680pF,50V,X7R ">
+      <description>50V 680pF X7R   10% 0603 Multilayer Ceramic Capacitors MLCC - SMD SMT ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/1811061822_FH-Guangdong-Fenghua-Advanced-Tech-0603B681K500NT_C1630.pdf</docs>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">680pF,50V,X7R </field>
+        <field name="Footprint">C_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/1811061822_FH-Guangdong-Fenghua-Advanced-Tech-0603B681K500NT_C1630.pdf</field>
+        <field name="LCSC">C1630</field>
+        <field name="MFG">FH(Guangdong Fenghua Advanced Tech)</field>
+        <field name="MFGPN">0603B681K500NT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor" part="0603,10k">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   10k   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110260030_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">0603,10k</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110260030_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf</field>
+        <field name="LCSC">C25804</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1002T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor" part="0603,33k">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33k   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3302T5E_C4216.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">0603,33k</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3302T5E_C4216.pdf</field>
+        <field name="LCSC">C4216</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF3302T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor" part="0603,560">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   560   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF5600T5E_C23204.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">0603,560</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF5600T5E_C23204.pdf</field>
+        <field name="LCSC">C23204</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF5600T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor-0603" part="1.5k">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1 5k   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110252030_UNI-ROYAL-Uniroyal-Elec-0603WAF1501T5E_C22843.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">1.5k</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110252030_UNI-ROYAL-Uniroyal-Elec-0603WAF1501T5E_C22843.pdf</field>
+        <field name="LCSC">C22843</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1501T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor-0603" part="1.8k">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1 8k   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF1801T5E_C4177.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">1.8k</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF1801T5E_C4177.pdf</field>
+        <field name="LCSC">C4177</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1801T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor-0603" part="1k">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   1k   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110252030_UNI-ROYAL-Uniroyal-Elec-0603WAF1001T5E_C21190.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">1k</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110252030_UNI-ROYAL-Uniroyal-Elec-0603WAF1001T5E_C21190.pdf</field>
+        <field name="LCSC">C21190</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF1001T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor-0603" part="2M">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2M   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2004T5E_C22976.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">2M</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2004T5E_C22976.pdf</field>
+        <field name="LCSC">C22976</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2004T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor-0603" part="2k">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   2k   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2001T5E_C22975.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">2k</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF2001T5E_C22975.pdf</field>
+        <field name="LCSC">C22975</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF2001T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor-0603" part="33">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   33   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF330JT5E_C23140.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">33</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF330JT5E_C23140.pdf</field>
+        <field name="LCSC">C23140</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF330JT5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor-0603" part="3k">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   3k   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3001T5E_C4211.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">3k</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110251730_UNI-ROYAL-Uniroyal-Elec-0603WAF3001T5E_C4211.pdf</field>
+        <field name="LCSC">C4211</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF3001T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="jlcpcb-basic-resistor-0603" part="5.1k">
+      <description>1% 1 10W Thick Film Resistors 75V   100ppm    -55    155   5 1k   0603 Chip Resistor - Surface Mount ROHS</description>
+      <docs>https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF5101T5E_C23186.pdf</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">5.1k</field>
+        <field name="Footprint">R_0603_1608Metric</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/2110252130_UNI-ROYAL-Uniroyal-Elec-0603WAF5101T5E_C23186.pdf</field>
+        <field name="LCSC">C23186</field>
+        <field name="MFG">UNI-ROYAL(Uniroyal Elec)</field>
+        <field name="MFGPN">0603WAF5101T5E</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Amplifier_Operational">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Amplifier_Operational.kicad_sym</uri>
+    </library>
+    <library logical="Audio">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Audio.kicad_sym</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Connector_Generic.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="MCU_Module">
+      <uri>C:\Program Files\KiCad\7.0\share\kicad\symbols\/MCU_Module.kicad_sym</uri>
+    </library>
+    <library logical="jlcpcb-basic-capacitor">
+      <uri>G:/My Drive/Random stuff/KiCAD Dependencys/Symbols/jlcpcb-basic-capacitor.kicad_sym</uri>
+    </library>
+    <library logical="jlcpcb-basic-capacitor-0603">
+      <uri>G:/My Drive/Random stuff/KiCAD Dependencys/Symbols/jlcpcb-basic-capacitor-0603.kicad_sym</uri>
+    </library>
+    <library logical="jlcpcb-basic-resistor">
+      <uri>G:/My Drive/Random stuff/KiCAD Dependencys/Symbols/jlcpcb-basic-resistor.kicad_sym</uri>
+    </library>
+    <library logical="jlcpcb-basic-resistor-0603">
+      <uri>G:/My Drive/Random stuff/KiCAD Dependencys/Symbols/jlcpcb-basic-resistor-0603.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+4.5V">
+      <node ref="A1" pin="39" pinfunction="VIN" pintype="power_in"/>
+      <node ref="C12" pin="1" pintype="passive"/>
+      <node ref="C13" pin="1" pintype="passive"/>
+      <node ref="C15" pin="1" pintype="passive"/>
+      <node ref="C18" pin="2" pintype="passive"/>
+      <node ref="C19" pin="2" pintype="passive"/>
+      <node ref="C20" pin="2" pintype="passive"/>
+      <node ref="C21" pin="2" pintype="passive"/>
+      <node ref="C22" pin="1" pintype="passive"/>
+      <node ref="C9" pin="1" pintype="passive"/>
+      <node ref="PWR+1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R25" pin="1" pintype="passive"/>
+      <node ref="R29" pin="1" pintype="passive"/>
+      <node ref="U2" pin="4" pinfunction="V+" pintype="power_in"/>
+      <node ref="U3" pin="8" pinfunction="V+" pintype="power_in"/>
+      <node ref="U4" pin="16" pinfunction="V+" pintype="power_in"/>
+    </net>
+    <net code="2" name="-1.2VA">
+      <node ref="A1" pin="21" pinfunction="3V3_A" pintype="power_out"/>
+      <node ref="C16" pin="1" pintype="passive"/>
+      <node ref="R27" pin="1" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="V+" pintype="power_in"/>
+    </net>
+    <net code="3" name="-1.2VD">
+      <node ref="A1" pin="38" pinfunction="3V3_D" pintype="power_out"/>
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J11" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J16" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="RV1" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="RV2" pin="3" pinfunction="3" pintype="passive"/>
+    </net>
+    <net code="4" name="-2.85V">
+      <node ref="C17" pin="1" pintype="passive"/>
+      <node ref="R27" pin="2" pintype="passive"/>
+      <node ref="R28" pin="1" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+    </net>
+    <net code="5" name="-4.5V">
+      <node ref="A1" pin="20" pinfunction="AGND" pintype="power_in"/>
+      <node ref="A1" pin="40" pinfunction="DGND" pintype="power_in"/>
+      <node ref="C12" pin="2" pintype="passive"/>
+      <node ref="C13" pin="2" pintype="passive"/>
+      <node ref="C14" pin="1" pintype="passive"/>
+      <node ref="C15" pin="2" pintype="passive"/>
+      <node ref="C16" pin="2" pintype="passive"/>
+      <node ref="C17" pin="2" pintype="passive"/>
+      <node ref="C18" pin="1" pintype="passive"/>
+      <node ref="C19" pin="1" pintype="passive"/>
+      <node ref="C20" pin="1" pintype="passive"/>
+      <node ref="C21" pin="1" pintype="passive"/>
+      <node ref="C22" pin="2" pintype="passive"/>
+      <node ref="C9" pin="2" pintype="passive"/>
+      <node ref="J12" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J17" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J4" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="PWR-1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R13" pin="1" pintype="passive"/>
+      <node ref="R14" pin="1" pintype="passive"/>
+      <node ref="R26" pin="2" pintype="passive"/>
+      <node ref="R28" pin="2" pintype="passive"/>
+      <node ref="RV1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="RV2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U1" pin="11" pinfunction="V-" pintype="power_in"/>
+      <node ref="U2" pin="11" pinfunction="V-" pintype="power_in"/>
+      <node ref="U3" pin="4" pinfunction="V-" pintype="power_in"/>
+      <node ref="U4" pin="9" pinfunction="V-" pintype="power_in"/>
+    </net>
+    <net code="6" name="/A2_POT">
+      <node ref="A1" pin="22" pinfunction="ADC_0" pintype="bidirectional"/>
+      <node ref="A2P1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="7" name="/A_POT">
+      <node ref="A1" pin="25" pinfunction="ADC_3" pintype="bidirectional"/>
+      <node ref="RV2" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="8" name="/BLUE_LED">
+      <node ref="BL1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R31" pin="2" pintype="passive"/>
+    </net>
+    <net code="9" name="/CODEC_IN_L">
+      <node ref="A1" pin="16" pinfunction="AUDIO_IN_1" pintype="input"/>
+      <node ref="U1" pin="1" pintype="output"/>
+      <node ref="U1" pin="2" pinfunction="-" pintype="input"/>
+    </net>
+    <net code="10" name="/CODEC_IN_R">
+      <node ref="A1" pin="17" pinfunction="AUDIO_IN_2" pintype="input"/>
+      <node ref="U1" pin="6" pinfunction="-" pintype="input"/>
+      <node ref="U1" pin="7" pintype="output"/>
+    </net>
+    <net code="11" name="/CV_A">
+      <node ref="R17" pin="2" pintype="passive"/>
+      <node ref="U2" pin="14" pintype="output"/>
+      <node ref="U4" pin="3" pinfunction="VC1" pintype="passive"/>
+    </net>
+    <net code="12" name="/CV_B">
+      <node ref="R18" pin="2" pintype="passive"/>
+      <node ref="U2" pin="8" pintype="output"/>
+      <node ref="U4" pin="6" pinfunction="VC2" pintype="passive"/>
+    </net>
+    <net code="13" name="/DAC_A">
+      <node ref="A1" pin="29" pinfunction="DAC_OUT2" pintype="bidirectional"/>
+      <node ref="U1" pin="10" pinfunction="+" pintype="input"/>
+    </net>
+    <net code="14" name="/DAC_B">
+      <node ref="A1" pin="30" pinfunction="DAC_OUT1" pintype="bidirectional"/>
+      <node ref="U1" pin="12" pinfunction="+" pintype="input"/>
+    </net>
+    <net code="15" name="/GREEN_LED">
+      <node ref="GL1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R30" pin="2" pintype="passive"/>
+    </net>
+    <net code="16" name="/J_IN_L">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="IL1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+    </net>
+    <net code="17" name="/J_IN_R">
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="IR1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+    </net>
+    <net code="18" name="/J_OUT_L">
+      <node ref="C10" pin="2" pintype="passive"/>
+      <node ref="LO1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R23" pin="1" pintype="passive"/>
+    </net>
+    <net code="19" name="/J_OUT_R">
+      <node ref="C11" pin="2" pintype="passive"/>
+      <node ref="R24" pin="1" pintype="passive"/>
+      <node ref="RO1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="20" name="/L_SW">
+      <node ref="A1" pin="4" pinfunction="SD_DATA_1" pintype="bidirectional"/>
+      <node ref="SWL1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="21" name="/PURPLE_LED">
+      <node ref="PL1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R32" pin="2" pintype="passive"/>
+    </net>
+    <net code="22" name="/R_SW">
+      <node ref="A1" pin="5" pinfunction="SD_DATA_0" pintype="bidirectional"/>
+      <node ref="SWR1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="23" name="/S2_POT">
+      <node ref="A1" pin="23" pinfunction="ADC_1" pintype="bidirectional"/>
+      <node ref="S2P1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="24" name="/S_POT">
+      <node ref="A1" pin="24" pinfunction="ADC_2" pintype="bidirectional"/>
+      <node ref="RV1" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="25" name="/VCA_IN_A">
+      <node ref="R15" pin="1" pintype="passive"/>
+      <node ref="R9" pin="2" pintype="passive"/>
+      <node ref="U4" pin="2" pinfunction="I_IN1" pintype="input"/>
+    </net>
+    <net code="26" name="/VCA_IN_B">
+      <node ref="R12" pin="2" pintype="passive"/>
+      <node ref="R16" pin="1" pintype="passive"/>
+      <node ref="U4" pin="7" pinfunction="I_IN2" pintype="input"/>
+    </net>
+    <net code="27" name="/VCA_OUT_A">
+      <node ref="C7" pin="1" pintype="passive"/>
+      <node ref="R19" pin="1" pintype="passive"/>
+      <node ref="U2" pin="2" pinfunction="-" pintype="input"/>
+      <node ref="U4" pin="4" pinfunction="I_OUT1" pintype="output"/>
+    </net>
+    <net code="28" name="/VCA_OUT_B">
+      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="R20" pin="1" pintype="passive"/>
+      <node ref="U2" pin="6" pinfunction="-" pintype="input"/>
+      <node ref="U4" pin="5" pinfunction="I_OUT2" pintype="output"/>
+    </net>
+    <net code="29" name="GND">
+      <node ref="C5" pin="2" pintype="passive"/>
+      <node ref="C6" pin="2" pintype="passive"/>
+      <node ref="J5" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J6" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+      <node ref="R10" pin="2" pintype="passive"/>
+      <node ref="R11" pin="2" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="R23" pin="2" pintype="passive"/>
+      <node ref="R24" pin="2" pintype="passive"/>
+      <node ref="U2" pin="3" pinfunction="+" pintype="input"/>
+      <node ref="U2" pin="5" pinfunction="+" pintype="input"/>
+      <node ref="U3" pin="1" pintype="output"/>
+      <node ref="U3" pin="2" pinfunction="-" pintype="input"/>
+      <node ref="U3" pin="5" pinfunction="+" pintype="input"/>
+      <node ref="U4" pin="8" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="30" name="Net-(A1-SD_CLK)">
+      <node ref="A1" pin="7" pinfunction="SD_CLK" pintype="bidirectional"/>
+      <node ref="R32" pin="1" pintype="passive"/>
+    </net>
+    <net code="31" name="Net-(A1-SD_DATA_2)">
+      <node ref="A1" pin="3" pinfunction="SD_DATA_2" pintype="bidirectional"/>
+      <node ref="R30" pin="1" pintype="passive"/>
+    </net>
+    <net code="32" name="Net-(A1-SD_DATA_3)">
+      <node ref="A1" pin="2" pinfunction="SD_DATA_3" pintype="bidirectional"/>
+      <node ref="R31" pin="1" pintype="passive"/>
+    </net>
+    <net code="33" name="Net-(C1-Pad2)">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+    </net>
+    <net code="34" name="Net-(C2-Pad2)">
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+    </net>
+    <net code="35" name="Net-(C3-Pad2)">
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="R9" pin="1" pintype="passive"/>
+    </net>
+    <net code="36" name="Net-(C4-Pad2)">
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="R12" pin="1" pintype="passive"/>
+    </net>
+    <net code="37" name="Net-(C5-Pad1)">
+      <node ref="C5" pin="1" pintype="passive"/>
+      <node ref="R15" pin="2" pintype="passive"/>
+    </net>
+    <net code="38" name="Net-(C6-Pad1)">
+      <node ref="C6" pin="1" pintype="passive"/>
+      <node ref="R16" pin="2" pintype="passive"/>
+    </net>
+    <net code="39" name="Net-(C7-Pad2)">
+      <node ref="C7" pin="2" pintype="passive"/>
+      <node ref="R19" pin="2" pintype="passive"/>
+      <node ref="R21" pin="1" pintype="passive"/>
+      <node ref="U2" pin="1" pintype="output"/>
+    </net>
+    <net code="40" name="Net-(C8-Pad2)">
+      <node ref="C8" pin="2" pintype="passive"/>
+      <node ref="R20" pin="2" pintype="passive"/>
+      <node ref="R22" pin="1" pintype="passive"/>
+      <node ref="U2" pin="7" pintype="output"/>
+    </net>
+    <net code="41" name="Net-(C10-Pad1)">
+      <node ref="C10" pin="1" pintype="passive"/>
+      <node ref="R21" pin="2" pintype="passive"/>
+    </net>
+    <net code="42" name="Net-(C11-Pad1)">
+      <node ref="C11" pin="1" pintype="passive"/>
+      <node ref="R22" pin="2" pintype="passive"/>
+    </net>
+    <net code="43" name="Net-(U1A-+)">
+      <node ref="R5" pin="1" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="+" pintype="input"/>
+    </net>
+    <net code="44" name="Net-(U1B-+)">
+      <node ref="R6" pin="1" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="+" pintype="input"/>
+    </net>
+    <net code="45" name="Net-(U1C--)">
+      <node ref="R7" pin="1" pintype="passive"/>
+      <node ref="U1" pin="8" pintype="output"/>
+      <node ref="U1" pin="9" pinfunction="-" pintype="input"/>
+    </net>
+    <net code="46" name="Net-(U1D--)">
+      <node ref="R8" pin="1" pintype="passive"/>
+      <node ref="U1" pin="13" pinfunction="-" pintype="input"/>
+      <node ref="U1" pin="14" pintype="output"/>
+    </net>
+    <net code="47" name="Net-(U2C-+)">
+      <node ref="R11" pin="1" pintype="passive"/>
+      <node ref="R8" pin="2" pintype="passive"/>
+      <node ref="U2" pin="10" pinfunction="+" pintype="input"/>
+    </net>
+    <net code="48" name="Net-(U2C--)">
+      <node ref="R14" pin="2" pintype="passive"/>
+      <node ref="R18" pin="1" pintype="passive"/>
+      <node ref="U2" pin="9" pinfunction="-" pintype="input"/>
+    </net>
+    <net code="49" name="Net-(U2D-+)">
+      <node ref="R10" pin="1" pintype="passive"/>
+      <node ref="R7" pin="2" pintype="passive"/>
+      <node ref="U2" pin="12" pinfunction="+" pintype="input"/>
+    </net>
+    <net code="50" name="Net-(U2D--)">
+      <node ref="R13" pin="2" pintype="passive"/>
+      <node ref="R17" pin="1" pintype="passive"/>
+      <node ref="U2" pin="13" pinfunction="-" pintype="input"/>
+    </net>
+    <net code="51" name="Net-(U3A-+)">
+      <node ref="C14" pin="2" pintype="passive"/>
+      <node ref="R25" pin="2" pintype="passive"/>
+      <node ref="R26" pin="1" pintype="passive"/>
+      <node ref="U3" pin="3" pinfunction="+" pintype="input"/>
+    </net>
+    <net code="52" name="Net-(U3B--)">
+      <node ref="U3" pin="6" pinfunction="-" pintype="input"/>
+      <node ref="U3" pin="7" pintype="output"/>
+    </net>
+    <net code="53" name="Net-(U4-MODE)">
+      <node ref="R29" pin="2" pintype="passive"/>
+      <node ref="U4" pin="1" pinfunction="MODE" pintype="passive"/>
+    </net>
+    <net code="54" name="unconnected-(A1-ADC_4-Pad26)">
+      <node ref="A1" pin="26" pinfunction="ADC_4" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="55" name="unconnected-(A1-ADC_5-Pad27)">
+      <node ref="A1" pin="27" pinfunction="ADC_5" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="56" name="unconnected-(A1-ADC_6-Pad28)">
+      <node ref="A1" pin="28" pinfunction="ADC_6" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="57" name="unconnected-(A1-AUDIO_OUT_1-Pad18)">
+      <node ref="A1" pin="18" pinfunction="AUDIO_OUT_1" pintype="output+no_connect"/>
+    </net>
+    <net code="58" name="unconnected-(A1-AUDIO_OUT_2-Pad19)">
+      <node ref="A1" pin="19" pinfunction="AUDIO_OUT_2" pintype="output+no_connect"/>
+    </net>
+    <net code="59" name="unconnected-(A1-I2C1_SCL-Pad12)">
+      <node ref="A1" pin="12" pinfunction="I2C1_SCL" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="60" name="unconnected-(A1-I2C1_SDA-Pad13)">
+      <node ref="A1" pin="13" pinfunction="I2C1_SDA" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="61" name="unconnected-(A1-SAI2_FS-Pad34)">
+      <node ref="A1" pin="34" pinfunction="SAI2_FS" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="62" name="unconnected-(A1-SAI2_MCLK-Pad31)">
+      <node ref="A1" pin="31" pinfunction="SAI2_MCLK" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="63" name="unconnected-(A1-SAI2_SCK-Pad35)">
+      <node ref="A1" pin="35" pinfunction="SAI2_SCK" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="64" name="unconnected-(A1-SAI2_SD_A-Pad33)">
+      <node ref="A1" pin="33" pinfunction="SAI2_SD_A" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="65" name="unconnected-(A1-SAI2_SD_B-Pad32)">
+      <node ref="A1" pin="32" pinfunction="SAI2_SD_B" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="66" name="unconnected-(A1-SD_CMD-Pad6)">
+      <node ref="A1" pin="6" pinfunction="SD_CMD" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="67" name="unconnected-(A1-SPI1_CS-Pad8)">
+      <node ref="A1" pin="8" pinfunction="SPI1_CS" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="68" name="unconnected-(A1-SPI1_PICO-Pad11)">
+      <node ref="A1" pin="11" pinfunction="SPI1_PICO" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="69" name="unconnected-(A1-SPI1_POCI-Pad10)">
+      <node ref="A1" pin="10" pinfunction="SPI1_POCI" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="70" name="unconnected-(A1-SPI1_SCK-Pad9)">
+      <node ref="A1" pin="9" pinfunction="SPI1_SCK" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="71" name="unconnected-(A1-USART1_RX-Pad15)">
+      <node ref="A1" pin="15" pinfunction="USART1_RX" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="72" name="unconnected-(A1-USART1_TX-Pad14)">
+      <node ref="A1" pin="14" pinfunction="USART1_TX" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="73" name="unconnected-(A1-USB_D_+-Pad37)">
+      <node ref="A1" pin="37" pinfunction="USB_D_+" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="74" name="unconnected-(A1-USB_D_--Pad36)">
+      <node ref="A1" pin="36" pinfunction="USB_D_-" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="75" name="unconnected-(A1-USB_ID-Pad1)">
+      <node ref="A1" pin="1" pinfunction="USB_ID" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="76" name="unconnected-(U4-I_IN3-Pad10)">
+      <node ref="U4" pin="10" pinfunction="I_IN3" pintype="input+no_connect"/>
+    </net>
+    <net code="77" name="unconnected-(U4-I_IN4-Pad15)">
+      <node ref="U4" pin="15" pinfunction="I_IN4" pintype="input+no_connect"/>
+    </net>
+    <net code="78" name="unconnected-(U4-I_OUT3-Pad12)">
+      <node ref="U4" pin="12" pinfunction="I_OUT3" pintype="output+no_connect"/>
+    </net>
+    <net code="79" name="unconnected-(U4-I_OUT4-Pad13)">
+      <node ref="U4" pin="13" pinfunction="I_OUT4" pintype="output+no_connect"/>
+    </net>
+    <net code="80" name="unconnected-(U4-VC3-Pad11)">
+      <node ref="U4" pin="11" pinfunction="VC3" pintype="passive+no_connect"/>
+    </net>
+    <net code="81" name="unconnected-(U4-VC4-Pad14)">
+      <node ref="U4" pin="14" pinfunction="VC4" pintype="passive+no_connect"/>
+    </net>
+  </nets>
+</export>
