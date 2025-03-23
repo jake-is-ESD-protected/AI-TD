@@ -1,0 +1,4 @@
+8 Snare drum hits have been recorded through the device.
+The first 4 with a time constant of 0.5 (UI referenced)
+The latter 4 with a time constant of 0.5 + 0.13(RMSE) = 0.63 (UI referenced)
+Each for Attack and Sustain boosting

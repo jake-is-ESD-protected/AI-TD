@@ -32,7 +32,7 @@ C_INCLUDES += \
 -I./src/af \
 -I./RTNeural/RTNeural
 
-OPT = -O2
+OPT = -Os
 
 # Core location, and generic makefile.
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
